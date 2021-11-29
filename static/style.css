@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    height: 100vh;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li {
+}
