@@ -1,16 +1,29 @@
 from flask import Flask, render_template, jsonify, request
-import json
+import db
+import catch as c
+
 POKET_DATA = './pokemons.json'
 
 app = Flask(__name__)
 
+# Global
+g = {}
+g['pokemonList'] = db.getPokemonList()   # 포켓몬 도감
+g['nPokemon'] = len(g['pokemonList'].keys())
+
+# Routings
 @app.route('/')
 def main():
     return render_template('index.html')
 
 @app.route('/list')
 def list():
-    with open(POKET_DATA) as f:
-        list_data = json.load(f)
-        print(jsonify(list_data))
-    return render_template('poket_list.html', datas=list_data)
+    return render_template('poket_list.html', datas=g['pokemonList'])
+
+@app.route('/catch')
+def catch():
+    comed = c.comePokemon(g['nPokemon'], 3) # [(포켓몬 id, percent), ...]
+
+    return str(comed)
+
+app.run()
