@@ -2,756 +2,907 @@
   "1": {
     "id": 1,
     "name": "\uc774\uc0c1\ud574\uc528",
-    "efficiency": 253
+    "efficiency": 253,
+    "evolution": [1, 2, 3]
   },
   "2": {
     "id": 2,
     "name": "\uc774\uc0c1\ud574\ud480",
-    "efficiency": 325
+    "efficiency": 325,
+    "evolution": [1, 2, 3]
   },
   "3": {
     "id": 3,
     "name": "\uc774\uc0c1\ud574\uaf43",
-    "efficiency": 425
+    "efficiency": 425,
+    "evolution": [1, 2, 3]
   },
   "4": {
     "id": 4,
     "name": "\ud30c\uc774\ub9ac",
-    "efficiency": 249
+    "efficiency": 249,
+    "evolution": [4, 5, 6]
   },
   "5": {
     "id": 5,
     "name": "\ub9ac\uc790\ub4dc",
-    "efficiency": 325
+    "efficiency": 325,
+    "evolution": [4, 5, 6]
   },
   "6": {
     "id": 6,
     "name": "\ub9ac\uc790\ubabd",
-    "efficiency": 425
+    "efficiency": 425,
+    "evolution": [4, 5, 6]
   },
   "7": {
     "id": 7,
     "name": "\uaf2c\ubd80\uae30",
-    "efficiency": 264
+    "efficiency": 264,
+    "evolution": [7, 8, 9]
   },
   "8": {
     "id": 8,
     "name": "\uc5b4\ub2c8\ubd80\uae30",
-    "efficiency": 325
+    "efficiency": 325,
+    "evolution": [7, 8, 9]
   },
   "9": {
     "id": 9,
     "name": "\uac70\ubd81\uc655",
-    "efficiency": 425
+    "efficiency": 425,
+    "evolution": [7, 8, 9]
   },
   "10": {
     "id": 10,
     "name": "\uce90\ud130\ud53c",
-    "efficiency": 175
+    "efficiency": 175,
+    "evolution": [10, 11, 12]
   },
   "11": {
     "id": 11,
     "name": "\ub2e8\ub370\uae30",
-    "efficiency": 180
+    "efficiency": 180,
+    "evolution": [10, 11, 12]
   },
   "12": {
     "id": 12,
     "name": "\ubc84\ud130\ud50c",
-    "efficiency": 305
+    "efficiency": 305,
+    "evolution": [10, 11, 12]
   },
   "13": {
     "id": 13,
     "name": "\ubfd4\ucda9\uc774",
-    "efficiency": 175
+    "efficiency": 175,
+    "evolution": [13, 14, 15]
   },
   "14": {
     "id": 14,
     "name": "\ub531\ucda9\uc774",
-    "efficiency": 180
+    "efficiency": 180,
+    "evolution": [13, 14, 15]
   },
   "15": {
     "id": 15,
     "name": "\ub3c5\uce68\ubd95",
-    "efficiency": 305
+    "efficiency": 305,
+    "evolution": [13, 14, 15]
   },
   "16": {
     "id": 16,
     "name": "\uad6c\uad6c",
-    "efficiency": 216
+    "efficiency": 216,
+    "evolution": [16, 17, 18]
   },
   "17": {
     "id": 17,
     "name": "\ud53c\uc8e4",
-    "efficiency": 299
+    "efficiency": 299,
+    "evolution": [16, 17, 18]
   },
   "18": {
     "id": 18,
     "name": "\ud53c\uc8e4\ud22c",
-    "efficiency": 399
+    "efficiency": 399,
+    "evolution": [16, 17, 18]
   },
   "19": {
     "id": 19,
     "name": "\uaf2c\ub81b",
-    "efficiency": 218
+    "efficiency": 218,
+    "evolution": [19, 20]
   },
   "20": {
     "id": 20,
     "name": "\ub808\ud2b8\ub77c",
-    "efficiency": 343
+    "efficiency": 343,
+    "evolution": [19, 20]
   },
   "21": {
     "id": 21,
     "name": "\uae68\ube44\ucc38",
-    "efficiency": 231
+    "efficiency": 231,
+    "evolution": [21, 22]
   },
   "22": {
     "id": 22,
     "name": "\uae68\ube44\ub4dc\ub9b4\uc870",
-    "efficiency": 381
+    "efficiency": 381,
+    "evolution": [21, 22]
   },
   "23": {
     "id": 23,
     "name": "\uc544\ubcf4",
-    "efficiency": 234
+    "efficiency": 234,
+    "evolution": [23, 24]
   },
   "24": {
     "id": 24,
     "name": "\uc544\ubcf4\ud06c",
-    "efficiency": 359
+    "efficiency": 359,
+    "evolution": [23, 24]
   },
   "25": {
     "id": 25,
     "name": "\ud53c\uce74\uce04",
-    "efficiency": 260
+    "efficiency": 260,
+    "evolution": [25, 26]
   },
   "26": {
     "id": 26,
     "name": "\ub77c\uc774\uce04",
-    "efficiency": 395
+    "efficiency": 395,
+    "evolution": [25, 26]
   },
   "27": {
     "id": 27,
     "name": "\ubaa8\ub798\ub450\uc9c0",
-    "efficiency": 280
+    "efficiency": 280,
+    "evolution": [27, 28]
   },
   "28": {
     "id": 28,
     "name": "\uace0\uc9c0",
-    "efficiency": 405
+    "efficiency": 405,
+    "evolution": [27, 28]
   },
   "29": {
     "id": 29,
     "name": "\ub2c8\ub4dc\ub7f0\u2640",
-    "efficiency": 235
+    "efficiency": 235,
+    "evolution": [29, 30, 31]
   },
   "30": {
     "id": 30,
     "name": "\ub2c8\ub4dc\ub9ac\ub098",
-    "efficiency": 310
+    "efficiency": 310,
+    "evolution": [29, 30, 31]
   },
   "31": {
     "id": 31,
     "name": "\ub2c8\ub4dc\ud038",
-    "efficiency": 410
+    "efficiency": 410,
+    "evolution": [29, 30, 31]
   },
   "32": {
     "id": 32,
     "name": "\ub2c8\ub4dc\ub7f0\u2642",
-    "efficiency": 233
+    "efficiency": 233,
+    "evolution": [32, 33, 34]
   },
   "33": {
     "id": 33,
     "name": "\ub2c8\ub4dc\ub9ac\ub178",
-    "efficiency": 310
+    "efficiency": 310,
+    "evolution": [32, 33, 34]
   },
   "34": {
     "id": 34,
     "name": "\ub2c8\ub4dc\ud0b9",
-    "efficiency": 410
+    "efficiency": 410,
+    "evolution": [32, 33, 34]
   },
   "35": {
     "id": 35,
     "name": "\uc090\uc090",
-    "efficiency": 258
+    "efficiency": 258,
+    "evolution": [35, 36]
   },
   "36": {
     "id": 36,
     "name": "\ud53d\uc2dc",
-    "efficiency": 383
+    "efficiency": 383,
+    "evolution": [35, 36]
   },
   "37": {
     "id": 37,
     "name": "\uc2dd\uc2a4\ud14c\uc77c",
-    "efficiency": 249
+    "efficiency": 249,
+    "evolution": [37, 38]
   },
   "38": {
     "id": 38,
     "name": "\ub098\uc778\ud14c\uc77c",
-    "efficiency": 424
+    "efficiency": 424,
+    "evolution": [37, 38]
   },
   "39": {
     "id": 39,
     "name": "\ud478\ub9b0",
-    "efficiency": 225
+    "efficiency": 225,
+    "evolution": [39, 40]
   },
   "40": {
     "id": 40,
     "name": "\ud478\ud06c\ub9b0",
-    "efficiency": 350
+    "efficiency": 350,
+    "evolution": [39, 40]
   },
   "41": {
     "id": 41,
     "name": "\uc8fc\ubc43",
-    "efficiency": 215
+    "efficiency": 215,
+    "evolution": [41, 42]
   },
   "42": {
     "id": 42,
     "name": "\uace8\ubc43",
-    "efficiency": 390
+    "efficiency": 390,
+    "evolution": [41, 42]
   },
   "43": {
     "id": 43,
     "name": "\ub69c\ubc85\ucd78",
-    "efficiency": 255
+    "efficiency": 255,
+    "evolution": [43, 44, 45]
   },
   "44": {
     "id": 44,
     "name": "\ub0c4\uc0c8\uaf2c",
-    "efficiency": 320
+    "efficiency": 320,
+    "evolution": [43, 44, 45]
   },
   "45": {
     "id": 45,
     "name": "\ub77c\ud50c\ub808\uc2dc\uc544",
-    "efficiency": 390
+    "efficiency": 390,
+    "evolution": [43, 44, 45]
   },
   "46": {
     "id": 46,
     "name": "\ud30c\ub77c\uc2a4",
-    "efficiency": 240
+    "efficiency": 240,
+    "evolution": [46, 47]
   },
   "47": {
     "id": 47,
     "name": "\ud30c\ub77c\uc139\ud2b8",
-    "efficiency": 345
+    "efficiency": 345,
+    "evolution": [46, 47]
   },
   "48": {
     "id": 48,
     "name": "\ucf58\ud321",
-    "efficiency": 250
+    "efficiency": 250,
+    "evolution": [48, 49]
   },
   "49": {
     "id": 49,
     "name": "\ub3c4\ub098\ub9ac",
-    "efficiency": 375
+    "efficiency": 375,
+    "evolution": [48, 49]
   },
   "50": {
     "id": 50,
     "name": "\ub514\uadf8\ub2e4",
-    "efficiency": 230
+    "efficiency": 230,
+    "evolution": [50, 51]
   },
   "51": {
     "id": 51,
     "name": "\ub2e5\ud2b8\ub9ac\uc624",
-    "efficiency": 355
+    "efficiency": 355,
+    "evolution": [50, 51]
   },
   "52": {
     "id": 52,
     "name": "\ub098\uc639",
-    "efficiency": 250
+    "efficiency": 250,
+    "evolution": [52, 53]
   },
   "53": {
     "id": 53,
     "name": "\ud398\ub974\uc2dc\uc628",
-    "efficiency": 375
+    "efficiency": 375,
+    "evolution": [52, 53]
   },
   "54": {
     "id": 54,
     "name": "\uace0\ub77c\ud30c\ub355",
-    "efficiency": 255
+    "efficiency": 255,
+    "evolution": [54, 55]
   },
   "55": {
     "id": 55,
     "name": "\uace8\ub355",
-    "efficiency": 405
+    "efficiency": 405,
+    "evolution": [54, 55]
   },
   "56": {
     "id": 56,
     "name": "\ub9dd\ud0a4",
-    "efficiency": 260
+    "efficiency": 260,
+    "evolution": [56, 57]
   },
   "57": {
     "id": 57,
     "name": "\uc131\uc6d0\uc22d",
-    "efficiency": 385
+    "efficiency": 385,
+    "evolution": [56, 57]
   },
   "58": {
     "id": 58,
     "name": "\uac00\ub514",
-    "efficiency": 280
+    "efficiency": 280,
+    "evolution": [58, 59]
   },
   "59": {
     "id": 59,
     "name": "\uc708\ub514",
-    "efficiency": 455
+    "efficiency": 455,
+    "evolution": [58, 59]
   },
   "60": {
     "id": 60,
     "name": "\ubc1c\ucc59\uc774",
-    "efficiency": 260
+    "efficiency": 260,
+    "evolution": [60, 61, 62]
   },
   "61": {
     "id": 61,
     "name": "\uc288\ub959\ucc59\uc774",
-    "efficiency": 335
+    "efficiency": 335,
+    "evolution": [60, 61, 62]
   },
   "62": {
     "id": 62,
     "name": "\uac15\ucc59\uc774",
-    "efficiency": 410
+    "efficiency": 410,
+    "evolution": [60, 61, 62]
   },
   "63": {
     "id": 63,
     "name": "\uce90\uc774\uc2dc",
-    "efficiency": 255
+    "efficiency": 255,
+    "evolution": [63, 64, 65]
   },
   "64": {
     "id": 64,
     "name": "\uc724\uac94\ub77c",
-    "efficiency": 330
+    "efficiency": 330,
+    "evolution": [63, 64, 65]
   },
   "65": {
     "id": 65,
     "name": "\ud6c4\ub518",
-    "efficiency": 405
+    "efficiency": 405,
+    "evolution": [63, 64, 65]
   },
   "66": {
     "id": 66,
     "name": "\uc54c\ud1b5\ubaac",
-    "efficiency": 270
+    "efficiency": 270,
+    "evolution": [66, 67, 68]
   },
   "67": {
     "id": 67,
     "name": "\uadfc\uc721\ubaac",
-    "efficiency": 345
+    "efficiency": 345,
+    "evolution": [66, 67, 68]
   },
   "68": {
     "id": 68,
     "name": "\uad34\ub825\ubaac",
-    "efficiency": 420
+    "efficiency": 420,
+    "evolution": [66, 67, 68]
   },
   "69": {
     "id": 69,
     "name": "\ubaa8\ub2e4\ud53c",
-    "efficiency": 270
+    "efficiency": 270,
+    "evolution": [69, 70, 71]
   },
   "70": {
     "id": 70,
     "name": "\uc6b0\uce20\ub3d9",
-    "efficiency": 345
+    "efficiency": 345,
+    "evolution": [69, 70, 71]
   },
   "71": {
     "id": 71,
     "name": "\uc6b0\uce20\ubcf4\ud2b8",
-    "efficiency": 420
+    "efficiency": 420,
+    "evolution": [69, 70, 71]
   },
   "72": {
     "id": 72,
     "name": "\uc655\ub208\ud574",
-    "efficiency": 285
+    "efficiency": 285,
+    "evolution": [72, 73]
   },
   "73": {
     "id": 73,
     "name": "\ub3c5\ud30c\ub9ac",
-    "efficiency": 435
+    "efficiency": 435,
+    "evolution": [72, 73]
   },
   "74": {
     "id": 74,
     "name": "\uaf2c\ub9c8\ub3cc",
-    "efficiency": 270
+    "efficiency": 270,
+    "evolution": [74, 75, 76]
   },
   "75": {
     "id": 75,
     "name": "\ub370\uad6c\ub9ac",
-    "efficiency": 345
+    "efficiency": 345,
+    "evolution": [74, 75, 76]
   },
   "76": {
     "id": 76,
     "name": "\ub531\uad6c\ub9ac",
-    "efficiency": 420
+    "efficiency": 420,
+    "evolution": [74, 75, 76]
   },
   "77": {
     "id": 77,
     "name": "\ud3ec\ub2c8\ud0c0",
-    "efficiency": 345
+    "efficiency": 345,
+    "evolution": [77, 78]
   },
   "78": {
     "id": 78,
     "name": "\ub0a0\uc329\ub9c8",
-    "efficiency": 420
+    "efficiency": 420,
+    "evolution": [77, 78]
   },
   "79": {
     "id": 79,
     "name": "\uc57c\ub3c8",
-    "efficiency": 275
+    "efficiency": 275,
+    "evolution": [79, 80]
   },
   "80": {
     "id": 80,
     "name": "\uc57c\ub3c4\ub780",
-    "efficiency": 390
+    "efficiency": 390,
+    "evolution": [79, 80]
   },
   "81": {
     "id": 81,
     "name": "\ucf54\uc77c",
-    "efficiency": 270
+    "efficiency": 270,
+    "evolution": [81, 82]
   },
   "82": {
     "id": 82,
     "name": "\ub808\uc5b4\ucf54\uc77c",
-    "efficiency": 395
+    "efficiency": 395,
+    "evolution": [81, 82]
   },
   "83": {
     "id": 83,
     "name": "\ud30c\uc624\ub9ac",
-    "efficiency": 290
+    "efficiency": 290,
+    "evolution": null
   },
   "84": {
     "id": 84,
     "name": "\ub450\ub450",
-    "efficiency": 275
+    "efficiency": 275,
+    "evolution": [84, 85]
   },
   "85": {
     "id": 85,
     "name": "\ub450\ud2b8\ub9ac\uc624",
-    "efficiency": 400
+    "efficiency": 400,
+    "evolution": [84, 85]
   },
   "86": {
     "id": 86,
     "name": "\uc96c\uc96c",
-    "efficiency": 280
+    "efficiency": 280,
+    "evolution": [86, 87]
   },
   "87": {
     "id": 87,
     "name": "\uc96c\ub808\uace4",
-    "efficiency": 405
+    "efficiency": 405,
+    "evolution": [86, 87]
   },
   "88": {
     "id": 88,
     "name": "\uc9c8\ud37d\uc774",
-    "efficiency": 275
+    "efficiency": 275,
+    "evolution": [88, 89]
   },
   "89": {
     "id": 89,
     "name": "\uc9c8\ubed0\uae30",
-    "efficiency": 400
+    "efficiency": 400,
+    "evolution": [88, 89]
   },
   "90": {
     "id": 90,
     "name": "\uc140\ub7ec",
-    "efficiency": 280
+    "efficiency": 280,
+    "evolution": [90, 91]
   },
   "91": {
     "id": 91,
     "name": "\ud30c\ub974\uc140",
-    "efficiency": 480
+    "efficiency": 480,
+    "evolution": [90, 91]
   },
   "92": {
     "id": 92,
     "name": "\uace0\uc624\uc2a4",
-    "efficiency": 275
+    "efficiency": 275,
+    "evolution": [92, 93, 94]
   },
   "93": {
     "id": 93,
     "name": "\uace0\uc6b0\uc2a4\ud2b8",
-    "efficiency": 350
+    "efficiency": 350,
+    "evolution": [92, 93, 94]
   },
   "94": {
     "id": 94,
     "name": "\ud32c\ud140",
-    "efficiency": 425
+    "efficiency": 425,
+    "evolution": [92, 93, 94]
   },
   "95": {
     "id": 95,
     "name": "\ub871\uc2a4\ud1a4",
-    "efficiency": 340
+    "efficiency": 340,
+    "evolution": null
   },
   "96": {
     "id": 96,
     "name": "\uc2ac\ub9ac\ud504",
-    "efficiency": 285
+    "efficiency": 285,
+    "evolution": [96, 97]
   },
   "97": {
     "id": 97,
     "name": "\uc2ac\ub9ac\ud37c",
-    "efficiency": 410
+    "efficiency": 410,
+    "evolution": [96, 97]
   },
   "98": {
     "id": 98,
     "name": "\ud06c\ub7a9",
-    "efficiency": 300
+    "efficiency": 300,
+    "evolution": [98, 99]
   },
   "99": {
     "id": 99,
     "name": "\ud0b9\ud06c\ub7a9",
-    "efficiency": 425
+    "efficiency": 425,
+    "evolution": [98, 99]
   },
   "100": {
     "id": 100,
     "name": "\ucc0c\ub9ac\ub9ac\uacf5",
-    "efficiency": 275
+    "efficiency": 275,
+    "evolution": [100, 101]
   },
   "101": {
     "id": 101,
     "name": "\ubd90\ubcfc",
-    "efficiency": 400
+    "efficiency": 400,
+    "evolution": [100, 101]
   },
   "102": {
     "id": 102,
     "name": "\uc544\ub77c\ub9ac",
-    "efficiency": 280
+    "efficiency": 280,
+    "evolution": [102, 103]
   },
   "103": {
     "id": 103,
     "name": "\ub098\uc2dc",
-    "efficiency": 455
+    "efficiency": 455,
+    "evolution": [102, 103]
   },
   "104": {
     "id": 104,
     "name": "\ud0d5\uad6c\ub9ac",
-    "efficiency": 270
+    "efficiency": 270,
+    "evolution": [104, 105]
   },
   "105": {
     "id": 105,
     "name": "\ud145\uad6c\ub9ac",
-    "efficiency": 345
+    "efficiency": 345,
+    "evolution": [104, 105]
   },
   "106": {
     "id": 106,
     "name": "\uc2dc\ub77c\uc18c\ubaac",
-    "efficiency": 345
+    "efficiency": 345,
+    "evolution": null
   },
   "107": {
     "id": 107,
     "name": "\ud64d\uc218\ubaac",
-    "efficiency": 345
+    "efficiency": 345,
+    "evolution": null
   },
   "108": {
     "id": 108,
     "name": "\ub0b4\ub8e8\ubbf8",
-    "efficiency": 310
+    "efficiency": 310,
+    "evolution": null
   },
   "109": {
     "id": 109,
     "name": "\ub610\uac00\uc2a4",
-    "efficiency": 295
+    "efficiency": 295,
+    "evolution": [109, 110]
   },
   "110": {
     "id": 110,
     "name": "\ub610\ub3c4\uac00\uc2a4",
-    "efficiency": 420
+    "efficiency": 420,
+    "evolution": [109, 110]
   },
   "111": {
     "id": 111,
     "name": "\ubfd4\uce74\ub178",
-    "efficiency": 315
+    "efficiency": 315,
+    "evolution": [111, 112]
   },
   "112": {
     "id": 112,
     "name": "\ucf54\ubfcc\ub9ac",
-    "efficiency": 440
+    "efficiency": 440,
+    "evolution": [111, 112]
   },
   "113": {
     "id": 113,
     "name": "\ub7ed\ud0a4",
-    "efficiency": 415
+    "efficiency": 415,
+    "evolution": null
   },
   "114": {
     "id": 114,
     "name": "\ub369\ucfe0\ub9ac",
-    "efficiency": 395
+    "efficiency": 395,
+    "evolution": null
   },
   "115": {
     "id": 115,
     "name": "\ucea5\uce74",
-    "efficiency": 410
+    "efficiency": 410,
+    "evolution": null
   },
   "116": {
     "id": 116,
     "name": "\uc3d8\ub4dc\ub77c",
-    "efficiency": 270
+    "efficiency": 270,
+    "evolution": [116, 117]
   },
   "117": {
     "id": 117,
     "name": "\uc2dc\ub4dc\ub77c",
-    "efficiency": 395
+    "efficiency": 395,
+    "evolution": [116, 117]
   },
   "118": {
     "id": 118,
     "name": "\ucf58\uce58",
-    "efficiency": 285
+    "efficiency": 285,
+    "evolution": [118, 119]
   },
   "119": {
     "id": 119,
     "name": "\uc655\ucf58\uce58",
-    "efficiency": 385
+    "efficiency": 385,
+    "evolution": [118, 119]
   },
   "120": {
     "id": 120,
     "name": "\ubcc4\uac00\uc0ac\ub9ac",
-    "efficiency": 285
+    "efficiency": 285,
+    "evolution": [120, 121]
   },
   "121": {
     "id": 121,
     "name": "\uc544\ucfe0\uc2a4\ud0c0",
-    "efficiency": 435
+    "efficiency": 435,
+    "evolution": [120, 121]
   },
   "122": {
     "id": 122,
     "name": "\ub9c8\uc784\ub9e8",
-    "efficiency": 340
+    "efficiency": 340,
+    "evolution": null
   },
   "123": {
     "id": 123,
     "name": "\uc2a4\ub77c\ud06c",
-    "efficiency": 420
+    "efficiency": 420,
+    "evolution": null
   },
   "124": {
     "id": 124,
     "name": "\ub8e8\uc8fc\ub77c",
-    "efficiency": 340
+    "efficiency": 340,
+    "evolution": null
   },
   "125": {
     "id": 125,
     "name": "\uc5d0\ub808\ube0c",
-    "efficiency": 395
+    "efficiency": 395,
+    "evolution": null
   },
   "126": {
     "id": 126,
     "name": "\ub9c8\uadf8\ub9c8",
-    "efficiency": 395
+    "efficiency": 395,
+    "evolution": null
   },
   "127": {
     "id": 127,
     "name": "\uc058\uc0ac\uc774\uc800",
-    "efficiency": 430
+    "efficiency": 430,
+    "evolution": null
   },
   "128": {
     "id": 128,
     "name": "\ucf04\ud0c0\ub85c\uc2a4",
-    "efficiency": 450
+    "efficiency": 450,
+    "evolution": null
   },
   "129": {
     "id": 129,
     "name": "\uc789\uc5b4\ud0b9",
-    "efficiency": 185
+    "efficiency": 185,
+    "evolution": [129, 130]
   },
   "130": {
     "id": 130,
     "name": "\uac38\ub77c\ub3c4\uc2a4",
-    "efficiency": 480
+    "efficiency": 480,
+    "evolution": [129, 130]
   },
   "131": {
     "id": 131,
     "name": "\ub77c\ud504\ub77c\uc2a4",
-    "efficiency": 450
+    "efficiency": 450,
+    "evolution": null
   },
   "132": {
     "id": 132,
     "name": "\uba54\ud0c0\ubabd",
-    "efficiency": 240
+    "efficiency": 240,
+    "evolution": null
   },
   "133": {
     "id": 133,
     "name": "\uc774\ube0c\uc774",
-    "efficiency": 280
+    "efficiency": 280,
+    "evolution": [133, 134, 135, 136]
   },
   "134": {
     "id": 134,
     "name": "\uc0e4\ubbf8\ub4dc",
-    "efficiency": 430
+    "efficiency": 430,
+    "evolution": [133, 134, 135, 136]
   },
   "135": {
     "id": 135,
     "name": "\uc96c\ud53c\uc36c\ub354",
-    "efficiency": 430
+    "efficiency": 430,
+    "evolution": [133, 134, 135, 136]
   },
   "136": {
     "id": 136,
     "name": "\ubd80\uc2a4\ud130",
-    "efficiency": 430
+    "efficiency": 430,
+    "evolution": [133, 134, 135, 136]
   },
   "137": {
     "id": 137,
     "name": "\ud3f4\ub9ac\uace4",
-    "efficiency": 310
+    "efficiency": 310,
+    "evolution": null
   },
   "138": {
     "id": 138,
     "name": "\uc554\ub098\uc774\ud2b8",
-    "efficiency": 300
+    "efficiency": 300,
+    "evolution": [138, 139]
   },
   "139": {
     "id": 139,
     "name": "\uc554\uc2a4\ud0c0",
-    "efficiency": 425
+    "efficiency": 425,
+    "evolution": [138, 139]
   },
   "140": {
     "id": 140,
     "name": "\ud22c\uad6c",
-    "efficiency": 300
+    "efficiency": 300,
+    "evolution": [140, 141]
   },
   "141": {
     "id": 141,
     "name": "\ud22c\uad6c\ud478\uc2a4",
-    "efficiency": 430
+    "efficiency": 430,
+    "evolution": [140, 141]
   },
   "142": {
     "id": 142,
     "name": "\ud504\ud14c\ub77c",
-    "efficiency": 440
+    "efficiency": 440,
+    "evolution": null
   },
   "143": {
     "id": 143,
     "name": "\uc7a0\ub9cc\ubcf4",
-    "efficiency": 430
+    "efficiency": 430,
+    "evolution": null
   },
   "144": {
     "id": 144,
     "name": "\ud504\ub9ac\uc838",
-    "efficiency": 485
+    "efficiency": 485,
+    "evolution": null
   },
   "145": {
     "id": 145,
     "name": "\uc36c\ub354",
-    "efficiency": 490
+    "efficiency": 490,
+    "evolution": null
   },
   "146": {
     "id": 146,
     "name": "\ud30c\uc774\uc5b4",
-    "efficiency": 495
+    "efficiency": 495,
+    "evolution": null
   },
   "147": {
     "id": 147,
     "name": "\ubbf8\ub1fd",
-    "efficiency": 250
+    "efficiency": 250,
+    "evolution": [147, 148, 149]
   },
   "148": {
     "id": 148,
     "name": "\uc2e0\ub1fd",
-    "efficiency": 350
+    "efficiency": 350,
+    "evolution": [147, 148, 149]
   },
   "149": {
     "id": 149,
     "name": "\ub9dd\ub098\ub1fd",
-    "efficiency": 500
+    "efficiency": 500,
+    "evolution": [147, 148, 149]
   },
   "150": {
     "id": 150,
     "name": "\ubba4\uce20",
-    "efficiency": 590
+    "efficiency": 590,
+    "evolution": null
   },
   "151": {
     "id": 151,
     "name": "\ubba4",
-    "efficiency": 500
+    "efficiency": 500,
+    "evolution": null
   }
 }

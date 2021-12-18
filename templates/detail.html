@@ -1,0 +1,19 @@
+{%  extends 'base.html' %}
+
+{% block content %}
+    <ul>
+        <li>
+            <img src="../static/images/{{ data['id'] }}.png" />
+            <div name="name">{{ data['name'] }}</div>
+            <div name="efficiency">{{ data['efficiency'] }}</div>
+            <div>
+                {% if data['evolution'] != None %}    
+                {% for _id in data['evolution'] %}
+                <img src="../static/images/{{ _id }}.png" />
+                {% endfor %}   
+                {% endif %}
+            </div>
+            </a>
+        </li>
+    </ul>
+{% endblock %}

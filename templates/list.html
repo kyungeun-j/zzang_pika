@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+    {% for _id in datas %}
+        <li>
+            <a href="/detail/{{ _id }}">
+                <img src="../static/images/{{ _id }}.png" />
+                <div name="name">{{ datas[_id]['name'] }}</div>
+                <div name="efficiency">{{ datas[_id]['efficiency'] }}</div>
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
