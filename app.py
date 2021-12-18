@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, session
 import db
 import catch as c
+import shop
 
 POKET_DATA = './pokemons.json'
 
@@ -66,6 +67,12 @@ def register():
         db.register(request.form['username'], request.form['password'])
         return redirect('/login')
 
+@app.route('/shop')
+def shop():
 
-
+    # shop.buyBall(userId, numberOfbuyBall)
+    # db.getMoney(userId)로 남은 코인 확인 후 처리
+    
+    return 'asd'
+  
 app.run('0.0.0.0')
