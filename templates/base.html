@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<title>zzangpika</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<nav>
+    <ul>
+        <li>
+            <a href="/">
+                로고
+            </a>
+        </li>
+        <li>
+            <a href="/list">
+                도감
+            </a>
+        </li>
+        <li>
+            {% if username != False %}
+                {{ username }}
+                <a href="/logout">로그아웃</a>
+            {% else %}
+                <a href="/login">로그인</a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+<section>
+    {% block content %}{% endblock %}
+</section>

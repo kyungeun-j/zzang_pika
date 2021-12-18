@@ -1,0 +1,15 @@
+{% block content %}
+    <form method="post">
+        <label for="username">Username</label>
+        <input name="username" id="username" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <input type="submit" value="Log In">
+    </form>
+    <a href="/register">회원가입</a>
+    {% if message == True %}
+        <script>
+            alert("아이디 또는 패스워드가 잘못 되었습니다.")
+        </script>
+    {% endif %}
+{% endblock %}
