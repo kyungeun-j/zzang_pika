@@ -1,8 +1,11 @@
 import json
 import datetime
+import os
 
+# DB 위치
 DB_POKEMON_LIST = './db/pokemons.json'
 DB_USER_LIST = './db/users.json'
+DB_INVENTORY = './db/inventory/'
 
 # 포켓몬 도감
 def getPokemonList():
@@ -66,3 +69,35 @@ def register(username, password):
     before_users['userList'][username] = user
     with open(DB_USER_LIST, 'w') as f:
         f.write(json.dumps(before_users))
+
+# Inventory
+def getInventory(userId):
+    if not str(userId) + '.json' in os.listdir(DB_INVENTORY):
+        makeInventory(userId)
+    with open(DB_INVENTORY + str(userId) + '.json', 'r') as f:
+        return json.loads(f.read())
+
+def makeInventory(userId):
+    with open(DB_INVENTORY + 'table.json', 'r') as f:
+        inventoryTable = json.loads(f.read())
+    
+    with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
+        f.write(json.dumps(inventoryTable))
+
+def getMoney(userId):
+    return getInventory(userId)['0']['amount']
+
+def updateInventory(userId, field, datas):
+    beforeInventory = getInventory(userId)
+    if field == 'ball':
+        for ball in datas:
+            beforeInventory[ball]['amount'] += 1
+
+    beforeInventory['0']['amount'] -= len(datas) * 100
+
+    # coin이 0 이하로 떨어지지 않음
+    # updateInventory()를 사용하는 곳에서 예외처리 해주어야 함
+    beforeInventory['0']['amount'] = 0 if beforeInventory['0']['amount'] < 0 else beforeInventory['0']['amount']
+
+    with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
+        f.write(json.dumps(beforeInventory))
