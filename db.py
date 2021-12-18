@@ -69,6 +69,8 @@ def register(username, password):
     before_users['userList'][username] = user
     with open(DB_USER_LIST, 'w') as f:
         f.write(json.dumps(before_users))
+    
+    makeInventory(userId)
 
 # Inventory
 def getInventory(userId):
