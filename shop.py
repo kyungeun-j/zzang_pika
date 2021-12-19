@@ -10,7 +10,7 @@ def buyBall(userId, n):
     balls = randBall(n)
     db.updateInventory(userId, 'ball', balls)
 
-    return True # 정상적으로 구입이 되면 return True
+    return balls
 
 def randBall(n):
     randomResult = []

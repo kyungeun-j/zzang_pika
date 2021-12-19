@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if money != False %}
+        <div class="userMoney">{{ money }}</div>
+    {%  else %}
+        <div class="userMoney">0</div>
+    {% endif %}
+    <div>
+        <!-- buy ball -->
+        <div>포켓몬 볼</div>
+        <input type="button" class="minus" value="-" />
+        <div class="ballCount">1</div>
+        <input type="button" class="plus" value="+" />
+        <input type="button" class="buyBall" value="뽑기">
+    </div>
+
+    <script>
+        const userMoney = getClass('userMoney')[0];
+
+        // buy pokeball
+        const countDivEle = getClass('ballCount')[0];
+        const minusEle = getClass('minus')[0];
+        const plusEle = getClass('plus')[0];
+
+        let count = countDivEle.innerText * 1;
+        let feild = ''
+
+        minusEle.addEventListener('click', () => {
+            if (count > 1) {
+                count -= 1;
+                updateCount();   
+            }
+        });
+
+        plusEle.addEventListener('click', () => {
+            if (count < 20) {
+                count += 1;
+                updateCount();
+            }
+        });
+
+        const updateCount = () => {
+            countDivEle.innerText = count + '';
+        }
+
+        getClass('buyBall')[0].addEventListener('click', () => {
+            // document.getElementsByClassName('submitField')[0].value = 'buyBall';
+            feild = 'buyball'
+            // formEle.submit();
+            shopPost()
+        });
+
+        function shopPost() {
+            fetch('/shop', {
+            
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    feild,
+                    ballCount: count
+                })
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data.money)
+                    userMoney.innerText = data.money
+                });
+        }
+
+    </script>
+{% endblock %}

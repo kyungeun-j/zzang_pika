@@ -1,7 +1,11 @@
+import json
+from random import seed
+import re
 from flask import Flask, render_template, redirect, request, session
+from flask.json import jsonify
 import db
 import catch as c
-import shop
+import shop as s
 
 POKET_DATA = './pokemons.json'
 
@@ -68,11 +72,28 @@ def register():
         return redirect('/login')
 
 @app.route('/shop')
-def shop():
+def shopGet():
+    _username = session['username'] if 'id' in session else False
+    _money =  db.getMoney(session['id']) if 'id' in session else False
+    print(_money)
+    print(_username)
+    return render_template('shop.html', username=_username, money=_money)
 
-    # shop.buyBall(userId, numberOfbuyBall)
-    # db.getMoney(userId)로 남은 코인 확인 후 처리
-    
-    return 'asd'
-  
+@app.route('/shop', methods=['POST'])
+def shopPost():
+    _userid = session['id'] if 'id' in session else False
+    _money = db.getMoney(session['id']) if 'id' in session else False
+    _success = False
+
+    if _userid != False:
+        # buyball
+        if request.form['feild'] == 'buyball':
+            if db.getMoney(_userid) >= int(request.form['ballCount']) * 100:
+                _success = True
+                _result = s.buyBall(_userid, int(request.form['ballCount']))
+            else:
+                _success = False
+                _result = False
+    return jsonify({'success': _success, 'result': _result, 'money': _money})
+
 app.run('0.0.0.0')
