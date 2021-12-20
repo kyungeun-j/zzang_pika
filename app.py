@@ -82,21 +82,17 @@ def shopGet():
 @app.route('/shop', methods=['POST'])
 def shopPost():
     _userid = session['id'] if 'id' in session else False
-    _money = db.getMoney(session['id']) if 'id' in session else False
-    _success = False
-
     if _userid != False:
         # buyball
         # shop.buyBall(userId, numberOfbuyBall)
         # db.getMoney(userId)로 남은 코인 확인 후 처리
         if request.form['feild'] == 'buyball':
-            if db.getMoney(_userid) >= int(request.form['ballCount']) * 100:
-                _success = True
-                _result = s.buyBall(_userid, int(request.form['ballCount']))
+            _ballResult = s.buyBall(_userid, int(request.form['ballCount']))
+            if _ballResult != False:
+                result = {'success': True, 'ball': _ballResult, 'money': db.getMoney(_userid)}
             else:
-                _success = False
-                _result = False
-    return jsonify({'success': _success, 'result': _result, 'money': _money})
+                result = {'success': False}
+    return jsonify(result)
 
 # @app.route('/catch')
 # def catch():

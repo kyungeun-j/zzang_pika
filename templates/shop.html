@@ -1,18 +1,69 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<style>
+    .shopResult {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .show {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .resultBody {
+        width: 300px;
+        height: 300px;
+        padding: 40px;
+        background-color: rgb(255, 255, 255);
+        border-radius: 10px;
+        box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+    }
+</style>
     {% if money != False %}
         <div class="userMoney">{{ money }}</div>
     {%  else %}
         <div class="userMoney">0</div>
     {% endif %}
-    <div>
+
+    <article class="shopContent">
         <!-- buy ball -->
-        <div>포켓몬 볼</div>
-        <input type="button" class="minus" value="-" />
-        <div class="ballCount">1</div>
-        <input type="button" class="plus" value="+" />
-        <input type="button" class="buyBall" value="뽑기">
+        <section class="shopItem">
+            <div>몬스터볼</div>
+            <input type="button" class="minus" value="-" />
+            <span class="ballCount">1</span>
+            <input type="button" class="plus" value="+" />
+            <input type="button" class="buyBall" value="100 Coin">
+        </section>
+        <section class="shopItem">
+            <div>가방 업그레이드</div>
+            <input type="button" class="buyBall" value="200 Coin">
+        </section>
+        <section class="shopItem">
+            <div>포켓몬 박스 업그레이드</div>
+            <input type="button" class="buyBall" value="200 Coin">
+        </section>
+        <section class="shopItem">
+            <div>러닝머신 업그레이드</div>
+            <input type="button" class="buyBall" value="?? Coin">
+        </section>
+
+
+    </article>
+
+    <div class="shopResult">
+        <div class="resultBody">
+            <div class="resultItem"></div>
+            <button class="closeBtn">닫기</button>
+        </div>
     </div>
 
     <script>
@@ -45,15 +96,14 @@
         }
 
         getClass('buyBall')[0].addEventListener('click', () => {
-            // document.getElementsByClassName('submitField')[0].value = 'buyBall';
             feild = 'buyball'
-            // formEle.submit();
+
             shopPost()
         });
 
+        // submit
         function shopPost() {
             fetch('/shop', {
-            
                 method: 'POST',
                 cache: 'no-cache',
                 headers: {
@@ -66,10 +116,38 @@
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data.money)
-                    userMoney.innerText = data.money
+                    userMoney.innerText = data.success ? data.money : 0
+
+                    shopResult(data)
                 });
         }
+
+        // popup
+        const shopResultEle = getClass('shopResult')[0];
+        const closeEle = getClass('closeBtn')[0];
+        const resultItemEle = getClass('resultItem')[0];
+
+        function shopResult(data) {
+            shopResultEle.classList.toggle('show');
+
+            let ballRe = ''
+            data.ball.map(b => {
+                if (b == 1) ballRe += '몬스터볼'
+                else if (b == 2) ballRe += '수퍼볼'
+                else if (b == 3) ballRe += '하이퍼볼'
+                else ballRe += '마스터볼'
+            })
+
+            if (data.success) {
+                resultItemEle.innerText = ballRe
+            } else {
+                resultItemEle.innerText = '코인이 부족합니다.'
+            }
+        }
+            
+        closeEle.addEventListener('click', () => {
+            shopResultEle.classList.toggle('show');
+        })
 
     </script>
 {% endblock %}

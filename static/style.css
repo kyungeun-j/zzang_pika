@@ -3,15 +3,28 @@ body {
     height: 100vh;
 }
 
-ul {
-    margin: 0;
-    padding: 0;
+.header > ul {
     list-style: none;
+    margin: 0;
+    padding: 1.5em 3em;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }
 
-li {
+.header > li {
+    margin: 1em;
+}
+
+.shopContent {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.shopItem {
+    flex: 1 1 40%;
+}
+
+.shopItem > .buyBall {
+    display: block;
 }
