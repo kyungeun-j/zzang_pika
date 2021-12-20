@@ -55,6 +55,13 @@ def resetUsers():
     }
     with open(DB_USER_LIST, 'w') as f:
         f.write(json.dumps(usersForm))
+    
+    # 인벤토리 삭제
+    userInventories = os.listdir(DB_INVENTORY)
+    userInventories.remove('table.json')
+
+    for inventory in userInventories:
+        os.remove(DB_INVENTORY + inventory)
 
 def register(username, password):
     userId = getUsers()['userLength'] + 1
@@ -69,6 +76,9 @@ def register(username, password):
     before_users['userList'][username] = user
     with open(DB_USER_LIST, 'w') as f:
         f.write(json.dumps(before_users))
+
+def checkDuplicatedUser(username):
+    return username in getUsers()['userList'].keys()
 
 # Inventory
 def getInventory(userId):
