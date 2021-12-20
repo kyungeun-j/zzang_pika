@@ -29,5 +29,3 @@ def randBall(n):
             # 약 70%
             randomResult.append('1')
     return randomResult
-
-buyBall('1', 20)

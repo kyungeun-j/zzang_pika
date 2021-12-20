@@ -6,6 +6,7 @@ import os
 DB_POKEMON_LIST = './db/pokemons.json'
 DB_USER_LIST = './db/users.json'
 DB_INVENTORY = './db/inventory/'
+DB_MY_POKEMONS = './db/my_pokemon/'
 
 # 포켓몬 도감
 def getPokemonList():
@@ -63,6 +64,13 @@ def resetUsers():
     for inventory in userInventories:
         os.remove(DB_INVENTORY + inventory)
 
+    # 보유 포켓몬 삭제
+    userMyPokemons = os.listdir(DB_MY_POKEMONS)
+    userMyPokemons.remove('table.json')
+
+    for myPokemon in userMyPokemons:
+        os.remove(DB_MY_POKEMONS + myPokemon)
+
 def register(username, password):
     userId = getUsers()['userLength'] + 1
     user = {
@@ -111,3 +119,33 @@ def updateInventory(userId, field, datas):
 
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
         f.write(json.dumps(beforeInventory))
+
+def replaceInventory(userId, inventory):
+    with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
+        f.write(json.dumps(inventory))
+
+# My Pokemon
+def makeMyPokemon(userId):
+    with open(DB_MY_POKEMONS + 'table.json', 'r') as f:
+        myPokemonTable = json.loads(f.read())
+    with open(DB_MY_POKEMONS + str(userId) + '.json', 'w') as f:
+        f.write(json.dumps(myPokemonTable))
+
+def getMyPokemon(userId):
+    if not str(userId) + '.json' in os.listdir(DB_MY_POKEMONS):
+        makeMyPokemon(userId)
+
+    with open(DB_MY_POKEMONS + str(userId) + '.json', 'r') as f:
+        return json.loads(f.read())
+
+def addPokemon(userId, pokemonId):
+    myPokemon = getMyPokemon(str(userId))
+
+    myPokemon['length'] += 1
+    myPokemon['default'][myPokemon['length']] = {
+        'id': str(pokemonId)
+    }
+
+    with open(DB_MY_POKEMONS + str(userId) + '.json', 'w') as f:
+        f.write(json.dumps(myPokemon))
+        
