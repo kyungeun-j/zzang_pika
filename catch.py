@@ -11,12 +11,8 @@ def comePokemon(nPokemon, n):
         percent = round(random.random(), 2)
         comed.append((pokemonId, percent))
     return comed
-
-
-def throwBall(userId, ballType):
-    getInventory(userId) 
     
-def catchPokemon(userId, ballType, pokemonId, numberOfTry):
+def catchPokemon(userId, ballType, pokemonId, percent, _max, numberOfTry):
     _ballType = str(ballType)
 
     inventory = db.getInventory(userId)
@@ -29,7 +25,7 @@ def catchPokemon(userId, ballType, pokemonId, numberOfTry):
     db.replaceInventory(userId, inventory)
 
     if random.random() < CATCH_PERCENT[_ballType]:
-        db.addPokemon(userId, pokemonId)
+        db.addPokemon(userId, pokemonId, percent, _max)
         return True
     else:
         if random.random() < numberOfTry * .1:

@@ -74,5 +74,19 @@ def shop():
     # db.getMoney(userId)로 남은 코인 확인 후 처리
     
     return 'asd'
-  
+
+@app.route('/catch')
+def catch():
+    # c.comePokemon(포켓몬 수, 나타나는 포켓몬 수)
+
+    # c.catchPokemon(userId, ballType, pokemonId, percent, _max, numberOfTry)
+    # percent: c.comePokemon에서 나온 Percent
+    # _max: 포켓몬 최대 효율, g['pokemonList']['pokemonId']['efficiency']
+    # numberOfTry: 시도 횟수 (처음엔 1)
+    # c.catchPokemon return
+    #   False -> 볼 타입이 없음
+    #   숫자 -> 다음 시도 횟수 (올라갈 수록 실패 시 도망갈 확률이 올라감)
+    #   True -> 잡기 성공 (인벤토리랑 myPokemon db에 이미 반영된 상태)
+    #   'run' -> 도망감
+    
 app.run('0.0.0.0')

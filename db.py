@@ -138,12 +138,14 @@ def getMyPokemon(userId):
     with open(DB_MY_POKEMONS + str(userId) + '.json', 'r') as f:
         return json.loads(f.read())
 
-def addPokemon(userId, pokemonId):
+def addPokemon(userId, pokemonId, percent, _max):
     myPokemon = getMyPokemon(str(userId))
 
     myPokemon['length'] += 1
     myPokemon['default'][myPokemon['length']] = {
-        'id': str(pokemonId)
+        'id': str(pokemonId),
+        'percent': percent,
+        'max': _max
     }
 
     with open(DB_MY_POKEMONS + str(userId) + '.json', 'w') as f:
