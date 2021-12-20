@@ -70,6 +70,9 @@ def register(username, password):
     with open(DB_USER_LIST, 'w') as f:
         f.write(json.dumps(before_users))
 
+def checkDuplicatedUser(username):
+    return username in getUsers()['userList'].keys()
+
 # Inventory
 def getInventory(userId):
     if not str(userId) + '.json' in os.listdir(DB_INVENTORY):
