@@ -130,18 +130,17 @@
         function shopResult(data) {
             shopResultEle.classList.toggle('show');
 
-            let ballRe = ''
-            data.ball.map(b => {
-                if (b == 1) ballRe += '몬스터볼'
-                else if (b == 2) ballRe += '수퍼볼'
-                else if (b == 3) ballRe += '하이퍼볼'
-                else ballRe += '마스터볼'
-            })
-
             if (data.success) {
+                let ballRe = ''
+                data.ball.map(b => {
+                    if (b == 1) ballRe += '몬스터볼'
+                    else if (b == 2) ballRe += '수퍼볼'
+                    else if (b == 3) ballRe += '하이퍼볼'
+                    else ballRe += '마스터볼'
+                })
                 resultItemEle.innerText = ballRe
             } else {
-                resultItemEle.innerText = '코인이 부족합니다.'
+                resultItemEle.innerText = data.msg
             }
         }
             
