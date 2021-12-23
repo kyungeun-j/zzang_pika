@@ -71,12 +71,16 @@ def register():
         db.register(request.form['username'], request.form['password'])
         return redirect('/login')
 
+@app.route('/checkID', methods=['POST'])
+def checkID():
+    result = db.checkDuplicatedUser(request.form['username'])
+    print(result)
+    return jsonify({'result': result})
+
 @app.route('/shop')
 def shopGet():
     _username = session['username'] if 'id' in session else False
     _money =  db.getMoney(session['id']) if 'id' in session else False
-    print(_money)
-    print(_username)
     return render_template('shop.html', username=_username, money=_money)
 
 @app.route('/shop', methods=['POST'])

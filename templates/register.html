@@ -2,29 +2,54 @@
 
 {% block content %}
     <form method="post" id="registerForm">
-        <input name="username" id="username" placeholder="ID" onchange="ID()" required>
+        <input name="username" id="username" placeholder="ID" check="false" oninput=IDValue() >
+        <input type="button" onclick="checkID()" value="중복 확인">
         <div class="idInfo"></div>
-        <input type="password" name="password" id="password" value="" placeholder="PASSWORD" onchange="Password()" required>
+        <input type="password" name="password" id="password" value="" placeholder="PASSWORD" onchange="Password()" >
         <div class="pwInfo"></div>
-        <input type="password" id="cPassword" value="" placeholder="CONFIRM PASSWORD" oninput="ConfirmPassword()" required>
+        <input type="password" id="cPassword" value="" placeholder="CONFIRM PASSWORD" oninput="ConfirmPassword()" >
         <div class="cpwInfo"></div>
         <input type="button" value="Register" onclick="checkInfo()" />
     </form>
 
     <script>
-        function ID() {
-            const id = document.querySelector("#username").value;
+        function IDValue() {
+            if (getID("username").getAttribute('check') === "true") getID("username").setAttribute('check', "false");
+        }
+
+        async function checkID() {
+            if (getID("username").getAttribute('check') === "false") getID("username").setAttribute('check', "true");
+
+            const id = getID('username').value;
+            
+            const options = {
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ 
+                    username: id 
+                })
+            };
+            const res = await fetch('/checkID', options);
+            const data = await res.json();
+            const checkIDRe = ID(id, data.result);
+        }
+
+        function ID(id, result) {
+            let idInfo = getClass('idInfo')[0];
+
             if (id.length === 0) {
-                document.querySelector(".idInfo").innerHTML = "아이디를 입력해주세요."
-                return false
-            } else if (id.length > 16) {
-                document.querySelector(".idInfo").innerHTML = "16자 이하로 입력해주세요."
-                return false
+                idInfo.innerHTML = '아이디를 입력해주세요.'
+            } else if(id.length > 16) {
+                idInfo.innerHTML = '16자 이하로 입력해주세요.'
+            } else if(result) {
+                idInfo.innerHTML = '이미 사용 중인 아이디입니다.'
             } else {
-                document.querySelector(".idInfo").innerHTML = "사용 가능한 아이디 입니다."
-                return true
+                idInfo.innerHTML = '사용 가능한 아이디입니다.'
             }
-        }  
+        }
 
         function Password() {
             const pw = document.querySelector("#password").value;
@@ -52,8 +77,10 @@
             }
         }
 
-        function checkInfo() {
-            if (!ID()) {
+        async function checkInfo() {
+            if (getID("username").getAttribute('check') === "false") {
+                alert('아이디 중복 확인을 해주세요.')
+            } else if (getClass('idInfo')[0].innerHTML != '사용 가능한 아이디입니다.') {
                 document.querySelector("#username").focus();
             } else if (!Password()) {
                 document.querySelector("#password").focus();
