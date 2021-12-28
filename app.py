@@ -81,6 +81,15 @@ def checkID():
 def shopGet():
     _username = session['username'] if 'id' in session else False
     _money =  db.getMoney(session['id']) if 'id' in session else False
+    # db.getRemainBackSize(id)로 남은 인벤토리 수를 확인 해야 함
+    # 클라이언트 페이지 요청 시 해당 데이터를 미리 넘긴 후 클라이언트에서도 예외 처리 필요 
+    # db.getRemainBackSize(id), db.getMoney(id) 모두 같은 json을 참조하기 때문에
+    # inventory = db.getInventory(id)
+    # money = inventory['0']['amount']
+    # remainBackSize = inventory['999']['remain'] 
+    # 이렇게 쓰는게 좋을듯 
+    #   !!!!!!!!!!! update !!!!!!!!!!!
+    #
     return render_template('shop.html', username=_username, money=_money)
 
 @app.route('/shop', methods=['POST'])
@@ -90,6 +99,7 @@ def shopPost():
         # buyball
         # shop.buyBall(userId, numberOfbuyBall)
         # db.getMoney(userId)로 남은 코인 확인 후 처리
+        # expandBackSize() <- 가방 확장 기능 
         if request.form['feild'] == 'buyball':
             _ballResult = s.buyBall(_userid, int(request.form['ballCount']))
             if _ballResult != False:

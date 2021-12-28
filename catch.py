@@ -3,6 +3,9 @@ import db
 
 CATCH_PERCENT = {'1': .25, '2': .5, '3': .75, '4': 2}
 
+def checkInventorySize(userId):
+    pass
+
 def comePokemon(nPokemon, n):
     # nPokemon: 포켓몬 수
     comed = []
@@ -18,9 +21,11 @@ def catchPokemon(userId, ballType, pokemonId, percent, _max, numberOfTry):
     inventory = db.getInventory(userId)
 
     if inventory[_ballType]['amount'] == 0:
+        # 해당 볼이 없음
         return False
     else:
         inventory[_ballType]['amount'] -= 1
+        inventory['999']['remain'] += 1     # 남은 가방 공간 + 1
     
     db.replaceInventory(userId, inventory)
 

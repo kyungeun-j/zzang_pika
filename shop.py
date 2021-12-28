@@ -1,15 +1,16 @@
 import db
 import random
 
-def buyBall(userId, n):
-    money = db.getMoney(userId)
-    price = n * 100
-    if money < price:
-        return False    # 소지 코인보다 구매 금액이 높으면 return False
-    
-    balls = randBall(n)
-    db.updateInventory(userId, 'ball', balls)
+# shop 가격은 db.py 상단에 기재
 
+# 몬스터볼 구입
+def buyBall(userId, n):
+    balls = randBall(n)
+    result = db.updateInventory(userId, 'ball', balls)
+
+    if not result['result']:
+        return result
+        
     return balls
 
 def randBall(n):
@@ -29,3 +30,16 @@ def randBall(n):
             # 약 70%
             randomResult.append('1')
     return randomResult
+
+# 러닝머신 구입
+def buyRunningMachines(userId, n):
+    n = int(n)
+    db.updateInventory(userId, 'RM', n)
+
+# 포켓몬 가방 확장
+def expandPokemonLength(userId, n):
+    pass
+
+# 인벤토리 가방 확장
+def expandBackSize(userId):
+    pass
