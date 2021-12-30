@@ -8,6 +8,11 @@ DB_USER_LIST = './db/users.json'
 DB_INVENTORY = './db/inventory/'
 DB_MY_POKEMONS = './db/my_pokemon/'
 
+# 상점 가격
+SHOP_BALL_PRICE = 100
+SHOP_RM_PRICE = 1000
+SHOP_BACK_SIZE = 50
+
 # 포켓몬 도감
 def getPokemonList():
     with open(DB_POKEMON_LIST, 'r') as f:
@@ -110,21 +115,47 @@ def getMoney(userId):
 def updateInventory(userId, field, datas):
     beforeInventory = getInventory(userId)
     if field == 'ball':
+        if len(datas) > beforeInventory['999']['remain']:
+            return {'result': False, 'msg': '가방 공간 부족'}
+
         for ball in datas:
             beforeInventory[ball]['amount'] += 1
+        beforeInventory['999']['remain'] -= len(datas)
 
-    beforeInventory['0']['amount'] -= len(datas) * 100
+        if len(datas) * SHOP_BALL_PRICE > beforeInventory['0']['amount']:
+            return {'result': False, 'msg': '소지 금액 부족'}
+        beforeInventory['0']['amount'] -= len(datas) * SHOP_BALL_PRICE
 
-    # coin이 0 이하로 떨어지지 않음
-    # updateInventory()를 사용하는 곳에서 예외처리 해주어야 함
-    beforeInventory['0']['amount'] = 0 if beforeInventory['0']['amount'] < 0 else beforeInventory['0']['amount']
+    elif field == 'RM':
+        # datas: 구입하는 갯수
+        if datas > beforeInventory['999']['remain']:
+            return {'result': False, 'msg': '가방 공간 부족'}
+        beforeInventory['5']['amount'] += datas
+        beforeInventory['5']['remain'] += datas
+
+        beforeInventory['999']['remain'] -= datas
+
+        if datas * SHOP_RM_PRICE > beforeInventory['0']['amount']:
+            return {'result': False, 'msg': '소지 금액 부족'}
+        beforeInventory['0']['amount'] -= datas * SHOP_RM_PRICE
+    
+    elif field == 'back':
+        # datas를 사용하지 않음, 에러 처리 없음
+        beforeInventory['999']['remain'] += SHOP_BACK_SIZE
+        beforeInventory['999']['amount'] += SHOP_BACK_SIZE
 
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
         f.write(json.dumps(beforeInventory))
 
+    return {'result': True}
+
 def replaceInventory(userId, inventory):
+    # catch에서 사용
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
         f.write(json.dumps(inventory))
+
+def getRemainBackSize(userId):
+    return getInventory(userId)['999']['remain']
 
 # My Pokemon
 def makeMyPokemon(userId):
