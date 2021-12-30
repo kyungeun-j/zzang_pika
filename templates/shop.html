@@ -28,11 +28,8 @@
         box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
     }
 </style>
-    {% if money != False %}
-        <div class="userMoney">{{ money }}</div>
-    {%  else %}
-        <div class="userMoney">0</div>
-    {% endif %}
+    <div class="userMoney">{{ money }}</div>
+    <div class="userBack">{{ remainBackSize }}</div>
 
     <article class="shopContent">
         <!-- buy ball -->
@@ -45,7 +42,7 @@
         </section>
         <section class="shopItem">
             <div>가방 업그레이드</div>
-            <input type="button" class="buyBall" value="200 Coin">
+            <input type="button" class="buyBall" value="50 Coin">
         </section>
         <section class="shopItem">
             <div>포켓몬 박스 업그레이드</div>
@@ -53,7 +50,7 @@
         </section>
         <section class="shopItem">
             <div>러닝머신 업그레이드</div>
-            <input type="button" class="buyBall" value="?? Coin">
+            <input type="button" class="buyBall" value="1000 Coin">
         </section>
 
 
@@ -102,7 +99,7 @@
         });
 
         // submit
-        function shopPost() {
+        async function shopPost() {
             fetch('/shop', {
                 method: 'POST',
                 cache: 'no-cache',
@@ -116,7 +113,7 @@
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    userMoney.innerText = data.success ? data.money : 0
+                    userMoney.innerHTML = data.ball.result == undefined ? data.money : 0
 
                     shopResult(data)
                 });
@@ -128,11 +125,15 @@
         const resultItemEle = getClass('resultItem')[0];
 
         function shopResult(data) {
+            console.log(typeof(data))
+            console.log(data)
+            console.log(data.result)
             shopResultEle.classList.toggle('show');
 
-            if (data.success) {
+            if (data.ball.result == undefined) {
                 let ballRe = ''
                 data.ball.map(b => {
+                    console.log(b)
                     if (b == 1) ballRe += '몬스터볼'
                     else if (b == 2) ballRe += '수퍼볼'
                     else if (b == 3) ballRe += '하이퍼볼'
@@ -140,7 +141,7 @@
                 })
                 resultItemEle.innerText = ballRe
             } else {
-                resultItemEle.innerText = data.msg
+                resultItemEle.innerText = data.ball.msg
             }
         }
             
