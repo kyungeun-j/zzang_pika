@@ -34,15 +34,6 @@ def detail(id):
     _username = session['username'] if 'id' in session else False
     return render_template('detail.html', data=g['pokemonList'][id], username=_username)
 
-@app.route('/catch')
-def catch():
-    if 'id' in session:
-        comed = c.comePokemon(g['nPokemon'], 3) # [(포켓몬 id, percent), ...]
-
-        return str(comed)
-    else:
-        return redirect('/login')
-
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -97,6 +88,7 @@ def shopPost():
     _userid = session['id'] if 'id' in session else False
     if _userid != False:
         # buyball
+        
         # shop.buyBall(userId, numberOfbuyBall)
         # db.getMoney(userId)로 남은 코인 확인 후 처리
         # expandBackSize() <- 가방 확장 기능 
@@ -111,19 +103,35 @@ def shopPost():
 
     return jsonify(result)
 
-# @app.route('/catch')
-# def catch():
-#     return render_template('catch.html')
-#     c.comePokemon(포켓몬 수, 나타나는 포켓몬 수)
 
-#     c.catchPokemon(userId, ballType, pokemonId, percent, _max, numberOfTry)
-#     percent: c.comePokemon에서 나온 Percent
-#     _max: 포켓몬 최대 효율, g['pokemonList']['pokemonId']['efficiency']
-#     numberOfTry: 시도 횟수 (처음엔 1)
-#     c.catchPokemon return
-#       False -> 볼 타입이 없음
-#       숫자 -> 다음 시도 횟수 (올라갈 수록 실패 시 도망갈 확률이 올라감)
-#       True -> 잡기 성공 (인벤토리랑 myPokemon db에 이미 반영된 상태)
-#       'run' -> 도망감
+@app.route('/catch', methods=['GET', 'POST'])
+def catch():
+    _username = session['username'] if 'id' in session else False
+
+    if request.method == 'GET':
+        if 'id' in session:
+            _userball = []
+            userinventory = getData('./db/inventory/'+str(session['id'])+'.json')
+            for _id in range(1, 5):
+                _userball.append(userinventory[str(_id)])
+
+            return render_template('catch.html', username=_username, userball=_userball)
+        else:
+            return redirect('/login')
+    elif request.method == 'POST':
+        if request.form['post_id'] == 'comePokemon':
+            return jsonify((c.comePokemon(151, 3)))
+        elif request.form['post_id'] == 'catchPokemon':
+            _max = g['pokemonList'][request.form['pokemonId']]['efficiency']
+            result = {'result': c.catchPokemon(session['id'], request.form['ballType'], request.form['pokemonId'], request.form['percent'], _max, int(request.form['numberOfTry']))}
+            print(result)
+            print(request.form['numberOfTry'])
+            return jsonify(result)
+
+# jsonfile read
+def getData(fileName):
+    with open(fileName, 'r') as f:
+        datas = f.read()
+        return json.loads(datas)
     
 app.run('0.0.0.0')
