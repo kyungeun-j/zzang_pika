@@ -123,7 +123,6 @@
             });
             const post = await shopPost(option);
             const data = await post.json();
-            console.log(data)
 
             if (data.result !== false) {
                 userMoney.innerHTML -= 100 * ballCount;
@@ -161,7 +160,6 @@
             });
             const post = await shopPost(option);
             const data = await post.json();
-            console.log(data)
             
             let result = ''
             if (data.result === true) {

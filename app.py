@@ -18,7 +18,6 @@ g['pokemonList'] = db.getPokemonList()   # 포켓몬 도감
 g['nPokemon'] = len(g['pokemonList'].keys())
 
 # Routings
-
 @app.route('/')
 def main():
     _username = session['username'] if 'id' in session else False
@@ -65,7 +64,6 @@ def register():
 @app.route('/checkID', methods=['POST'])
 def checkID():
     result = db.checkDuplicatedUser(request.form['username'])
-    print(result)
     return jsonify({'result': result})
 
 @app.route('/shop')
@@ -77,7 +75,7 @@ def shopGet():
         remainBagSize = inventory['999']['remain']
         return render_template('shop.html', username=_username, money=money, remainBagSize=remainBagSize)
     else:
-            return redirect('/login')
+        return redirect('/login')
 
 @app.route('/shop', methods=['POST'])
 def shopPost():
@@ -85,9 +83,8 @@ def shopPost():
     # buyball
     if request.form['feild'] == 'buyball':
         _ballResult = s.buyBall(_userid, int(request.form['ballCount']))
-        print(_ballResult)
         return jsonify(_ballResult)
-    # expandBackSize
+    # expandBagSize
     elif request.form['feild'] == 'expandBagSize':
         _bagResult = s.expandBackSize(_userid)
         return _bagResult;
@@ -96,11 +93,9 @@ def shopPost():
         _runningResult = s.buyRunningMachines(_userid, int(request.form['runCount']))
         return _runningResult
 
-
 @app.route('/catch', methods=['GET', 'POST'])
 def catch():
     _username = session['username'] if 'id' in session else False
-
     if request.method == 'GET':
         if 'id' in session:
             _userball = []
@@ -112,8 +107,10 @@ def catch():
         else:
             return redirect('/login')
     elif request.method == 'POST':
+        # comePokemon
         if request.form['post_id'] == 'comePokemon':
             return jsonify((c.comePokemon(151, 3)))
+        # catchPokemon
         elif request.form['post_id'] == 'catchPokemon':
             _max = g['pokemonList'][request.form['pokemonId']]['efficiency']
             result = {'result': c.catchPokemon(session['id'], request.form['ballType'], request.form['pokemonId'], request.form['percent'], _max, int(request.form['numberOfTry']))}
