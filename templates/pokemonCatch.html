@@ -58,7 +58,7 @@
             catchEle.innerHTML = ''
 
             // get pokemonList
-            const res = await fetch('/catch', {
+            const res = await fetch('/pokemonCatch', {
                     method: 'POST',
                     cache: 'no-cache',
                     headers: {
@@ -96,7 +96,7 @@
         let numberOfTry = 1;
         async function catchPokemon(e){
             const ballType = getClass('select')[0].getAttribute('ball_id')
-            const catchRes = await fetch('/catch', {
+            const catchRes = await fetch('/pokemonCatch', {
                 method: 'POST',
                 cache: 'no-cache',
                 headers: {

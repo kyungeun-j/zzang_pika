@@ -4,4 +4,5 @@ pyvenv.cfg
 __pycache__/
 /bin
 /lib
-/db/inventory
+db/
+db/users.json

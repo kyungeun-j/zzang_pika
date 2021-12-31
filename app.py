@@ -23,15 +23,15 @@ def main():
     _username = session['username'] if 'id' in session else False
     return render_template('index.html', username=_username)
 
-@app.route('/list')
-def list():
+@app.route('/pokemonList')
+def pokemonList():
     _username = session['username'] if 'id' in session else False
-    return render_template('list.html', datas=g['pokemonList'], username=_username)
+    return render_template('pokemonList.html', datas=g['pokemonList'], username=_username)
 
-@app.route('/detail/<id>')
-def detail(id):
+@app.route('/pokemonDetail/<id>')
+def pokemonDetail(id):
     _username = session['username'] if 'id' in session else False
-    return render_template('detail.html', data=g['pokemonList'][id], username=_username)
+    return render_template('pokemonDetail.html', data=g['pokemonList'][id], username=_username)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -66,13 +66,13 @@ def checkID():
     result = db.checkDuplicatedUser(request.form['username'])
     return jsonify({'result': result})
 
-@app.route('/pokemon')
-def pokemon():
+@app.route('/myPokemon')
+def myPokemon():
     _username = session['username'] if 'id' in session else False
     if 'id' in session:
         _mypokemon = db.getMyPokemon(session['id'])
         print(_mypokemon['default'])
-        return render_template('pokemon.html', username=_username, pokemons=g['pokemonList'],resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
+        return render_template('myPokemon.html', username=_username, pokemons=g['pokemonList'],resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
     else:
         return redirect('/login')
 
@@ -103,7 +103,7 @@ def shopPost():
         _runningResult = s.buyRunningMachines(_userid, int(request.form['runCount']))
         return _runningResult
 
-@app.route('/catch', methods=['GET', 'POST'])
+@app.route('/pokemonCatch', methods=['GET', 'POST'])
 def catch():
     _username = session['username'] if 'id' in session else False
     if request.method == 'GET':
@@ -113,7 +113,7 @@ def catch():
             for _id in range(1, 5):
                 _userball.append(userinventory[str(_id)])
 
-            return render_template('catch.html', username=_username, userball=_userball)
+            return render_template('pokemonCatch.html', username=_username, userball=_userball)
         else:
             return redirect('/login')
     elif request.method == 'POST':
