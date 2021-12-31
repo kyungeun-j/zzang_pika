@@ -109,7 +109,7 @@ def catch():
     if request.method == 'GET':
         if 'id' in session:
             _userball = []
-            userinventory = getData('./db/inventory/'+str(session['id'])+'.json')
+            userinventory = db.getInventory(session['id'])
             for _id in range(1, 5):
                 _userball.append(userinventory[str(_id)])
 
@@ -125,11 +125,5 @@ def catch():
             _max = g['pokemonList'][request.form['pokemonId']]['efficiency']
             result = {'result': c.catchPokemon(session['id'], request.form['ballType'], request.form['pokemonId'], request.form['percent'], _max, int(request.form['numberOfTry']))}
             return jsonify(result)
-
-# jsonfile read
-def getData(fileName):
-    with open(fileName, 'r') as f:
-        datas = f.read()
-        return json.loads(datas)
     
 app.run('0.0.0.0')
