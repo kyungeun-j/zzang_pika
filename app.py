@@ -66,6 +66,16 @@ def checkID():
     result = db.checkDuplicatedUser(request.form['username'])
     return jsonify({'result': result})
 
+@app.route('/pokemon')
+def pokemon():
+    _username = session['username'] if 'id' in session else False
+    if 'id' in session:
+        _mypokemon = db.getMyPokemon(session['id'])
+        print(_mypokemon['default'])
+        return render_template('pokemon.html', username=_username, pokemons=g['pokemonList'],resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
+    else:
+        return redirect('/login')
+
 @app.route('/shop')
 def shopGet():
     _username = session['username'] if 'id' in session else False

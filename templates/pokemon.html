@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+    {% for _id in resting %}
+        {{ _id }}
+    {% endfor %}
+    </ul>
+    <ul>
+        {% for _id in working %}
+        {{ _id }}
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for _id in default %}
+        <li class={{ _id }}>
+            <img src="../static/images/{{ default[_id]['id'] }}.png" />
+            <p>{{ pokemons[default[_id]['id']]['name'] }}</p>
+            <p>{{ (default[_id]['percent']|float * default[_id]['max'])|round|int }} ({{ (default[_id]['percent']|float * 100)|round|int }}%)</p>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
