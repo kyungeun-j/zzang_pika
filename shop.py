@@ -34,7 +34,7 @@ def randBall(n):
 # 러닝머신 구입
 def buyRunningMachines(userId, n):
     n = int(n)
-    db.updateInventory(userId, 'RM', n)
+    return db.updateInventory(userId, 'RM', n)
 
 # 포켓몬 가방 확장
 def expandPokemonLength(userId, n):

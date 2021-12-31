@@ -29,20 +29,20 @@
     }
 </style>
     <div class="userMoney">{{ money }}</div>
-    <div class="userBack">{{ remainBackSize }}</div>
+    <div class="userBag">{{ remainBagSize }}</div>
 
     <article class="shopContent">
         <!-- buy ball -->
         <section class="shopItem">
             <div>몬스터볼</div>
-            <input type="button" class="minus" value="-" />
+            <input type="button" class="ballMinus" value="-" disabled />
             <span class="ballCount">1</span>
-            <input type="button" class="plus" value="+" />
+            <input type="button" class="ballPlus" value="+" />
             <input type="button" class="buyBall" value="100 Coin">
         </section>
         <section class="shopItem">
             <div>가방 업그레이드</div>
-            <input type="button" class="buyBall" value="50 Coin">
+            <input type="button" class="expandBagSize" value="50 Coin">
         </section>
         <section class="shopItem">
             <div>포켓몬 박스 업그레이드</div>
@@ -50,7 +50,10 @@
         </section>
         <section class="shopItem">
             <div>러닝머신 업그레이드</div>
-            <input type="button" class="buyBall" value="1000 Coin">
+            <input type="button" class="runMinus" value="-" disabled />
+            <span class="runCount">1</span>
+            <input type="button" class="runPlus" value="+" />
+            <input type="button" class="buyRunningMachines" value="1000 Coin">
         </section>
 
 
@@ -65,58 +68,122 @@
 
     <script>
         const userMoney = getClass('userMoney')[0];
+        const userBag = getClass('userBag')[0];
 
-        // buy pokeball
-        const countDivEle = getClass('ballCount')[0];
-        const minusEle = getClass('minus')[0];
-        const plusEle = getClass('plus')[0];
+        // buyBall count
+        const ballCountEle = getClass('ballCount')[0];
+        const ballMinusEle = getClass('ballMinus')[0];
+        const ballPlusEle = getClass('ballPlus')[0];
 
-        let count = countDivEle.innerText * 1;
-        let feild = ''
+        let ballCount = ballCountEle.innerText * 1;
+        ballMinusEle.addEventListener('click', () => {
+            ballCount = minus(ballCount, ballCountEle)
+            if (ballCount === 1) ballMinusEle.disabled = true;
+        })
+        ballPlusEle.addEventListener('click', () => {
+            ballMinusEle.disabled = false;
+            ballCount = plus(ballCount, ballCountEle)
+            if (ballCount > 19) ballPlusEle.disabled = true;
+        })
 
-        minusEle.addEventListener('click', () => {
+        // buyRunningMachines count
+        const runCountEle = getClass('runCount')[0];
+        const runMinusEle = getClass('runMinus')[0];
+        const runPlusEle = getClass('runPlus')[0];
+
+        let runCount = runCountEle.innerText * 1;
+        runMinusEle.addEventListener('click', () => {
+            runCount = minus(runCount, runCountEle)
+            if (runCount === 1) runMinusEle.disabled = true;
+        })
+        runPlusEle.addEventListener('click', () => {
+            runMinusEle.disabled = false;
+            runCount = plus(runCount, runCountEle)
+        })
+
+        // +, - 버튼
+        function minus(count, ele) {
             if (count > 1) {
                 count -= 1;
-                updateCount();   
+                ele.innerText = count + '';
+                return count;
             }
-        });
-
-        plusEle.addEventListener('click', () => {
-            if (count < 20) {
-                count += 1;
-                updateCount();
-            }
-        });
-
-        const updateCount = () => {
-            countDivEle.innerText = count + '';
+        }
+        function plus(count, ele) {
+            count += 1;
+            ele.innerText = count + '';
+            return count;
         }
 
-        getClass('buyBall')[0].addEventListener('click', () => {
-            feild = 'buyball'
+        // buy ball
+        getClass('buyBall')[0].addEventListener('click', async () => {
+            const option = new URLSearchParams({
+                feild: 'buyball',
+                ballCount: ballCount
+            });
+            const post = await shopPost(option);
+            const data = await post.json();
+            console.log(data)
 
-            shopPost()
+            if (data.result !== false) {
+                userMoney.innerHTML -= 100 * ballCount;
+                userBag.innerHTML -= 1 * ballCount;
+            }
+
+            let result = ''
+            if (!data.msg) {
+                data.map(b => {
+                    if (b == 1) result += '몬스터볼'
+                    else if (b == 2) result += '수퍼볼'
+                    else if (b == 3) result += '하이퍼볼'
+                    else result += '마스터볼'
+                })
+            } else {
+                result = data.msg
+            }
+            shopResult(result)
         });
 
-        // submit
-        async function shopPost() {
-            fetch('/shop', {
+        // expandBagSize
+        getClass('expandBagSize')[0].addEventListener('click', async () => {
+            const option = new URLSearchParams({
+                feild: 'expandBagSize'
+            });
+            // const post = await shopPost(option);
+            // const data = await post.json();
+        });
+
+        // buyRunningMachines
+        getClass('buyRunningMachines')[0].addEventListener('click', async () => {
+            const option = new URLSearchParams({
+                feild: 'buyRunningMachines',
+                runCount: runCount
+            });
+            const post = await shopPost(option);
+            const data = await post.json();
+            console.log(data)
+            
+            let result = ''
+            if (data.result === true) {
+                userMoney.innerHTML -= 1000 * runCount;
+                userBag.innerHTML -= 1 * runCount;
+                result = runCount + '개 구입'
+            } else {
+                result = data.msg
+            }
+            shopResult(result)
+        });
+
+        // post
+        function shopPost(option) {
+            return fetch('/shop', {
                 method: 'POST',
                 cache: 'no-cache',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: new URLSearchParams({
-                    feild,
-                    ballCount: count
-                })
+                body: option
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    userMoney.innerHTML = data.ball.result == undefined ? data.money : 0
-
-                    shopResult(data)
-                });
         }
 
         // popup
@@ -124,25 +191,9 @@
         const closeEle = getClass('closeBtn')[0];
         const resultItemEle = getClass('resultItem')[0];
 
-        function shopResult(data) {
-            console.log(typeof(data))
-            console.log(data)
-            console.log(data.result)
+        function shopResult(result) {
             shopResultEle.classList.toggle('show');
-
-            if (data.ball.result == undefined) {
-                let ballRe = ''
-                data.ball.map(b => {
-                    console.log(b)
-                    if (b == 1) ballRe += '몬스터볼'
-                    else if (b == 2) ballRe += '수퍼볼'
-                    else if (b == 3) ballRe += '하이퍼볼'
-                    else ballRe += '마스터볼'
-                })
-                resultItemEle.innerText = ballRe
-            } else {
-                resultItemEle.innerText = data.ball.msg
-            }
+            resultItemEle.innerText = result
         }
             
         closeEle.addEventListener('click', () => {

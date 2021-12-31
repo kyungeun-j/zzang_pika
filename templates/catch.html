@@ -23,6 +23,16 @@
             height: 96px;
         }
 
+        .ball.select {
+            background: cyan;
+        }
+        .ball {
+            background: #fff;
+            cursor: pointer;
+            border: 1px solid #eee;
+            padding: 3px;
+        }
+
     </style>
     <div id="catchDiv"></div>
     <button class="catchBtn">잡기</button>
@@ -111,7 +121,7 @@
 
             // 포켓볼이 부족하지 않은 경우 -1
             if (catchData.result != false) getClass('select')[0].children[1].innerHTML -= 1;
-            getPokemon()
+            // getPokemon()
         }
         
         // ball select

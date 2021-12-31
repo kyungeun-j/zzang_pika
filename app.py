@@ -72,26 +72,29 @@ def checkID():
 def shopGet():
     _username = session['username'] if 'id' in session else False
     if 'id' in session:
-    # _money =  db.getMoney(session['id']) if 'id' in session else False
-    # db.getRemainBackSize(id)로 남은 인벤토리 수를 확인 해야 함
-    # 클라이언트 페이지 요청 시 해당 데이터를 미리 넘긴 후 클라이언트에서도 예외 처리 필요 
-    # db.getRemainBackSize(id), db.getMoney(id) 모두 같은 json을 참조하기 때문에
         inventory = db.getInventory(session['id'])
         money = inventory['0']['amount']
-        remainBackSize = inventory['999']['remain']
-        return render_template('shop.html', username=_username, money=money, remainBackSize=remainBackSize)
+        remainBagSize = inventory['999']['remain']
+        return render_template('shop.html', username=_username, money=money, remainBagSize=remainBagSize)
     else:
             return redirect('/login')
 
 @app.route('/shop', methods=['POST'])
 def shopPost():
     _userid = session['id'] if 'id' in session else False
-        # buyball
-        
-        # expandBackSize() <- 가방 확장 기능 
+    # buyball
     if request.form['feild'] == 'buyball':
         _ballResult = s.buyBall(_userid, int(request.form['ballCount']))
-    return jsonify({'ball': _ballResult, 'money': db.getMoney(_userid)})
+        print(_ballResult)
+        return jsonify(_ballResult)
+    # expandBackSize
+    elif request.form['feild'] == 'expandBagSize':
+        _bagResult = s.expandBackSize(_userid)
+        return _bagResult;
+    # buyRunningMachines
+    elif request.form['feild'] == 'buyRunningMachines':
+        _runningResult = s.buyRunningMachines(_userid, int(request.form['runCount']))
+        return _runningResult
 
 
 @app.route('/catch', methods=['GET', 'POST'])
@@ -114,8 +117,6 @@ def catch():
         elif request.form['post_id'] == 'catchPokemon':
             _max = g['pokemonList'][request.form['pokemonId']]['efficiency']
             result = {'result': c.catchPokemon(session['id'], request.form['ballType'], request.form['pokemonId'], request.form['percent'], _max, int(request.form['numberOfTry']))}
-            print(result)
-            print(request.form['numberOfTry'])
             return jsonify(result)
 
 # jsonfile read
