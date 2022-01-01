@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .container {
+            flex: 1 1 40%;
+        }
+
+        .notDefault {
+            min-height: 400px;
+            height: auto;
+        }
+
+        .pokeContainer {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .pokeContainer > div {
+            height: 100px;
+        }
+
+        .rmImg {
+            width: 100px;
+        }
+
+        .using {
+            background: url('../static/icon/RM.png') no-repeat center / 100px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <div id="pokemons" class="hidden">{{ pokemons }}</div>
+    <div id="workingPokemons" class="hidden">{{ working }}</div>
+    <div id="restingPokemons" class="hidden">{{ resting }}</div>
+    <div id="defaultPokemons" class="hidden">{{ default }}</div>
+    <section class="working container">
+        <h1>Working</h1>
+        <div class="pokeContainer notDefault">
+        </div>
+    </section>
+    <section class="resting container">
+        <h1>Resting</h1>
+        <div class="pokeContainer notDefault">
+            {% for _id in resting %}
+            <div class="{{ _id }} dragPokemon" pokemon_id="{{ resting[_id]['id'] }}" percent="{{ resting[_id]['percent'] }}" max="{{ resting[_id]['max'] }}" draggable="true">
+                <img src="../static/images/{{ resting[_id]['id'] }}.png" />
+                <p>{{ pokemons[resting[_id]['id']]['name'] }}</p>
+                <p>{{ (resting[_id]['percent']|float * resting[_id]['max'])|round|int }} ({{ (resting[_id]['percent']|float * 100)|round|int }}%)</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="default container">
+        <h1>Default</h1>
+        <div class="pokeContainer">
+            {% for _id in default %}
+            <div class="{{ _id }} dragPokemon" pokemon_id="{{ default[_id]['id']}}" percent="{{ default[_id]['percent'] }}" max="{{ default[_id]['max'] }}" draggable="true">
+                <img src="../static/images/{{ default[_id]['id'] }}.png" />
+                <p>{{ pokemons[default[_id]['id']]['name'] }}</p>
+                <p>{{ (default[_id]['percent']|float * default[_id]['max'])|round|int }} ({{ (default[_id]['percent']|float * 100)|round|int }}%)</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <script>
+        let dragEles = [...getClass('dragPokemon')];
+        let containerEles = getClass('container');
+
+        let workingJSON = JSON.parse(getID('workingPokemons').innerText.replaceAll("'", '"'));
+        let restingJSON = JSON.parse(getID('restingPokemons').innerText.replaceAll("'", '"'));
+        let defaultJSON = JSON.parse(getID('defaultPokemons').innerText.replaceAll("'", '"'));
+        const pokemons = JSON.parse(getID('pokemons').innerText.replaceAll("'", '"').replaceAll('None', 'null'));
+
+        let jinjaWorkingLeng = "{{ working|length }}";
+        let jinjaMyRMAmount = "{{ myRM['amount']+1 }}";
+        let jinjaMyRMRemain = "{{ myRM['remain'] }}";
+        let RMEle = getClass('working')[0].children[1];
+
+        function RMCreate(jinjaWorkingLeng, workingJSON) {
+            for (let i=1; i<jinjaMyRMAmount; i++) {
+                const rmDivEle = document.createElement('div');
+                const rmImgEle = document.createElement('img');
+                const rmPEle = document.createElement('p');
+                const rmPEle2 = document.createElement('p');
+
+                if (i > jinjaWorkingLeng) {
+                    rmImgEle.setAttribute('class', 'rmImg');
+                    rmImgEle.src = '../static/icon/RM.png';
+                    rmDivEle.append(rmImgEle);
+                    RMEle.append(rmDivEle);
+                } else {
+                    rmDivEle.classList.add(i, "dragPokemon", "using");
+                    rmDivEle.setAttribute("pokemon_id", workingJSON[i]['id']);
+                    rmDivEle.setAttribute('percent', workingJSON[i]['percent']);
+                    rmDivEle.setAttribute('max', workingJSON[i]['max']);
+                    rmDivEle.setAttribute('draggable', "true");
+                    rmImgEle.src="../static/images/"+workingJSON[i]['id']+".png";
+                    rmDivEle.appendChild(rmImgEle);
+                    rmPEle.innerText = pokemons[workingJSON[i]['id']]['name'];
+                    rmDivEle.appendChild(rmPEle);
+                    rmPEle2.innerText = parseInt(Math.round(parseFloat(workingJSON[i]['percent']) * workingJSON[i]['max'])) + " (" + parseInt(Math.round(parseFloat(workingJSON[i]['percent']) * 100))+"%)";
+                    rmDivEle.appendChild(rmPEle2);
+                    RMEle.appendChild(rmDivEle);
+                }
+            }
+
+            dragEles = [...getClass('dragPokemon')];
+            dragSE(dragEles)
+        }
+
+        RMCreate(jinjaWorkingLeng, workingJSON);
+        
+        function dragSE(dragEles) {
+            dragEles.forEach(ele => {
+                ele.addEventListener('dragstart', (e) => {
+                    ele.classList.add("dragging");
+                });
+
+                ele.addEventListener("dragend", () => {
+                    ele.classList.remove("dragging");
+                });
+            });
+        }
+
+        [...containerEles].forEach(container => {
+            container.addEventListener("dragover", (e) => {
+                e.preventDefault();
+            });
+
+            container.addEventListener("drop", async (e) => {
+                const draggable = getClass("dragging")[0];
+                const childLen = container.children[1].childElementCount-1;
+
+                container.children[1].appendChild(draggable);
+                
+                const option = new URLSearchParams({
+                    feild: container.classList[0]
+                });
+                const post = await runPost(container.classList[0])
+                const data = await post.json();
+
+                if (container.classList[0] === 'working') {
+                    if (data > 0) {
+                        draggable.classList.add("using");
+                        
+                        workingPokemon = {
+                            id: draggable.getAttribute('pokemon_id'),
+                            max: draggable.getAttribute('max'),
+                            percent: draggable.getAttribute('percent')
+                        }
+                        
+                        jinjaWorkingLeng = jinjaWorkingLeng * 1 + 1 + "";
+                        workingJSON = {
+                            ...workingJSON,
+                            [jinjaWorkingLeng]: workingPokemon
+                        }
+
+                        RMEle.innerHTML = ''
+
+                        RMCreate(jinjaWorkingLeng, workingJSON);
+                    } else {
+                        alert('러닝머신이 부족합니다.');
+                    }
+                } else {
+                    if (draggable.classList.contains('using')) {
+                        draggable.classList.remove("using");
+
+                        jinjaWorkingLeng = jinjaWorkingLeng * 1 - 1 + "";
+
+                        let deleteKey = -1
+                        Object.keys(workingJSON).forEach(work => {
+                            // console.log('d',workingJSON[work])
+                            if (workingJSON[work]['id'] === draggable.getAttribute('pokemon_id')) {
+                                deleteKey = work
+                                delete workingJSON[work]
+                            }
+                        })
+
+                        Object.keys(workingJSON).forEach(work => {
+                            if (work > deleteKey) {
+                                workingJSON[deleteKey] = workingJSON[work]
+                                delete workingJSON[work]
+                                deleteKey = work
+                            }
+                        })
+
+                        RMEle.innerHTML = ''
+
+                        RMCreate(jinjaWorkingLeng, workingJSON);
+                    }
+
+                    // if (container.classList[0] === 'resting') {
+                    //     console.log(restingJSON)
+                    // } else if (container.classList[0] === 'default') {
+                    //     console.log(defaultJSON)
+                        // defaultPokemon = {
+                        //     id: draggable.getAttribute('pokemon_id'),
+                        //     max: draggable.getAttribute('max'),
+                        //     percent: draggable.getAttribute('percent')
+                        // }
+                        
+                        // jinjaWorkingLeng = jinjaWorkingLeng * 1 + 1 + "";
+                        // workingJSON = {
+                        //     ...workingJSON,
+                        //     [jinjaWorkingLeng]: workingPokemon
+                        // }
+
+                        // RMEle.innerHTML = ''
+                    // }
+                }
+            })
+        });
+
+        // 일단 working/resting만 param값으로 넘긴 후 남은 러닝머신 수(remain) 값만 return해주는 것을 가정해서 작성했습니당.
+        // 제현이가 업데이트 해주세요~ 하투~ ㅎㅎ,,
+        function runPost(option) {
+            return fetch('/pokemonRun', {
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: option
+            })
+        }
+    </script>
+{% endblock %}

@@ -72,9 +72,23 @@ def myPokemon():
     if 'id' in session:
         _mypokemon = db.getMyPokemon(session['id'])
         print(_mypokemon['default'])
-        return render_template('myPokemon.html', username=_username, pokemons=g['pokemonList'],resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
+        return render_template('myPokemon.html', username=_username, pokemons=g['pokemonList'], resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
     else:
         return redirect('/login')
+
+@app.route('/pokemonRun', methods=['GET', 'POST'])
+def pokemonRun():
+    _username = session['username'] if 'id' in session else False
+    if request.method == 'GET':
+        if 'id' in session:
+            _mypokemon = db.getMyPokemon(session['id'])
+            _myRM = db.getInventory(session['id'])['5']
+            return render_template('pokemonRun.html', username=_username, myRM=_myRM, pokemons=g['pokemonList'], resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
+        else:
+            return redirect('/login')
+    elif request.method == 'POST':
+        _myRM = db.getInventory(session['id'])['5']['remain']
+        return jsonify(_myRM);
 
 @app.route('/shop')
 def shopGet():
