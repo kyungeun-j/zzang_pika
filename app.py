@@ -83,7 +83,8 @@ def pokemonRun():
         if 'id' in session:
             _mypokemon = db.getMyPokemon(session['id'])
             _myRM = db.getInventory(session['id'])['5']
-            return render_template('pokemonRun.html', username=_username, myRM=_myRM, pokemons=g['pokemonList'], resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
+            del _mypokemon['length']
+            return render_template('pokemonRun.html', username=_username, myRM=_myRM, pokemons=g['pokemonList'], mypokemon=_mypokemon)
         else:
             return redirect('/login')
     elif request.method == 'POST':
