@@ -106,6 +106,10 @@ def shopGet():
 def shopPost():
     _userid = session['id'] if 'id' in session else False
     # buyball
+
+        # shop.expandBackSize() <- 가방 확장 기능
+        # shop.expandPokemonLength() <- 포켓몬 수 확장 기능
+        
     if request.form['feild'] == 'buyball':
         _ballResult = s.buyBall(_userid, int(request.form['ballCount']))
         return jsonify(_ballResult)

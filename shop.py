@@ -34,12 +34,18 @@ def randBall(n):
 # 러닝머신 구입
 def buyRunningMachines(userId, n):
     n = int(n)
-    return db.updateInventory(userId, 'RM', n)
+    result = db.updateInventory(userId, 'RM', n)
+
+    return result
 
 # 포켓몬 가방 확장
-def expandPokemonLength(userId, n):
-    pass
+def expandPokemonLength(userId):
+    result = db.updateInventory(userId, 'pokemonBag', '')
+
+    return result
 
 # 인벤토리 가방 확장
 def expandBackSize(userId):
-    pass
+    result = db.updateInventory(userId, 'bag', '')
+
+    return result
