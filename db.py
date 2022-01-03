@@ -1,6 +1,7 @@
 import json
 import datetime
 import os
+import time
 
 # DB 위치
 DB_POKEMON_LIST = './db/pokemons.json'
@@ -170,6 +171,12 @@ def replaceInventory(userId, inventory):
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
         f.write(json.dumps(inventory))
 
+def updateMoney(userId, earned):
+    inventory = getInventory(userId)
+    inventory['0']['amount'] += int(earned)
+
+    replaceInventory(userId, inventory)
+
 def getRemainBackSize(userId):
     return getInventory(userId)['999']['remain']
 
@@ -187,16 +194,93 @@ def getMyPokemon(userId):
     with open(DB_MY_POKEMONS + str(userId) + '.json', 'r') as f:
         return json.loads(f.read())
 
+def setMyPokemon(userId, updated):
+    with open(DB_MY_POKEMONS + str(userId) + '.json', 'w') as f:
+        f.write(json.dumps(updated))
+
 def addPokemon(userId, pokemonId, percent, _max):
     myPokemon = getMyPokemon(str(userId))
 
     myPokemon['length'] += 1
+    # myPokemon['length']: my Pokemon Id
     myPokemon['default'][myPokemon['length']] = {
         'id': str(pokemonId),
         'percent': percent,
-        'max': _max
+        'max': _max,
+        'hp': 300,
+        'maxHp': 300
     }
 
-    with open(DB_MY_POKEMONS + str(userId) + '.json', 'w') as f:
-        f.write(json.dumps(myPokemon))
+    setMyPokemon(userId, myPokemon)
 
+def workPokemon(userId, myPokemonId):
+    myPokemon = getMyPokemon(str(userId))
+    if str(myPokemonId) in myPokemon['default']:
+        working = myPokemon['default'].pop(str(myPokemonId))
+        working['startTime'] = round(time.time())
+        myPokemon['working'][str(myPokemonId)] = working
+
+        setMyPokemon(userId, myPokemon)
+        return True
+    
+    return False
+
+def workEndPokemon(userId, myPokemonId):
+    # working의 포켓몬으로 default로 옮기고 돈을 return
+    myPokemon = getMyPokemon(str(userId))
+
+    if str(myPokemonId) in myPokemon['working']:
+        now = round(time.time())
+        # working 리스트에서 제거
+        default = myPokemon['working'].pop(str(myPokemonId))
+        startTime = default.pop('startTime')
+        if (now - startTime > default['hp']):
+            gold = int(default['hp'] / 60 * float(default['percent']) * default['max'])
+            default['hp'] = 0
+        else:
+            gold = int((now - startTime) / 60 * float(default['percent']) * default['max'])
+            default['hp'] -= now - startTime
+
+        myPokemon['default'][str(myPokemonId)] = default
+        setMyPokemon(userId, myPokemon)
+        updateMoney(userId, gold)
+        return gold
+
+    return False
+
+def restPokemon(userId, myPokemonId):
+    myPokemon = getMyPokemon(str(userId))
+    if str(myPokemonId) in myPokemon['default']:
+        resting = myPokemon['default'].pop(str(myPokemonId))
+        resting['startTime'] = round(time.time())
+        myPokemon['resting'][str(myPokemonId)] = resting
+
+        setMyPokemon(userId, myPokemon)
+
+        return True
+    
+    return False
+
+def restEndPokemon(userId, myPokemonId):
+    # resting 포켓몬을 default로 옮기고 회복 후 hp를 return
+    myPokemon = getMyPokemon(str(userId))
+
+    if str(myPokemonId) in myPokemon['resting']:
+        now = round(time.time())
+        # working 리스트에서 제거
+        default = myPokemon['resting'].pop(str(myPokemonId))
+        startTime = default.pop('startTime')
+        
+        hpRecovery = int((now - startTime) / 3)
+
+        if (default['hp'] + hpRecovery <= default['maxHp']):
+            default['hp'] += hpRecovery
+        else:
+            default['hp'] = default['maxHp']
+
+        myPokemon['default'][str(myPokemonId)] = default
+        setMyPokemon(userId, myPokemon)
+
+        return default['hp']
+
+    return False
