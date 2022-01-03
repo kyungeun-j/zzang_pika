@@ -116,7 +116,7 @@ def shopPost():
     # expandBagSize
     elif request.form['feild'] == 'expandBagSize':
         _bagResult = s.expandBackSize(_userid)
-        return _bagResult;
+        return _bagResult
     # buyRunningMachines
     elif request.form['feild'] == 'buyRunningMachines':
         _runningResult = s.buyRunningMachines(_userid, int(request.form['runCount']))
@@ -145,4 +145,4 @@ def catch():
             result = {'result': c.catchPokemon(session['id'], request.form['ballType'], request.form['pokemonId'], request.form['percent'], _max, int(request.form['numberOfTry']))}
             return jsonify(result)
     
-app.run('0.0.0.0')
+app.run('0.0.0.0', port="3333")
