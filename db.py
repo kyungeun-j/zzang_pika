@@ -11,7 +11,10 @@ DB_MY_POKEMONS = './db/my_pokemon/'
 # 상점 가격
 SHOP_BALL_PRICE = 100
 SHOP_RM_PRICE = 1000
-SHOP_BACK_SIZE = 50
+SHOP_BAG_SIZE = 50
+SHOP_BAG_PRICE = 10000
+SHOP_POKEMON_BAG_SIZE = 10
+SHOP_POKEMON_BAG_PRICE = 10000
 
 # 포켓몬 도감
 def getPokemonList():
@@ -139,10 +142,23 @@ def updateInventory(userId, field, datas):
             return {'result': False, 'msg': '소지 금액 부족'}
         beforeInventory['0']['amount'] -= datas * SHOP_RM_PRICE
     
-    elif field == 'back':
-        # datas를 사용하지 않음, 에러 처리 없음
-        beforeInventory['999']['remain'] += SHOP_BACK_SIZE
-        beforeInventory['999']['amount'] += SHOP_BACK_SIZE
+    elif field == 'bag':
+        # datas를 사용하지 않음
+        beforeInventory['999']['remain'] += SHOP_BAG_SIZE
+        beforeInventory['999']['amount'] += SHOP_BAG_SIZE
+
+        if SHOP_BAG_PRICE > beforeInventory['0']['amount']:
+            return {'result': False, 'msg': '소지 금액 부족'}
+        beforeInventory['0']['amount'] -= SHOP_BAG_PRICE
+
+    elif field == 'pokemonBag':
+        # datas를 사용하지 않음
+        beforeInventory['999']['remain'] += SHOP_POKEMON_BAG_SIZE
+        beforeInventory['999']['amount'] += SHOP_POKEMON_BAG_SIZE
+
+        if SHOP_BAG_PRICE > beforeInventory['0']['amount']:
+            return {'result': False, 'msg': '소지 금액 부족'}
+        beforeInventory['0']['amount'] -= SHOP_POKEMON_BAG_PRICE
 
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
         f.write(json.dumps(beforeInventory))
@@ -183,4 +199,4 @@ def addPokemon(userId, pokemonId, percent, _max):
 
     with open(DB_MY_POKEMONS + str(userId) + '.json', 'w') as f:
         f.write(json.dumps(myPokemon))
-        
+
