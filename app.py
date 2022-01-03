@@ -18,21 +18,20 @@ g['pokemonList'] = db.getPokemonList()   # 포켓몬 도감
 g['nPokemon'] = len(g['pokemonList'].keys())
 
 # Routings
-
 @app.route('/')
 def main():
     _username = session['username'] if 'id' in session else False
     return render_template('index.html', username=_username)
 
-@app.route('/list')
-def list():
+@app.route('/pokemonList')
+def pokemonList():
     _username = session['username'] if 'id' in session else False
-    return render_template('list.html', datas=g['pokemonList'], username=_username)
+    return render_template('pokemonList.html', datas=g['pokemonList'], username=_username)
 
-@app.route('/detail/<id>')
-def detail(id):
+@app.route('/pokemonDetail/<id>')
+def pokemonDetail(id):
     _username = session['username'] if 'id' in session else False
-    return render_template('detail.html', data=g['pokemonList'][id], username=_username)
+    return render_template('pokemonDetail.html', data=g['pokemonList'][id], username=_username)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -65,74 +64,85 @@ def register():
 @app.route('/checkID', methods=['POST'])
 def checkID():
     result = db.checkDuplicatedUser(request.form['username'])
-    print(result)
     return jsonify({'result': result})
+
+@app.route('/myPokemon')
+def myPokemon():
+    _username = session['username'] if 'id' in session else False
+    if 'id' in session:
+        _mypokemon = db.getMyPokemon(session['id'])
+        print(_mypokemon['default'])
+        return render_template('myPokemon.html', username=_username, pokemons=g['pokemonList'], resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
+    else:
+        return redirect('/login')
+
+@app.route('/pokemonRun', methods=['GET', 'POST'])
+def pokemonRun():
+    _username = session['username'] if 'id' in session else False
+    if request.method == 'GET':
+        if 'id' in session:
+            _mypokemon = db.getMyPokemon(session['id'])
+            _myRM = db.getInventory(session['id'])['5']
+            del _mypokemon['length']
+            return render_template('pokemonRun.html', username=_username, myRM=_myRM, pokemons=g['pokemonList'], mypokemon=_mypokemon)
+        else:
+            return redirect('/login')
+    elif request.method == 'POST':
+        _myRM = db.getInventory(session['id'])['5']['remain']
+        return jsonify(_myRM);
 
 @app.route('/shop')
 def shopGet():
     _username = session['username'] if 'id' in session else False
-    _money =  db.getMoney(session['id']) if 'id' in session else False
-    # db.getRemainBackSize(id)로 남은 인벤토리 수를 확인 해야 함
-    # 클라이언트 페이지 요청 시 해당 데이터를 미리 넘긴 후 클라이언트에서도 예외 처리 필요 
-    # db.getRemainBackSize(id), db.getMoney(id) 모두 같은 json을 참조하기 때문에
-    # inventory = db.getInventory(id)
-    # money = inventory['0']['amount']
-    # remainBackSize = inventory['999']['remain'] 
-    # 이렇게 쓰는게 좋을듯 
-    #   !!!!!!!!!!! update !!!!!!!!!!!
-    #
-    return render_template('shop.html', username=_username, money=_money)
+    if 'id' in session:
+        inventory = db.getInventory(session['id'])
+        money = inventory['0']['amount']
+        remainBagSize = inventory['999']['remain']
+        return render_template('shop.html', username=_username, money=money, remainBagSize=remainBagSize)
+    else:
+        return redirect('/login')
 
 @app.route('/shop', methods=['POST'])
 def shopPost():
     _userid = session['id'] if 'id' in session else False
-    if _userid != False:
-        # buyball
-        
-        # shop.buyBall(userId, numberOfbuyBall)
-        # db.getMoney(userId)로 남은 코인 확인 후 처리
+    # buyball
+
         # shop.expandBackSize() <- 가방 확장 기능
         # shop.expandPokemonLength() <- 포켓몬 수 확장 기능
-        if request.form['feild'] == 'buyball':
-            _ballResult = s.buyBall(_userid, int(request.form['ballCount']))
-            if _ballResult != False:
-                result = {'success': True, 'ball': _ballResult, 'money': db.getMoney(_userid)}
-            else:
-                result = {'success': False, 'msg': '코인이 부족합니다.'}
-    else:
-        result = {'success': False, 'msg': '로그인을 해주세요.'}
+        
+    if request.form['feild'] == 'buyball':
+        _ballResult = s.buyBall(_userid, int(request.form['ballCount']))
+        return jsonify(_ballResult)
+    # expandBagSize
+    elif request.form['feild'] == 'expandBagSize':
+        _bagResult = s.expandBackSize(_userid)
+        return _bagResult;
+    # buyRunningMachines
+    elif request.form['feild'] == 'buyRunningMachines':
+        _runningResult = s.buyRunningMachines(_userid, int(request.form['runCount']))
+        return _runningResult
 
-    return jsonify(result)
-
-
-@app.route('/catch', methods=['GET', 'POST'])
+@app.route('/pokemonCatch', methods=['GET', 'POST'])
 def catch():
     _username = session['username'] if 'id' in session else False
-
     if request.method == 'GET':
         if 'id' in session:
             _userball = []
-            userinventory = getData('./db/inventory/'+str(session['id'])+'.json')
+            userinventory = db.getInventory(session['id'])
             for _id in range(1, 5):
                 _userball.append(userinventory[str(_id)])
 
-            return render_template('catch.html', username=_username, userball=_userball)
+            return render_template('pokemonCatch.html', username=_username, userball=_userball)
         else:
             return redirect('/login')
     elif request.method == 'POST':
+        # comePokemon
         if request.form['post_id'] == 'comePokemon':
             return jsonify((c.comePokemon(151, 3)))
+        # catchPokemon
         elif request.form['post_id'] == 'catchPokemon':
             _max = g['pokemonList'][request.form['pokemonId']]['efficiency']
             result = {'result': c.catchPokemon(session['id'], request.form['ballType'], request.form['pokemonId'], request.form['percent'], _max, int(request.form['numberOfTry']))}
-            print(result)
-            print(request.form['numberOfTry'])
             return jsonify(result)
-
-# jsonfile read
-def getData(fileName):
-    with open(fileName, 'r') as f:
-        datas = f.read()
-        return json.loads(datas)
     
 app.run('0.0.0.0')

@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .container {
+            flex: 1 1 40%;
+        }
+
+        .pokeContainer {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 100px;
+            height: auto;
+        }
+
+        .dragPokemon {
+            height: 170px;
+        }
+
+        .rmImg {
+            width: 100px;
+        }
+
+        .using {
+            background: url('../static/icon/RM.png') no-repeat center top / 100px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <div id="pokemons" class="hidden">{{ pokemons }}</div>
+    <div id="myPokemons" class="hidden">{{ mypokemon }}</div>
+    <section class="working container">
+        <h1>Working</h1>
+        <div class="pokeContainer">
+        </div>
+    </section>
+    <section class="resting container">
+        <h1>Resting</h1>
+        <div class="pokeContainer">
+        </div>
+    </section>
+    <section class="default container">
+        <h1>Default</h1>
+        <div class="pokeContainer">
+        </div>
+    </section>
+    <script>
+        let dragEles = [...getClass('dragPokemon')];
+        let containerEles = getClass('container');
+
+        let myPokemonJSON = JSON.parse(getID('myPokemons').innerText.replaceAll("'", '"'));
+        const pokemons = JSON.parse(getID('pokemons').innerText.replaceAll("'", '"').replaceAll('None', 'null'));
+        
+        let myPokemonJSONLeng = Object.keys(myPokemonJSON).length;
+        let jinjaMyRMAmount = "{{ myRM['amount'] }}" * 1;
+
+        // running machine create
+        function RMCreate(myPokemonJSONLeng, myPokemonJSON, jinjaMyRMAmount) {
+            Object.keys(myPokemonJSON).map(myPoke => {
+                if (myPoke == 'working' && Object.keys(myPokemonJSON[myPoke]).length < jinjaMyRMAmount) {
+                    pokeCreate(myPokemonJSON, myPoke);
+                    for (let rm=1; rm<=jinjaMyRMAmount; rm++) {
+                        if (myPokemonJSON[myPoke][rm] === undefined) {
+                            const rmDivEle = document.createElement('div');
+                            const rmImgEle = document.createElement('img');
+
+                            rmImgEle.setAttribute('class', 'rmImg');
+                            rmImgEle.src = '../static/icon/RM.png';
+                            rmDivEle.append(rmImgEle);
+                            getClass(myPoke)[0].children[1].append(rmDivEle);
+                        }
+                    }
+                } else {
+                    pokeCreate(myPokemonJSON, myPoke);
+                }
+            })
+
+            dragEles = [...getClass('dragPokemon')];
+            dragSE(dragEles)
+        }
+
+        // pokemon create
+        function pokeCreate(myPokemonJSON, myPoke) {
+            Object.keys(myPokemonJSON[myPoke]).map(poke => {
+                const rmDivEle = document.createElement('div');
+                const rmImgEle = document.createElement('img');
+                const rmPEle = document.createElement('p');
+                const rmPEle2 = document.createElement('p');
+
+                if(myPoke === 'working') {
+                    rmDivEle.classList.add(poke, "dragPokemon", "using");
+                } else {
+                    rmDivEle.classList.add(poke, "dragPokemon");
+                }
+                rmDivEle.setAttribute("pokemon_id", myPokemonJSON[myPoke][poke]['id']);
+                rmDivEle.setAttribute('percent', myPokemonJSON[myPoke][poke]['percent']);
+                rmDivEle.setAttribute('max', myPokemonJSON[myPoke][poke]['max']);
+                rmDivEle.setAttribute('draggable', "true");
+                rmImgEle.src="../static/images/"+myPokemonJSON[myPoke][poke]['id']+".png";
+                rmDivEle.appendChild(rmImgEle);
+                rmPEle.innerText = pokemons[myPokemonJSON[myPoke][poke]['id']]['name'];
+                rmDivEle.appendChild(rmPEle);
+                rmPEle2.innerText = parseInt(Math.round(parseFloat(myPokemonJSON[myPoke][poke]['percent']) * myPokemonJSON[myPoke][poke]['max'])) + " (" + parseInt(Math.round(parseFloat(myPokemonJSON[myPoke][poke]['percent']) * 100))+"%)";
+                rmDivEle.appendChild(rmPEle2);
+                getClass(myPoke)[0].children[1].append(rmDivEle);
+            })
+        }
+
+        RMCreate(myPokemonJSONLeng, myPokemonJSON, jinjaMyRMAmount);
+        
+        // drag Start & End
+        function dragSE(dragEles) {
+            dragEles.forEach(ele => {
+                ele.addEventListener('dragstart', () => {
+                    ele.classList.add("dragging");
+                });
+
+                ele.addEventListener("dragend", () => {
+                    ele.classList.remove("dragging");
+                });
+            });
+        }
+
+        // drag Over & drop
+        [...containerEles].forEach(container => {
+            container.addEventListener("dragover", (e) => {
+                e.preventDefault();
+            });
+
+            container.addEventListener("drop", async (e) => {
+                const draggable = getClass("dragging")[0];
+
+                // 같은 section 안에선 이동 못함 ex) working -> working
+                if (draggable.parentElement.parentElement.classList[0] === container.classList[0]) {
+                    e.preventDefault()
+                } else {
+                    // post
+                    const option = new URLSearchParams({
+                        feild: container.classList[0]
+                    });
+                    const post = await runPost(container.classList[0])
+                    const data = await post.json();
+
+                    // client를 위한 json 변경 함수 호출
+                    addPokemon(container.classList[0], draggable)    
+                    removePokemon(draggable.parentElement.parentElement.classList[0], draggable)
+
+                    getClass('working')[0].children[1].innerHTML = ''
+                    getClass('resting')[0].children[1].innerHTML = ''
+                    getClass('default')[0].children[1].innerHTML = ''
+
+                    // create function 실행
+                    RMCreate(myPokemonJSONLeng, myPokemonJSON, jinjaMyRMAmount);
+                }
+            })
+        });
+
+        // 일단 working/resting만 param값으로 넘긴 후 남은 러닝머신 수(remain) 값만 return해주는 것을 가정해서 작성했습니당.
+        // 제현이가 업데이트 해주세요~ 하투~ ㅎㅎ,,
+        function runPost(option) {
+            return fetch('/pokemonRun', {
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: option
+            })
+        }
+
+        // json add
+        function addPokemon(container, pokemon) {
+            if (container === 'working'){
+                pokemon.classList.add("using");
+            }
+
+            const jsonLeng = Object.keys(myPokemonJSON[container]).length + 1;    
+            myPokemonJSON[container] = {
+                ...myPokemonJSON[container],
+                [jsonLeng]: {
+                    id: pokemon.getAttribute('pokemon_id'),
+                    percent: pokemon.getAttribute('percent'),
+                    max: parseInt(pokemon.getAttribute('max'))
+                }
+            }    
+        }
+
+        // json remove
+        function removePokemon(container, pokemon) {
+            if (pokemon.classList.contains('using')) {
+                pokemon.classList.remove("using");
+            }
+
+            delete myPokemonJSON[container][pokemon.classList[0]]
+
+            let deleteKey = pokemon.classList[0];
+            Object.keys(myPokemonJSON[container]).forEach(contain => {
+                if (contain > deleteKey) {
+                    myPokemonJSON[container][deleteKey] = myPokemonJSON[container][contain];
+                    delete myPokemonJSON[container][contain];
+                    deleteKey = contain;
+                }
+            })
+        }
+    </script>
+{% endblock %}
