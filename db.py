@@ -55,7 +55,7 @@ def updateUser(username, field, data):
 
     before_users['userList'][username][field] = data
     with open(DB_USER_LIST, 'w') as f:
-        f.write(json.dumps(before_users))
+        f.write(json.dumps(before_users, indent=2))
 
 def resetUsers():
     # db/users.json이 없는 경우, 초기화할 경우 사용
@@ -64,7 +64,7 @@ def resetUsers():
         'userList': {}
     }
     with open(DB_USER_LIST, 'w') as f:
-        f.write(json.dumps(usersForm))
+        f.write(json.dumps(usersForm, indent=2))
     
     # 인벤토리 삭제
     userInventories = os.listdir(DB_INVENTORY)
@@ -92,7 +92,7 @@ def register(username, password):
     before_users['userLength'] = userId
     before_users['userList'][username] = user
     with open(DB_USER_LIST, 'w') as f:
-        f.write(json.dumps(before_users))
+        f.write(json.dumps(before_users, indent=2))
     
     makeInventory(userId)
 
@@ -111,7 +111,7 @@ def makeInventory(userId):
         inventoryTable = json.loads(f.read())
     
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
-        f.write(json.dumps(inventoryTable))
+        f.write(json.dumps(inventoryTable, indent=2))
 
 def getMoney(userId):
     return getInventory(userId)['0']['amount']
@@ -162,14 +162,14 @@ def updateInventory(userId, field, datas):
         beforeInventory['0']['amount'] -= SHOP_POKEMON_BAG_PRICE
 
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
-        f.write(json.dumps(beforeInventory))
+        f.write(json.dumps(beforeInventory, indent=2))
 
     return {'result': True}
 
 def replaceInventory(userId, inventory):
     # catch에서 사용
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
-        f.write(json.dumps(inventory))
+        f.write(json.dumps(inventory, indent=2))
 
 def updateMoney(userId, earned):
     inventory = getInventory(userId)
@@ -185,7 +185,7 @@ def makeMyPokemon(userId):
     with open(DB_MY_POKEMONS + 'table.json', 'r') as f:
         myPokemonTable = json.loads(f.read())
     with open(DB_MY_POKEMONS + str(userId) + '.json', 'w') as f:
-        f.write(json.dumps(myPokemonTable))
+        f.write(json.dumps(myPokemonTable, indent=2))
 
 def getMyPokemon(userId):
     if not str(userId) + '.json' in os.listdir(DB_MY_POKEMONS):
@@ -196,19 +196,21 @@ def getMyPokemon(userId):
 
 def setMyPokemon(userId, updated):
     with open(DB_MY_POKEMONS + str(userId) + '.json', 'w') as f:
-        f.write(json.dumps(updated))
+        f.write(json.dumps(updated, indent=2))
 
 def addPokemon(userId, pokemonId, percent, _max):
     myPokemon = getMyPokemon(str(userId))
 
     myPokemon['length'] += 1
+    myPokemon['id'] += 1
     # myPokemon['length']: my Pokemon Id
-    myPokemon['default'][myPokemon['length']] = {
+    myPokemon['default'][myPokemon['id']] = {
         'id': str(pokemonId),
         'percent': percent,
         'max': _max,
         'hp': 300,
-        'maxHp': 300
+        'maxHp': 300,
+        'level': 1
     }
 
     setMyPokemon(userId, myPokemon)
@@ -283,4 +285,36 @@ def restEndPokemon(userId, myPokemonId):
 
         return default['hp']
 
+    return False
+
+def levelUpPokemon(userId, first, second):
+    # first, second: myPokemonId
+    # 레벨과 id가 같고 default 내에 있어야 함
+    # 합성이 성공하면 second를 삭제하고 first만 남고 그 id를 Return
+
+    if first == second:
+        # 동일한 포켓몬은 합성 X
+        return False
+
+    myPokemon = getMyPokemon(str(userId))
+
+    if str(first) in myPokemon['default'] and str(second) in myPokemon['default']:
+        if myPokemon['default'][str(first)]['level'] == myPokemon['default'][str(second)]['level'] \
+            and myPokemon['default'][str(first)]['id'] == myPokemon['default'][str(second)]['id']:
+            # id와 level이 동일한 경우
+            # level + 1, maxHp * 2, hp1 + hp2, average percent
+            myPokemon['default'][str(first)]['level'] += 1
+            myPokemon['default'][str(first)]['maxHp'] *= 2
+            myPokemon['default'][str(first)]['hp'] += myPokemon['default'][str(second)]['hp']
+            newPercent = round((float(myPokemon['default'][str(first)]['percent']) + float(myPokemon['default'][str(second)]['percent'])) / 2, 2)
+            myPokemon['default'][str(first)]['percent'] = newPercent
+            myPokemon['default'].pop(str(second))
+            
+            myPokemon['length'] -= 1
+
+            setMyPokemon(userId, myPokemon)
+
+            return True
+
+    # 둘 다 default 내에 있어야 함
     return False
