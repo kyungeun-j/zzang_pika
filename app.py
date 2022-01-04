@@ -131,8 +131,7 @@ def catch():
             userinventory = db.getInventory(session['id'])
             for _id in range(1, 5):
                 _userball.append(userinventory[str(_id)])
-
-            return render_template('pokemonCatch.html', username=_username, userball=_userball)
+            return render_template('pokemonCatch.html', username=_username, userball=_userball, pokemons=c.comePokemon(151, 3))
         else:
             return redirect('/login')
     elif request.method == 'POST':
@@ -147,7 +146,7 @@ def catch():
         # catchPokemon
         elif request.form['post_id'] == 'catchPokemon':
             _max = g['pokemonList'][request.form['pokemonId']]['efficiency']
-            result = {'result': c.catchPokemon(session['id'], request.form['ballType'], request.form['pokemonId'], request.form['percent'], _max, int(request.form['numberOfTry']))}
+            result = {'result': c.catchPokemon(session['id'], request.form['ballType'], request.form['pokemonId'], float(request.form['percent']), _max, int(request.form['numberOfTry']))}
             return jsonify(result)
     
 app.run('0.0.0.0', port="3333")
