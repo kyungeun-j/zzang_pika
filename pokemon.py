@@ -110,19 +110,21 @@ def levelUpPokemon(userId, first, second):
 def trainingPokemon(userId, myPokemonId):
     myPokemon = db.getMyPokemon(str(userId))
 
+    if myPokemon['default'][str(myPokemonId)]['percent'] == 1:
+        return { 'result': False, 'msg': 'Already max percent' }
+        
+    result = db.updateMoney(userId, -1 * (2 ** (myPokemon['default'][str(myPokemonId)]['level'] - 1) * POKEMON_TRANING_PRICE))
+    if not result['result']:
+        return {'result': False, 'msg': result['msg']}
+
     # 내 포켓몬의 효율을 다시 돌림 -> 더 좋은 경우에만 반영됨
     newPercent = round(random.random(), 2)
     if float(myPokemon['default'][str(myPokemonId)]['percent']) < newPercent:
         myPokemon['default'][str(myPokemonId)]['percent'] = newPercent
 
-        result = db.updateMoney(userId, -1 * POKEMON_TRANING_PRICE)
+        db.setMyPokemon(userId, myPokemon)
 
-        if result['result']:
-            db.setMyPokemon(userId, myPokemon)
-
-            return newPercent
-
-        return {'result': False, 'msg': result['msg']}
+        return newPercent
 
     else:
         # newPercent < originPercent

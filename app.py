@@ -138,7 +138,12 @@ def catch():
     elif request.method == 'POST':
         # comePokemon
         if request.form['post_id'] == 'comePokemon':
-            return jsonify((c.comePokemon(151, 3)))
+
+            if 'id' in session:
+                return jsonify((c.comePokemon(session['id'], 151, 3)))
+            else:
+                return redirect('/login')
+
         # catchPokemon
         elif request.form['post_id'] == 'catchPokemon':
             _max = g['pokemonList'][request.form['pokemonId']]['efficiency']

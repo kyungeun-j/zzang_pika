@@ -6,15 +6,32 @@ CATCH_PERCENT = {'1': .25, '2': .5, '3': .75, '4': 2}
 def checkInventorySize(userId):
     pass
 
-def comePokemon(nPokemon, n):
+def comePokemon(userId, nPokemon, n):
     # nPokemon: 포켓몬 수
-    comed = []
+    myPokemon = db.getMyPokemon(str(userId))
+
+    if 'coming' in myPokemon:
+        return myPokemon['coming']
+
+    coming = []
     for _ in range(n):
-        pokemonId = random.randrange(1, nPokemon)
+        pokemonId = random.randrange(1, nPokemon + 1)
         percent = round(random.random(), 2)
-        comed.append((pokemonId, percent))
-    return comed
-    
+        coming.append((pokemonId, percent))
+
+    myPokemon['coming'] = coming
+    db.setMyPokemon(userId, myPokemon)
+
+    return coming
+
+def resetComingPokemon(userId):
+    # coming 포켓몬 중 하나가 도망갔거나, 하나를 잡았을 때 호출
+    myPokemon = db.getMyPokemon(str(userId))
+    myPokemon.pop('coming')
+    db.setMyPokemon(userId, myPokemon)
+
+    return True
+
 def catchPokemon(userId, ballType, pokemonId, percent, _max, numberOfTry):
     _ballType = str(ballType)
 
