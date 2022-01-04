@@ -6,15 +6,40 @@ CATCH_PERCENT = {'1': .25, '2': .5, '3': .75, '4': 2}
 def checkInventorySize(userId):
     pass
 
-def comePokemon(nPokemon, n):
-    # nPokemon: 포켓몬 수
-    comed = []
-    for _ in range(n):
-        pokemonId = random.randrange(1, nPokemon)
-        percent = round(random.random(), 2)
-        comed.append((pokemonId, percent))
-    return comed
-    
+def comePokemon(userId, nPokemon, n):
+    # nPokemon: 포켓몬 수 <- 이제 안 쓸거임
+    myPokemon = db.getMyPokemon(str(userId))
+
+    if 'coming' in myPokemon:
+        return myPokemon['coming']
+
+    pokemons = db.getPokemonList()
+
+    # 진화 포켓몬이지만 아직 진화 안된 포켓몬 length: 54
+    unevolved = [id for id in pokemons if pokemons[id]['evolution'] != None and pokemons[id]['evolution'][0] == pokemons[id]['id']]
+
+    # 진화 포켓몬 X
+    noEvolved = [id for id in pokemons if pokemons[id]['evolution'] == None]
+
+    spawnId = unevolved
+
+    coming = []
+    for id in random.sample(unevolved, 3):
+        coming.append((id, round(random.random(), 2)))
+
+    myPokemon['coming'] = coming
+    db.setMyPokemon(userId, myPokemon)
+
+    return coming
+
+def resetComingPokemon(userId):
+    # coming 포켓몬 중 하나가 도망갔거나, 하나를 잡았을 때 호출
+    myPokemon = db.getMyPokemon(str(userId))
+    myPokemon.pop('coming')
+    db.setMyPokemon(userId, myPokemon)
+
+    return True
+
 def catchPokemon(userId, ballType, pokemonId, percent, _max, numberOfTry):
     _ballType = str(ballType)
 
