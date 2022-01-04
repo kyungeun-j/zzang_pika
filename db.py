@@ -218,4 +218,12 @@ def addPokemon(userId, pokemonId, percent, _max):
         'level': 1
     }
 
+    # 전설 포켓몬은 레벨 및 효율 비율이 정해져서 spawn
+    if (int(pokemonId) >= 144 and int(pokemonId) <= 146) or int(pokemonId) == 151:
+        myPokemon['default'][myPokemon['id']]['level'] = 10
+        myPokemon['default'][myPokemon['id']]['percent'] = 0.5
+    elif int(pokemonId) == 150:
+        myPokemon['default'][myPokemon['id']]['level'] = 15
+        myPokemon['default'][myPokemon['id']]['percent'] = 0.5
+
     setMyPokemon(userId, myPokemon)
