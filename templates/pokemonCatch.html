@@ -34,7 +34,6 @@
         }
 
     </style>
-    <div id="pokemons" class="hidden">{{ pokemons|tojson }}</div>
     <div id="catchDiv"></div>
     <button class="catchBtn">잡기</button>
 
@@ -51,7 +50,6 @@
     <script>
         const catchEle = getID('catchDiv');
         const catchBtn = getClass('catchBtn')[0];
-        let pokemonsJSON = JSON.parse('{{ pokemons | tojson }}');
 
         function pokemonImgCreate(pokemon) {
             catchEle.innerHTML = ''
@@ -80,12 +78,9 @@
 
 
         // 잡기 버튼 클릭
-        catchBtn.addEventListener('click', getPokemonList)
-        async function getPokemonList(){
-            pokemonImgCreate(pokemonsJSON)
-        }
+        catchBtn.addEventListener('click', getPokemon)
         
-        async function getPokemon() {
+        async function getPokemon(catchResult) {
             // get pokemonList
             const res = await fetch('/pokemonCatch', {
                     method: 'POST',
@@ -94,7 +89,8 @@
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     body: new URLSearchParams({ 
-                        post_id: 'comePokemon'
+                        post_id: 'comePokemon',
+                        catch_res: catchResult
                     })
                 });
             const data = await res.json();
@@ -124,7 +120,6 @@
             const catchData = await catchRes.json();
             if (catchData.result === true) {
                 alert('성공')
-                getPokemon()
             } else if (catchData.result == false) alert('포켓볼이 부족합니다.')
             else if (catchData.result == 'run') alert('도망갔다!')
             else {
@@ -132,6 +127,8 @@
                 numberOfTry = Number(catchData.result);
             }
 
+            getPokemon(catchData.result)
+            
             // 포켓볼이 부족하지 않은 경우 -1
             if (catchData.result != false) getClass('select')[0].children[1].innerHTML -= 1;
         }

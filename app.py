@@ -71,7 +71,6 @@ def myPokemon():
     _username = session['username'] if 'id' in session else False
     if 'id' in session:
         _mypokemon = db.getMyPokemon(session['id'])
-        print(_mypokemon['default'])
         return render_template('myPokemon.html', username=_username, pokemons=g['pokemonList'], resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
     else:
         return redirect('/login')
@@ -131,22 +130,24 @@ def catch():
             userinventory = db.getInventory(session['id'])
             for _id in range(1, 5):
                 _userball.append(userinventory[str(_id)])
-            return render_template('pokemonCatch.html', username=_username, userball=_userball, pokemons=c.comePokemon(151, 3))
+            return render_template('pokemonCatch.html', username=_username, userball=_userball)
         else:
             return redirect('/login')
     elif request.method == 'POST':
+        _userid = session['id'] if 'id' in session else False
         # comePokemon
-        if request.form['post_id'] == 'comePokemon':
+        if _userid != False:
+            if request.form['post_id'] == 'comePokemon':
+                if request.form['catch_res'] == 'true' or request.form['catch_res'] == 'run':
+                    c.resetComingPokemon(_userid)
+                return jsonify((c.comePokemon(_userid, 151, 3)))
 
-            if 'id' in session:
-                return jsonify((c.comePokemon(session['id'], 151, 3)))
-            else:
-                return redirect('/login')
-
-        # catchPokemon
-        elif request.form['post_id'] == 'catchPokemon':
-            _max = g['pokemonList'][request.form['pokemonId']]['efficiency']
-            result = {'result': c.catchPokemon(session['id'], request.form['ballType'], request.form['pokemonId'], float(request.form['percent']), _max, int(request.form['numberOfTry']))}
-            return jsonify(result)
+            # catchPokemon
+            elif request.form['post_id'] == 'catchPokemon':
+                _max = g['pokemonList'][request.form['pokemonId']]['efficiency']
+                result = {'result': c.catchPokemon(_userid, request.form['ballType'], request.form['pokemonId'], float(request.form['percent']), _max, int(request.form['numberOfTry']))}
+                return jsonify(result)
+        else:
+            return redirect('/login')
     
 app.run('0.0.0.0', port="3333")
