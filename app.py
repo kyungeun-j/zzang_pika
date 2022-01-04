@@ -6,6 +6,7 @@ from flask.json import jsonify
 import db
 import catch as c
 import shop as s
+import pokemon as p
 
 POKET_DATA = './pokemons.json'
 
@@ -78,17 +79,42 @@ def myPokemon():
 @app.route('/pokemonRun', methods=['GET', 'POST'])
 def pokemonRun():
     _username = session['username'] if 'id' in session else False
+    _userid = session['id'] if 'id' in session else False
     if request.method == 'GET':
         if 'id' in session:
             _mypokemon = db.getMyPokemon(session['id'])
             _myRM = db.getInventory(session['id'])['5']
             del _mypokemon['length']
+            del _mypokemon['coming']
             return render_template('pokemonRun.html', username=_username, myRM=_myRM, pokemons=g['pokemonList'], mypokemon=_mypokemon)
         else:
             return redirect('/login')
     elif request.method == 'POST':
-        _myRM = db.getInventory(session['id'])['5']['remain']
-        return jsonify(_myRM);
+        if request.form['startCont'] == 'working':
+            if request.form['endCont'] == 'resting':
+                _coin = p.workEndPokemon(_userid, request.form['dragPokemon'])
+                _result = p.restPokemon(_userid, request.form['dragPokemon'])
+                return jsonify({'result': _result, 'coin': _coin})
+            elif request.form['endCont'] == 'default':
+                _coin = p.workEndPokemon(_userid, request.form['dragPokemon'])
+                return jsonify({'coin': _coin})
+        elif request.form['startCont'] == 'resting':
+            if request.form['endCont'] == 'working':
+                _hp = p.restEndPokemon(_userid, request.form['dragPokemon'])
+                _result = p.workPokemon(_userid, request.form['dragPokemon'])
+                return jsonify({'result': _result, 'hp': _hp})
+            elif request.form['endCont'] == 'default':
+                _hp = p.restEndPokemon(_userid, request.form['dragPokemon'])
+                return jsonify({'hp': _hp})
+        elif request.form['startCont'] == 'default':
+            if request.form['endCont'] == 'working':
+                _result = p.workPokemon(_userid, request.form['dragPokemon'])
+                return jsonify({'result': _result})
+            elif request.form['endCont'] == 'resting':
+                _result = p.restPokemon(_userid, request.form['dragPokemon'])
+                return jsonify({'result': _result})
+        elif request.form['startCont'] == request.form['endCont']:
+            return jsonify({'result': False})
 
 @app.route('/shop')
 def shopGet():
@@ -135,8 +161,8 @@ def catch():
             return redirect('/login')
     elif request.method == 'POST':
         _userid = session['id'] if 'id' in session else False
-        # comePokemon
         if _userid != False:
+            # comePokemon
             if request.form['post_id'] == 'comePokemon':
                 if request.form['catch_res'] == 'true' or request.form['catch_res'] == 'run':
                     c.resetComingPokemon(_userid)
