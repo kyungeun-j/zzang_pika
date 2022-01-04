@@ -19,13 +19,29 @@ def comePokemon(userId, nPokemon, n):
     # 진화 포켓몬이지만 아직 진화 안된 포켓몬 length: 54
     unevolved = [id for id in pokemons if pokemons[id]['evolution'] != None and pokemons[id]['evolution'][0] == pokemons[id]['id']]
 
-    # 진화 포켓몬 X
+    # 진화 포켓몬 X (전설 제외)
     noEvolved = [id for id in pokemons if pokemons[id]['evolution'] == None]
 
-    spawnId = unevolved
+    # 잡은 포켓몬 종류 수
+    unlocked = len(myPokemon['archive']['pokemon'])
+
+    
+    if unlocked < 100:
+        n = 0
+    elif unlocked < 110:
+        n = 5
+    elif unlocked < 120:
+        n = 10
+    elif unlocked < 125:
+        n = 15
+    elif unlocked < 150:
+        n = 20
+
+    spawnId = unevolved + noEvovled[:n]
+    # legendSpawnId = noEvolved[-5:]
 
     coming = []
-    for id in random.sample(unevolved, 3):
+    for id in random.sample(spawnId, 3):
         coming.append((id, round(random.random(), 2)))
 
     myPokemon['coming'] = coming
