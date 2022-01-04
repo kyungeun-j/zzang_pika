@@ -100,6 +100,10 @@ def levelUpPokemon(userId, first, second):
             
             myPokemon['length'] -= 1
 
+            # 업적 업데이트 (level)
+            _id = myPokemon['default'][str(first)]['id']
+            maxLevel = max(myPokemon['default'][str(first)]['level'], myPokemon['archive']['pokemon'][_id]['maxLevel'])
+            myPokemon['archive']['pokemon'][_id]['maxLevel'] = maxLevel
             db.setMyPokemon(userId, myPokemon)
 
             return True
@@ -121,6 +125,11 @@ def trainingPokemon(userId, myPokemonId):
     newPercent = round(random.random(), 2)
     if float(myPokemon['default'][str(myPokemonId)]['percent']) < newPercent:
         myPokemon['default'][str(myPokemonId)]['percent'] = newPercent
+
+        # 업적 업데이트
+        _id = myPokemon['default'][str(myPokemonId)]['id']
+        maxPercent = max(myPokemon['archive']['pokemon'][_id]['maxPercent'], newPercent)
+        myPokemon['archive']['pokemon'][_id]['maxPercent'] = maxPercent
 
         db.setMyPokemon(userId, myPokemon)
 

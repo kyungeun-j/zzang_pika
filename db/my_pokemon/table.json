@@ -4,5 +4,27 @@
     "default": {},
     "length": 0,
     "id": 0,
-    "max_length": 50
+    "max_length": 50,
+    "archive": {
+        "ball": {
+            "1": {
+                "throw": 0,
+                "success": 0
+            },
+            "2": {
+                "throw": 0,
+                "success": 0
+            },
+            "3": {
+                "throw": 0,
+                "success": 0
+            },
+            "4": {
+                "throw": 0,
+                "success": 0
+            }
+        },
+        "pokemon": {
+        }
+    }
 }

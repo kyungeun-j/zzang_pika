@@ -1,5 +1,6 @@
 import random
 import db
+import archive
 
 CATCH_PERCENT = {'1': .25, '2': .5, '3': .75, '4': 2}
 
@@ -55,9 +56,23 @@ def catchPokemon(userId, ballType, pokemonId, percent, _max, numberOfTry):
     db.replaceInventory(userId, inventory)
 
     if random.random() < CATCH_PERCENT[_ballType]:
+        # 업적 업데이트
+        
         db.addPokemon(userId, pokemonId, percent, _max)
+
+        archive.updateArchive(userId, 'get', {
+            'ballType': _ballType,
+            'result': True,
+            'pokemonId': str(pokemonId),
+            'percent': percent
+        })
+
         return True
     else:
+        archive.updateArchive(userId, 'throw', {
+            'ballType': _ballType,
+            'result': False
+        })
         if random.random() < numberOfTry * .1:
             return 'run'
         return numberOfTry + 1
