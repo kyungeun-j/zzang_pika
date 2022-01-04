@@ -24,8 +24,29 @@
         .using {
             background: url('../static/icon/RM.png') no-repeat center top / 100px;
         }
+
         .hidden {
             display: none;
+        }
+
+        .percentDiv {
+            width: 100%;
+            height: 14px;
+            background-color: #ddd;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+        .percentInnerDiv {
+            height: 100%;
+            background-color: #d94141;
+        }
+
+        .percentLabelDiv {
+            text-align: center;
+            line-height: 16px;
+            color: white;
+            font-size: 8px;
         }
     </style>
     <div id="pokemons" class="hidden">{{ pokemons }}</div>
@@ -88,6 +109,27 @@
                 const rmPEle = document.createElement('p');
                 const rmPEle2 = document.createElement('p');
 
+                const percentDiv = document.createElement('div')
+                const percentInnerDiv = document.createElement('div')
+                const percentLabelDiv = document.createElement('div')
+
+                if(myPoke === 'default') {
+                    percentDiv.classList.add('percentDiv');
+                    percentInnerDiv.classList.add('percentInnerDiv');
+                    percentLabelDiv.classList.add('percentLabelDiv');
+
+                    
+                    const percent = Math.round(myPokemonJSON[myPoke][poke]['hp'] / myPokemonJSON[myPoke][poke]['maxHp'] * 100)
+                    percentInnerDiv.style.width = percent+'%';
+                    percentLabelDiv.innerHTML = percent+'%';
+
+                    percentInnerDiv.appendChild(percentLabelDiv)
+                    percentDiv.appendChild(percentInnerDiv)
+
+                    rmDivEle.appendChild(percentDiv)
+                }
+
+            
                 if(myPoke === 'working') {
                     rmDivEle.classList.add(poke, "dragPokemon", "using");
                 } else {
@@ -130,21 +172,31 @@
 
             container.addEventListener("drop", async (e) => {
                 const draggable = getClass("dragging")[0];
-
+                
                 // 같은 section 안에선 이동 못함 ex) working -> working
                 if (draggable.parentElement.parentElement.classList[0] === container.classList[0]) {
                     e.preventDefault()
                 } else {
                     // post
                     const option = new URLSearchParams({
-                        feild: container.classList[0]
+                        startCont: draggable.parentElement.parentElement.classList[0],
+                        endCont: container.classList[0],
+                        dragPokemon: draggable.classList[0]
                     });
-                    const post = await runPost(container.classList[0])
+                    const post = await runPost(option)
                     const data = await post.json();
 
                     // client를 위한 json 변경 함수 호출
-                    addPokemon(container.classList[0], draggable)    
-                    removePokemon(draggable.parentElement.parentElement.classList[0], draggable)
+                    if (data.result !== false || data !== undefined) {
+                        updateJSON(draggable.parentElement.parentElement.classList[0], container.classList[0], draggable)
+                        if (data.coin) { 
+                            alert('+'+data.coin+'coin')
+                        } else if (data.hp) {
+                            alert('+'+data.hp+'hp')
+                        }
+                    } else if (data.result === false) {
+                        alert('포켓몬을 이동시킬 수 없습니다.')
+                    }
 
                     getClass('working')[0].children[1].innerHTML = ''
                     getClass('resting')[0].children[1].innerHTML = ''
@@ -156,9 +208,22 @@
             })
         });
 
-        // 일단 working/resting만 param값으로 넘긴 후 남은 러닝머신 수(remain) 값만 return해주는 것을 가정해서 작성했습니당.
-        // 제현이가 업데이트 해주세요~ 하투~ ㅎㅎ,,
-        function runPost(option) {
+        function updateJSON(startCont, endCont, pokemon) {
+            if (startCont === 'working') {
+                pokemon.classList.remove('using')
+            } else if (endCont === 'working') {
+                pokemon.classList.add('using')
+            }
+            
+            myPokemonJSON[endCont] = {
+                ...myPokemonJSON[endCont],
+                [pokemon.classList[0]]: myPokemonJSON[startCont][pokemon.classList[0]]
+            }  
+
+            delete myPokemonJSON[startCont][pokemon.classList[0]]
+        }
+
+        async function runPost(option) {
             return fetch('/pokemonRun', {
                 method: 'POST',
                 cache: 'no-cache',
@@ -166,41 +231,6 @@
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: option
-            })
-        }
-
-        // json add
-        function addPokemon(container, pokemon) {
-            if (container === 'working'){
-                pokemon.classList.add("using");
-            }
-
-            const jsonLeng = Object.keys(myPokemonJSON[container]).length + 1;    
-            myPokemonJSON[container] = {
-                ...myPokemonJSON[container],
-                [jsonLeng]: {
-                    id: pokemon.getAttribute('pokemon_id'),
-                    percent: pokemon.getAttribute('percent'),
-                    max: parseInt(pokemon.getAttribute('max'))
-                }
-            }    
-        }
-
-        // json remove
-        function removePokemon(container, pokemon) {
-            if (pokemon.classList.contains('using')) {
-                pokemon.classList.remove("using");
-            }
-
-            delete myPokemonJSON[container][pokemon.classList[0]]
-
-            let deleteKey = pokemon.classList[0];
-            Object.keys(myPokemonJSON[container]).forEach(contain => {
-                if (contain > deleteKey) {
-                    myPokemonJSON[container][deleteKey] = myPokemonJSON[container][contain];
-                    delete myPokemonJSON[container][contain];
-                    deleteKey = contain;
-                }
             })
         }
     </script>
