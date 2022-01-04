@@ -89,7 +89,7 @@ def pokemonRun():
             return redirect('/login')
     elif request.method == 'POST':
         _myRM = db.getInventory(session['id'])['5']['remain']
-        return jsonify(_myRM);
+        return jsonify(_myRM)
 
 @app.route('/shop')
 def shopGet():
@@ -131,7 +131,7 @@ def catch():
             userinventory = db.getInventory(session['id'])
             for _id in range(1, 5):
                 _userball.append(userinventory[str(_id)])
-            return render_template('pokemonCatch.html', username=_username, userball=_userball, pokemons=c.comePokemon(151, 3))
+            return render_template('pokemonCatch.html', username=_username, userball=_userball, pokemons=c.comePokemon(session['id'], 151, 3))
         else:
             return redirect('/login')
     elif request.method == 'POST':
