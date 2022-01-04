@@ -67,12 +67,16 @@ def checkID():
     result = db.checkDuplicatedUser(request.form['username'])
     return jsonify({'result': result})
 
-@app.route('/myPokemon')
+@app.route('/myPokemon', methods=['GET', 'POST'])
 def myPokemon():
     _username = session['username'] if 'id' in session else False
     if 'id' in session:
-        _mypokemon = db.getMyPokemon(session['id'])
-        return render_template('myPokemon.html', username=_username, pokemons=g['pokemonList'], resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
+        if request.method == 'GET':
+            _mypokemon = db.getMyPokemon(session['id'])
+            return render_template('myPokemon.html', username=_username, pokemons=g['pokemonList'], resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
+        elif request.method == 'POST':
+            if request.form['field'] == 'training':
+                return jsonify(p.trainingPokemon(session['id'], int(request.form['pokemonID'])))
     else:
         return redirect('/login')
 

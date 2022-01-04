@@ -1,23 +1,121 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <ul>
-    {% for _id in resting %}
-        {{ _id }}
-    {% endfor %}
-    </ul>
-    <ul>
-        {% for _id in working %}
-        {{ _id }}
-        {% endfor %}
-    </ul>
-    <ul>
+    <style>
+        .content {
+            flex-direction: column;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            list-style: none;
+            width: -webkit-fill-available;
+        }
+
+        .pokemon {
+            position: relative;
+        }
+
+        .pokeLevel {
+            position: absolute;
+            margin: 0;
+            background-color: lightgray;
+            top: -8px;
+            left: -7px;
+            border: 2px outset;
+        }
+    </style>
+    <h1>Default</h1>
+    <ul class="default container">
         {% for _id in default %}
-        <li class={{ _id }}>
+        <li class="{{ _id }} pokemon">
+            <p class="pokeLevel">LEVEL {{ default[_id]['level']}}</p>
             <img src="../static/images/{{ default[_id]['id'] }}.png" />
             <p>{{ pokemons[default[_id]['id']]['name'] }}</p>
             <p>{{ (default[_id]['percent']|float * default[_id]['max'])|round|int }} ({{ (default[_id]['percent']|float * 100)|round|int }}%)</p>
+
+            <input type="button" class="training" value="훈련" />
         </li>
         {% endfor %}
     </ul>
+    <h1>Working</h1>
+    <ul class="working container">
+        {% for _id in working %}
+        <li class="{{ _id }} pokemon">
+            <p class="pokeLevel">LEVEL {{ working[_id]['level']}}</p>
+            <img src="../static/images/{{ working[_id]['id'] }}.png" />
+            <p>{{ pokemons[working[_id]['id']]['name'] }}</p>
+            <p>{{ (working[_id]['percent']|float * working[_id]['max'])|round|int }} ({{ (working[_id]['percent']|float * 100)|round|int }}%)</p>
+
+            <input type="button" class="training" value="훈련 10000coin" />
+        </li>
+        {% endfor %}
+    </ul>
+    <h1>Resting</h1>
+    <ul class="resting container">
+    {% for _id in resting %}
+    <li class="{{ _id }} pokemon">
+        <p class="pokeLevel">LEVEL {{ resting[_id]['level']}}</p>
+        <img src="../static/images/{{ resting[_id]['id'] }}.png" />
+        <p>{{ pokemons[resting[_id]['id']]['name'] }}</p>
+        <p>{{ (resting[_id]['percent']|float * resting[_id]['max'])|round|int }} ({{ (resting[_id]['percent']|float * 100)|round|int }}%)</p>
+
+        <input type="button" class="training" value="훈련" />
+    </li>
+    {% endfor %}
+    </ul>
+    <script>
+        const trainingBtn = [...getClass('training')]
+        const pokemonJSON = {
+            default: JSON.parse('{{default|tojson}}'),
+            working: JSON.parse('{{working|tojson}}'),
+            resting: JSON.parse('{{resting|tojson}}'),
+        }
+
+        Object.keys(pokemonJSON).forEach(contain => {
+            Object.keys(pokemonJSON[contain]).forEach(pokemons => {
+                const percent = pokemonJSON[contain][pokemons]['percent'] * 100
+                const pokemon = getClass(pokemons)[0];
+                if (percent === 100) {
+                    pokemon.style.background = 'black'
+                    pokemon.style.color = 'rgb(177 161 78)'
+                } else if (percent > 90) {
+                    pokemon.style.background = 'red'
+                } else if (percent > 50) {
+                    pokemon.style.background = 'green'
+                } else if (percent > 30) {
+                    pokemon.style.background = 'blue'
+                }  
+            })
+        })
+
+        trainingBtn.forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const option = new URLSearchParams({
+                    field: 'training',
+                    pokemonID: e.target.parentElement.classList[0]
+                });
+                const post = await myPokemonPost(option)
+                const data = await post.json();
+
+                if (!data.msg) {
+                    alert('percent가 ' + data*100 + '(이)가 되었다!')
+                } else {
+                    alert(data.msg)
+                }
+            })
+        })
+
+        async function myPokemonPost(option) {
+            return fetch('/myPokemon', {
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: option
+            })
+        }
+
+    </script>
 {% endblock %}
