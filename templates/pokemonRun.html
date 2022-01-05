@@ -70,16 +70,15 @@
         let dragEles = [...getClass('dragPokemon')];
         let containerEles = getClass('container');
 
-        let myPokemonJSON = JSON.parse(getID('myPokemons').innerText.replaceAll("'", '"'));
         const pokemons = JSON.parse(getID('pokemons').innerText.replaceAll("'", '"').replaceAll('None', 'null'));
-        
+        let myPokemonJSON = JSON.parse(getID('myPokemons').innerText.replaceAll("'", '"'));
         let myPokemonJSONLeng = Object.keys(myPokemonJSON).length;
-        let jinjaMyRMAmount = "{{ myRM['amount'] }}" * 1;
+        let jinjaMyRMAmount = "{{ myRM['amount'] }}" * 1; // 러닝머신 개수
 
         // running machine create
         function RMCreate(myPokemonJSONLeng, myPokemonJSON, jinjaMyRMAmount) {
             Object.keys(myPokemonJSON).map(myPoke => {
-                if (myPoke == 'working' && Object.keys(myPokemonJSON[myPoke]).length < jinjaMyRMAmount) {
+                if (myPoke == 'working' && Object.keys(myPokemonJSON['working']).length < jinjaMyRMAmount) {
                     pokeCreate(myPokemonJSON, myPoke);
                     for (let rm=1; rm<=jinjaMyRMAmount; rm++) {
                         if (myPokemonJSON[myPoke][rm] === undefined) {
@@ -172,15 +171,22 @@
 
             container.addEventListener("drop", async (e) => {
                 const draggable = getClass("dragging")[0];
-                
+                const startCont = draggable.parentElement.parentElement.classList[0];
+                const endCont = container.classList[0];
+
                 // 같은 section 안에선 이동 못함 ex) working -> working
-                if (draggable.parentElement.parentElement.classList[0] === container.classList[0]) {
-                    e.preventDefault()
+                if (startCont === endCont) {
+                    e.preventDefault();
+                } 
+                // 러닝머신 개수와 working의 pokemon 수가 동일하다면 이동을 막음
+                else if (endCont === 'working' && Object.keys(myPokemonJSON['working']).length === jinjaMyRMAmount) {
+                        e.preventDefault();
+                        alert('러닝머신이 부족합니다.')
                 } else {
                     // post
                     const option = new URLSearchParams({
-                        startCont: draggable.parentElement.parentElement.classList[0],
-                        endCont: container.classList[0],
+                        startCont: startCont,
+                        endCont: endCont,
                         dragPokemon: draggable.classList[0]
                     });
                     const post = await runPost(option)
@@ -188,7 +194,7 @@
 
                     // client를 위한 json 변경 함수 호출
                     if (data.result !== false || data !== undefined) {
-                        updateJSON(draggable.parentElement.parentElement.classList[0], container.classList[0], draggable)
+                        updateJSON(startCont, container.classList[0], draggable)
                         if (data.coin) { 
                             alert('+'+data.coin+'coin')
                         } else if (data.hp) {
@@ -221,6 +227,8 @@
             }  
 
             delete myPokemonJSON[startCont][pokemon.classList[0]]
+
+            return jinjaMyRMAmount
         }
 
         async function runPost(option) {

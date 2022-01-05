@@ -89,11 +89,16 @@ def pokemonRun():
             _mypokemon = db.getMyPokemon(session['id'])
             _myRM = db.getInventory(session['id'])['5']
             del _mypokemon['length']
-            del _mypokemon['coming']
+            del _mypokemon['archive']
+            if 'coming' in _mypokemon:
+                del _mypokemon['coming']
+            
             return render_template('pokemonRun.html', username=_username, myRM=_myRM, pokemons=g['pokemonList'], mypokemon=_mypokemon)
         else:
             return redirect('/login')
     elif request.method == 'POST':
+        _myRM = db.getInventory(session['id'])['5']
+
         if request.form['startCont'] == 'working':
             if request.form['endCont'] == 'resting':
                 _coin = p.workEndPokemon(_userid, request.form['dragPokemon'])
