@@ -4,7 +4,6 @@
     <style>
         .container {
             width: 800px;
-            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
@@ -16,6 +15,7 @@
             height: 185px;
             display: flex;
             justify-content: space-evenly;
+            flex-shrink: 0;
         }
 
         .scItem {
@@ -27,6 +27,7 @@
         .listContainer {
             list-style: none;
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             width: inherit;
             height: auto;
@@ -92,11 +93,11 @@
                 btn.addEventListener('click', () => {
                     const pokemonID = btn.classList[0];
                     if (btn.parentElement.classList[1] === 'list') {
-                        selectPokemon('select', pokemonID)
-                    } else if (btn.parentElement.classList[1] === 'filter') {
-                        selectPokemon('filter', pokemonID)
-                    }
+                        selectPokemon('select', pokemonID, json)
                     pokemonFilter(pokemonID, pokemonJSON[pokemonID]['id'], pokemonJSON[pokemonID]['level'])
+                    } else if (btn.parentElement.classList[1] === 'filter') {
+                        selectPokemon('filter', pokemonID, json)
+                    }
                 })
             })
         }
@@ -104,44 +105,42 @@
         listPokemon('list', pokemonJSON)
 
         // 합성할 포켓몬 선택
-        function selectPokemon(type, pokemonID) {
+        function selectPokemon(type, pokemonID, json) {
             let second = 0;
 
-            Object.values(pokemonID).map(pokemon => {
-                const selectPokemonDivEle = document.createElement('div');
-                const selectPokemonImgEle = document.createElement('img');
-                const selectPokemonInfoEle = document.createElement('p');
+            const selectPokemonDivEle = document.createElement('div');
+            const selectPokemonImgEle = document.createElement('img');
+            const selectPokemonInfoEle = document.createElement('p');
 
-                selectPokemonDivEle.classList.add(pokemonID);
+            selectPokemonDivEle.classList.add(pokemonID);
 
-                selectPokemonImgEle.src="../static/images/" + pokemonJSON[pokemon]['id'] + ".png";
-                selectPokemonInfoEle.innerText = pokemons[pokemonJSON[pokemon]['id']]['name'] + ', ' + pokemonJSON[pokemon]['level'] + ', ' + parseFloat(Math.round(pokemonJSON[pokemonID]['percent'] * pokemonJSON[pokemonID]['max'])) + " (" + parseInt(Math.round(parseFloat(pokemonJSON[pokemonID]['percent']) * 100)) + "%)";
+            selectPokemonImgEle.src="../static/images/" + json[pokemonID]['id'] + ".png";
+            selectPokemonInfoEle.innerText = pokemons[json[pokemonID]['id']]['name'] + ', ' + json[pokemonID]['level'] + ', ' + parseFloat(Math.round(json[pokemonID]['percent'] * json[pokemonID]['max'])) + " (" + parseInt(Math.round(parseFloat(json[pokemonID]['percent']) * 100)) + "%)";
 
-                selectPokemonDivEle.appendChild(selectPokemonImgEle);
-                selectPokemonDivEle.appendChild(selectPokemonInfoEle);
+            selectPokemonDivEle.appendChild(selectPokemonImgEle);
+            selectPokemonDivEle.appendChild(selectPokemonInfoEle);
 
-                if (type === 'select') {
-                    getClass('selectPokemon')[0].innerHTML = ""
+            if (type === 'select') {
+                getClass('selectPokemon')[0].innerHTML = ""
 
-                    const reSelect = document.createElement('button');
-                    reSelect.classList.add('reSelect')
-                    reSelect.innerText = '다시 고르기'
-                    selectPokemonDivEle.appendChild(reSelect)
-                    getClass('selectPokemon')[0].appendChild(selectPokemonDivEle)
+                const reSelect = document.createElement('button');
+                reSelect.classList.add('reSelect')
+                reSelect.innerText = '다시 고르기'
+                selectPokemonDivEle.appendChild(reSelect)
+                getClass('selectPokemon')[0].appendChild(selectPokemonDivEle)
 
-                    
-                } else if (type === 'filter') {
-                    getClass('filterPokemon')[0].innerHTML = ""
+                
+            } else if (type === 'filter') {
+                getClass('filterPokemon')[0].innerHTML = ""
 
-                    const levelup = document.createElement('button');
-                    levelup.classList.add('levelup')
-                    levelup.innerText = '합성하기'
-                    selectPokemonDivEle.appendChild(levelup)
-                    getClass('filterPokemon')[0].appendChild(selectPokemonDivEle)
+                const levelup = document.createElement('button');
+                levelup.classList.add('levelup')
+                levelup.innerText = '합성하기'
+                selectPokemonDivEle.appendChild(levelup)
+                getClass('filterPokemon')[0].appendChild(selectPokemonDivEle)
 
-                    second = pokemonID
-                }
-            })
+                second = pokemonID
+            }
 
             // 다시 고르기 버튼
             getClass('reSelect')[0].addEventListener('click', (e) => {
@@ -170,6 +169,9 @@
 
                     if (data === true) {
                         alert('성공')
+
+                        listPokemon('list', pokemonJSON)
+                        getClass('selectPokemon')[0].innerHTML = ""
                     } else {
                         alert('실패')
                     }
