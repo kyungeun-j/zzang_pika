@@ -125,6 +125,25 @@ def pokemonRun():
         elif request.form['startCont'] == request.form['endCont']:
             return jsonify({'result': False})
 
+@app.route('/pokemonTraining')
+def pokemonTraining():
+    _username = session['username'] if 'id' in session else False
+    if 'id' in session:
+        _default = db.getMyPokemon(session['id'])['default']
+        return render_template('pokemonTraining.html', username=_username, pokemons=g['pokemonList'], default=_default)
+    else:
+        return redirect('/login')
+
+@app.route('/pokemonLevelUp')
+def pokemonLevelUp():
+    _username = session['username'] if 'id' in session else False
+    if 'id' in session:
+        _default = db.getMyPokemon(session['id'])['default']
+        return render_template('pokemonLevelUp.html', username=_username, pokemons=g['pokemonList'], default=_default)
+    else:
+        return redirect('/login')
+
+
 @app.route('/shop')
 def shopGet():
     _username = session['username'] if 'id' in session else False
