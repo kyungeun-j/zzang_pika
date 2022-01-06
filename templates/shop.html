@@ -41,12 +41,12 @@
             <input type="button" class="buyBall" value="100 Coin">
         </section>
         <section class="shopItem">
-            <div>가방 업그레이드</div>
-            <input type="button" class="expandBagSize" value="50 Coin">
+            <div>인벤토리 가방 업그레이드</div>
+            <input type="button" class="expandBagSize" value="10000 Coin">
         </section>
         <section class="shopItem">
-            <div>포켓몬 박스 업그레이드</div>
-            <input type="button" class="buyBall" value="200 Coin">
+            <div>포켓몬 가방 업그레이드</div>
+            <input type="button" class="expandPokemonLength" value="10000 Coin">
         </section>
         <section class="shopItem">
             <div>러닝머신 업그레이드</div>
@@ -148,8 +148,28 @@
             const option = new URLSearchParams({
                 feild: 'expandBagSize'
             });
-            // const post = await shopPost(option);
-            // const data = await post.json();
+            const post = await shopPost(option);
+            const data = await post.json();
+            console.log(data)
+
+            let result = ''
+            if (data.result) result = '확장 완료'
+            else result = data.msg
+            shopResult(result)
+        });
+
+        // expandPokemonLength
+        getClass('expandPokemonLength')[0].addEventListener('click', async () => {
+            const option = new URLSearchParams({
+                feild: 'expandPokemonLength'
+            });
+            const post = await shopPost(option);
+            const data = await post.json();
+
+            let result = ''
+            if (data.result) result = '확장 완료'
+            else result = data.msg
+            shopResult(result)
         });
 
         // buyRunningMachines
