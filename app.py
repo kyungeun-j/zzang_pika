@@ -74,9 +74,6 @@ def myPokemon():
         if request.method == 'GET':
             _mypokemon = db.getMyPokemon(session['id'])
             return render_template('myPokemon.html', username=_username, pokemons=g['pokemonList'], resting=_mypokemon['resting'], working=_mypokemon['working'], default=_mypokemon['default'])
-        elif request.method == 'POST':
-            if request.form['field'] == 'training':
-                return jsonify(p.trainingPokemon(session['id'], int(request.form['pokemonID'])))
     else:
         return redirect('/login')
 
@@ -125,12 +122,16 @@ def pokemonRun():
         elif request.form['startCont'] == request.form['endCont']:
             return jsonify({'result': False})
 
-@app.route('/pokemonTraining')
+@app.route('/pokemonTraining', methods=['GET', 'POST'])
 def pokemonTraining():
     _username = session['username'] if 'id' in session else False
     if 'id' in session:
-        _default = db.getMyPokemon(session['id'])['default']
-        return render_template('pokemonTraining.html', username=_username, pokemons=g['pokemonList'], default=_default)
+        if request.method == 'GET':
+            _default = db.getMyPokemon(session['id'])['default']
+            return render_template('pokemonTraining.html', username=_username, pokemons=g['pokemonList'], default=_default)
+        elif request.method == 'POST':
+            if request.form['field'] == 'training':
+                return jsonify(p.trainingPokemon(session['id'], int(request.form['pokemonID'])))
     else:
         return redirect('/login')
 
