@@ -135,12 +135,16 @@ def pokemonTraining():
     else:
         return redirect('/login')
 
-@app.route('/pokemonLevelUp')
+@app.route('/pokemonLevelUp', methods=['GET', 'POST'])
 def pokemonLevelUp():
     _username = session['username'] if 'id' in session else False
     if 'id' in session:
-        _default = db.getMyPokemon(session['id'])['default']
-        return render_template('pokemonLevelUp.html', username=_username, pokemons=g['pokemonList'], default=_default)
+        if request.method == 'GET':
+            _default = db.getMyPokemon(session['id'])['default']
+            return render_template('pokemonLevelUp.html', username=_username, pokemons=g['pokemonList'], default=_default)
+        elif request.method == 'POST':
+            
+            return jsonify(p.levelUpPokemon(session['id'], int(request.form['first']), int(request.form['second'])))
     else:
         return redirect('/login')
 
