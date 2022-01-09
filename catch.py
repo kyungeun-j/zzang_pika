@@ -37,7 +37,7 @@ def comePokemon(userId, nPokemon, n):
     elif unlocked < 150:
         n = 20
 
-    spawnId = unevolved + noEvovled[:n]
+    spawnId = unevolved + noEvolved[:n]
     # legendSpawnId = noEvolved[-5:]
 
     coming = []
