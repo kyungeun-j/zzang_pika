@@ -1,0 +1,19 @@
+#pokemons {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    align-items: center;
+    text-align: center;
+    margin-left: 138px;
+    margin-right: 138px;
+}
+
+ul#pokemons li {
+    border: 2px solid #7eaf91;
+    background-color: #d4ffd6;
+    width: 151px;
+    margin: 5px;
+    border-radius: 10px;
+}

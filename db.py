@@ -103,14 +103,14 @@ def checkDuplicatedUser(username):
 def getInventory(userId):
     if not str(userId) + '.json' in os.listdir(DB_INVENTORY):
         makeInventory(userId)
-    with open(DB_INVENTORY + str(userId) + '.json', 'r') as f:
+    with open(DB_INVENTORY + str(userId) + '.json', 'r', encoding='utf8') as f:
         return json.loads(f.read())
 
 def makeInventory(userId):
-    with open(DB_INVENTORY + 'table.json', 'r') as f:
+    with open(DB_INVENTORY + 'table.json', 'r', encoding='utf8') as f:
         inventoryTable = json.loads(f.read())
     
-    with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
+    with open(DB_INVENTORY + str(userId) + '.json', 'w', encoding='utf8') as f:
         f.write(json.dumps(inventoryTable, indent=2))
 
 def getMoney(userId):
