@@ -22,7 +22,7 @@
         }
 
         .using {
-            background: url('../static/icon/RM.png') no-repeat center top / 100px;
+            background: url('../static/icons/RM.png') no-repeat center top / 100px;
         }
 
         .hidden {
@@ -49,8 +49,9 @@
             font-size: 8px;
         }
     </style>
-    <div id="pokemons" class="hidden">{{ pokemons }}</div>
-    <div id="myPokemons" class="hidden">{{ mypokemon }}</div>
+    <div id="myRM" style="display: none;">{{ myRM }}</div>
+    <div id="pokemons" style="display: none;">{{ pokemons }}</div>
+    <div id="myPokemons" style="display: none;">{{ mypokemon }}</div>
     <section class="working container">
         <h1>Working</h1>
         <div class="pokeContainer">
@@ -66,180 +67,7 @@
         <div class="pokeContainer">
         </div>
     </section>
-    <script>
-        let dragEles = [...getClass('dragPokemon')];
-        let containerEles = getClass('container');
-
-        const pokemons = JSON.parse(getID('pokemons').innerText.replaceAll("'", '"').replaceAll('None', 'null'));
-        let myPokemonJSON = JSON.parse(getID('myPokemons').innerText.replaceAll("'", '"'));
-        let myPokemonJSONLeng = Object.keys(myPokemonJSON).length;
-        let jinjaMyRMAmount = "{{ myRM['amount'] }}" * 1; // 러닝머신 개수
-
-        // running machine create
-        function RMCreate(myPokemonJSONLeng, myPokemonJSON, jinjaMyRMAmount) {
-            Object.keys(myPokemonJSON).map(myPoke => {
-                if (myPoke == 'working' && Object.keys(myPokemonJSON['working']).length < jinjaMyRMAmount) {
-                    pokeCreate(myPokemonJSON, myPoke);
-                    for (let rm=1; rm<=jinjaMyRMAmount; rm++) {
-                        if (myPokemonJSON[myPoke][rm] === undefined) {
-                            const rmDivEle = document.createElement('div');
-                            const rmImgEle = document.createElement('img');
-
-                            rmImgEle.setAttribute('class', 'rmImg');
-                            rmImgEle.src = '../static/icon/RM.png';
-                            rmDivEle.append(rmImgEle);
-                            getClass(myPoke)[0].children[1].append(rmDivEle);
-                        }
-                    }
-                } else {
-                    pokeCreate(myPokemonJSON, myPoke);
-                }
-            })
-
-            dragEles = [...getClass('dragPokemon')];
-            dragSE(dragEles)
-        }
-
-        // pokemon create
-        function pokeCreate(myPokemonJSON, myPoke) {
-            Object.keys(myPokemonJSON[myPoke]).map(poke => {
-                const rmDivEle = document.createElement('div');
-                const rmImgEle = document.createElement('img');
-                const rmPEle = document.createElement('p');
-                const rmPEle2 = document.createElement('p');
-
-                const percentDiv = document.createElement('div')
-                const percentInnerDiv = document.createElement('div')
-                const percentLabelDiv = document.createElement('div')
-
-                if(myPoke === 'default') {
-                    percentDiv.classList.add('percentDiv');
-                    percentInnerDiv.classList.add('percentInnerDiv');
-                    percentLabelDiv.classList.add('percentLabelDiv');
-
-                    
-                    const percent = Math.round(myPokemonJSON[myPoke][poke]['hp'] / myPokemonJSON[myPoke][poke]['maxHp'] * 100)
-                    percentInnerDiv.style.width = percent+'%';
-                    percentLabelDiv.innerHTML = percent+'%';
-
-                    percentInnerDiv.appendChild(percentLabelDiv)
-                    percentDiv.appendChild(percentInnerDiv)
-
-                    rmDivEle.appendChild(percentDiv)
-                }
-
-            
-                if(myPoke === 'working') {
-                    rmDivEle.classList.add(poke, "dragPokemon", "using");
-                } else {
-                    rmDivEle.classList.add(poke, "dragPokemon");
-                }
-                rmDivEle.setAttribute("pokemon_id", myPokemonJSON[myPoke][poke]['id']);
-                rmDivEle.setAttribute('percent', myPokemonJSON[myPoke][poke]['percent']);
-                rmDivEle.setAttribute('max', myPokemonJSON[myPoke][poke]['max']);
-                rmDivEle.setAttribute('draggable', "true");
-                rmImgEle.src="../static/images/"+myPokemonJSON[myPoke][poke]['id']+".png";
-                rmDivEle.appendChild(rmImgEle);
-                rmPEle.innerText = pokemons[myPokemonJSON[myPoke][poke]['id']]['name'];
-                rmDivEle.appendChild(rmPEle);
-                rmPEle2.innerText = parseInt(Math.round(parseFloat(myPokemonJSON[myPoke][poke]['percent']) * myPokemonJSON[myPoke][poke]['max'])) + " (" + parseInt(Math.round(parseFloat(myPokemonJSON[myPoke][poke]['percent']) * 100))+"%)";
-                rmDivEle.appendChild(rmPEle2);
-                getClass(myPoke)[0].children[1].append(rmDivEle);
-            })
-        }
-
-        RMCreate(myPokemonJSONLeng, myPokemonJSON, jinjaMyRMAmount);
-        
-        // drag Start & End
-        function dragSE(dragEles) {
-            dragEles.forEach(ele => {
-                ele.addEventListener('dragstart', () => {
-                    ele.classList.add("dragging");
-                });
-
-                ele.addEventListener("dragend", () => {
-                    ele.classList.remove("dragging");
-                });
-            });
-        }
-
-        // drag Over & drop
-        [...containerEles].forEach(container => {
-            container.addEventListener("dragover", (e) => {
-                e.preventDefault();
-            });
-
-            container.addEventListener("drop", async (e) => {
-                const draggable = getClass("dragging")[0];
-                const startCont = draggable.parentElement.parentElement.classList[0];
-                const endCont = container.classList[0];
-
-                // 같은 section 안에선 이동 못함 ex) working -> working
-                if (startCont === endCont) {
-                    e.preventDefault();
-                } 
-                // 러닝머신 개수와 working의 pokemon 수가 동일하다면 이동을 막음
-                else if (endCont === 'working' && Object.keys(myPokemonJSON['working']).length === jinjaMyRMAmount) {
-                        e.preventDefault();
-                        alert('러닝머신이 부족합니다.')
-                } else {
-                    // post
-                    const option = new URLSearchParams({
-                        startCont: startCont,
-                        endCont: endCont,
-                        dragPokemon: draggable.classList[0]
-                    });
-                    const post = await runPost(option)
-                    const data = await post.json();
-
-                    // client를 위한 json 변경 함수 호출
-                    if (data.result !== false || data !== undefined) {
-                        updateJSON(startCont, container.classList[0], draggable)
-                        if (data.coin) { 
-                            alert('+'+data.coin+'coin')
-                        } else if (data.hp) {
-                            alert('+'+data.hp+'hp')
-                        }
-                    } else if (data.result === false) {
-                        alert('포켓몬을 이동시킬 수 없습니다.')
-                    }
-
-                    getClass('working')[0].children[1].innerHTML = ''
-                    getClass('resting')[0].children[1].innerHTML = ''
-                    getClass('default')[0].children[1].innerHTML = ''
-
-                    // create function 실행
-                    RMCreate(myPokemonJSONLeng, myPokemonJSON, jinjaMyRMAmount);
-                }
-            })
-        });
-
-        function updateJSON(startCont, endCont, pokemon) {
-            if (startCont === 'working') {
-                pokemon.classList.remove('using')
-            } else if (endCont === 'working') {
-                pokemon.classList.add('using')
-            }
-            
-            myPokemonJSON[endCont] = {
-                ...myPokemonJSON[endCont],
-                [pokemon.classList[0]]: myPokemonJSON[startCont][pokemon.classList[0]]
-            }  
-
-            delete myPokemonJSON[startCont][pokemon.classList[0]]
-
-            return jinjaMyRMAmount
-        }
-
-        async function runPost(option) {
-            return fetch('/pokemonRun', {
-                method: 'POST',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: option
-            })
-        }
-    </script>
 {% endblock %}
+{% block js %}
+    <script src="../static/pokemonRun.js"></script>
+{% endblock %}  
