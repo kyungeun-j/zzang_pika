@@ -17,3 +17,9 @@ ul#pokemons li {
     margin: 5px;
     border-radius: 10px;
 }
+
+ul#pokemonSort {
+    position: absolute;
+    right: 66px;
+    top: 16px;
+}

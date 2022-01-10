@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonList.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='shop.css') }}" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script src="../static/common.js"></script>
 
 <div id="user_info">
@@ -45,3 +45,5 @@
 <section id="content">
     {% block content %}{% endblock %}
 </section>
+
+{% block js %}{% endblock %}
