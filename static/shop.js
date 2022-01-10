@@ -1,150 +1,165 @@
 const userMoney = getClass('userMoney')[0];
-        const userBag = getClass('userBag')[0];
+const userBag = getClass('userBag')[0];
 
-        // buyBall count
-        const ballCountEle = getClass('ballCount')[0];
-        const ballMinusEle = getClass('ballMinus')[0];
-        const ballPlusEle = getClass('ballPlus')[0];
+// buyBall count
+const ballCountEle = getClass('ballCount')[0];
+const ballMinusEle = getClass('ballMinus')[0];
+const ballPlusEle = getClass('ballPlus')[0];
 
-        let ballCount = ballCountEle.innerText * 1;
-        ballMinusEle.addEventListener('click', () => {
-            ballCount = minus(ballCount, ballCountEle)
-            if (ballCount === 1) ballMinusEle.disabled = true;
-        })
-        ballPlusEle.addEventListener('click', () => {
-            ballMinusEle.disabled = false;
-            ballCount = plus(ballCount, ballCountEle)
-            if (ballCount > 19) ballPlusEle.disabled = true;
-        })
+let ballCount = ballCountEle.innerText * 1;
+ballMinusEle.addEventListener('click', () => {
+    ballCount = minus(ballCount, ballCountEle)
+});
+ballPlusEle.addEventListener('click', () => {
+    ballMinusEle.disabled = false;
+    ballCount = plus(ballCount, ballCountEle)
+});
+getClass('setMax')[0].addEventListener('click', () => {
+    ballCountEle.innerText = 40;
+    ballCount = 40;
+});
 
-        // buyRunningMachines count
-        const runCountEle = getClass('runCount')[0];
-        const runMinusEle = getClass('runMinus')[0];
-        const runPlusEle = getClass('runPlus')[0];
+getClass('setMin')[0].addEventListener('click', () => {
+    ballCountEle.innerText = 1;
+    ballCount = 1;
+});
 
-        let runCount = runCountEle.innerText * 1;
-        runMinusEle.addEventListener('click', () => {
-            runCount = minus(runCount, runCountEle)
-            if (runCount === 1) runMinusEle.disabled = true;
-        })
-        runPlusEle.addEventListener('click', () => {
-            runMinusEle.disabled = false;
-            runCount = plus(runCount, runCountEle)
-        })
+// +, - 버튼
+function minus(count, ele) {
+    if (count == 1)
+    {
+        return count;
+    }
+    if (count > 1) {
+        count -= 1;
+        ele.innerText = count + '';
+        return count;
+    }
+}
+function plus(count, ele) {
+    if (count == 40)
+    {
+        return count;
+    }
+    count += 1;
+    ele.innerText = count + '';
+    return count;
+}
 
-        // +, - 버튼
-        function minus(count, ele) {
-            if (count > 1) {
-                count -= 1;
-                ele.innerText = count + '';
-                return count;
-            }
-        }
-        function plus(count, ele) {
-            count += 1;
-            ele.innerText = count + '';
-            return count;
-        }
+// buy ball
+getClass('buyBall')[0].addEventListener('click', async () => {
+    const option = new URLSearchParams({
+        feild: 'buyball',
+        ballCount: ballCount
+    });
+    const post = await shopPost(option);
+    const data = await post.json();
 
-        // buy ball
-        getClass('buyBall')[0].addEventListener('click', async () => {
-            const option = new URLSearchParams({
-                feild: 'buyball',
-                ballCount: ballCount
-            });
-            const post = await shopPost(option);
-            const data = await post.json();
+    if (data.result !== false) {
+        userMoney.innerHTML -= 100 * ballCount;
+        userBag.innerHTML -= 1 * ballCount;
+    }
 
-            if (data.result !== false) {
-                userMoney.innerHTML -= 100 * ballCount;
-                userBag.innerHTML -= 1 * ballCount;
-            }
-
-            let result = ''
-            if (!data.msg) {
-                data.map(b => {
-                    if (b == 1) result += '몬스터볼'
-                    else if (b == 2) result += '수퍼볼'
-                    else if (b == 3) result += '하이퍼볼'
-                    else result += '마스터볼'
-                })
-            } else {
-                result = data.msg
-            }
-            shopResult(result)
+    if (!data.msg) {
+        getID('shop_ball_list').innerText = '';
+        data.map(b => {
+            const ballEle = document.createElement('li');
+            ballEle.setAttribute('type', b);
+            getID('shop_ball_list').appendChild(ballEle);
         });
+        openBuyBallResult();
+    } else {
+        alert(data.msg);
+    }
+});
 
-        // expandBagSize
-        getClass('expandBagSize')[0].addEventListener('click', async () => {
-            const option = new URLSearchParams({
-                feild: 'expandBagSize'
-            });
-            const post = await shopPost(option);
-            const data = await post.json();
-            console.log(data)
+// expandBagSize
+getClass('expandBagSize')[0].addEventListener('click', async () => {
+    const option = new URLSearchParams({
+        feild: 'expandBagSize'
+    });
+    const post = await shopPost(option);
+    const data = await post.json();
+    console.log(data)
 
-            let result = ''
-            if (data.result) result = '확장 완료'
-            else result = data.msg
-            shopResult(result)
-        });
+    let result = ''
+    if (data.result) {
+        result = '확장 완료'
+        userBag.innerHTML = userBag.innerHTML * 1 + 50;
+        userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
+    }
+    else result = data.msg
+    alert(result);
+});
 
-        // expandPokemonLength
-        getClass('expandPokemonLength')[0].addEventListener('click', async () => {
-            const option = new URLSearchParams({
-                feild: 'expandPokemonLength'
-            });
-            const post = await shopPost(option);
-            const data = await post.json();
+// expandPokemonLength
+getClass('expandPokemonLength')[0].addEventListener('click', async () => {
+    const option = new URLSearchParams({
+        feild: 'expandPokemonLength'
+    });
+    const post = await shopPost(option);
+    const data = await post.json();
 
-            let result = ''
-            if (data.result) result = '확장 완료'
-            else result = data.msg
-            shopResult(result)
-        });
+    let result = ''
+    if (data.result) {
+        result = '확장 완료';
+        userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
+    }
+    else result = data.msg
+    alert(result);
+});
 
-        // buyRunningMachines
-        getClass('buyRunningMachines')[0].addEventListener('click', async () => {
-            const option = new URLSearchParams({
-                feild: 'buyRunningMachines',
-                runCount: runCount
-            });
-            const post = await shopPost(option);
-            const data = await post.json();
-            
-            let result = ''
-            if (data.result === true) {
-                userMoney.innerHTML -= 1000 * runCount;
-                userBag.innerHTML -= 1 * runCount;
-                result = runCount + '개 구입'
-            } else {
-                result = data.msg
-            }
-            shopResult(result)
-        });
+// buyRunningMachines
+getClass('buyRunningMachines')[0].addEventListener('click', async () => {
+    const runCount = 1;
+    const option = new URLSearchParams({
+        feild: 'buyRunningMachines',
+        runCount: runCount
+    });
+    const post = await shopPost(option);
+    const data = await post.json();
+    
+    let result = ''
+    if (data.result === true) {
+        userMoney.innerHTML -= 1000 * runCount;
+        userBag.innerHTML -= 1 * runCount;
+        result = runCount + '개 구입'
+    } else {
+        result = data.msg
+    }
+    alert(result);
+});
 
-        // post
-        function shopPost(option) {
-            return fetch('/shop', {
-                method: 'POST',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: option
-            })
-        }
+// post
+function shopPost(option) {
+    return fetch('/shop', {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: option
+    })
+}
 
-        // popup
-        const shopResultEle = getClass('shopResult')[0];
-        const closeEle = getClass('closeBtn')[0];
-        const resultItemEle = getClass('resultItem')[0];
+function openBuyBallResult()
+{
+    getID('shop_buy_result_balls').classList.add('popped');   
+}
 
-        function shopResult(result) {
-            shopResultEle.classList.toggle('show');
-            resultItemEle.innerText = result
-        }
-            
-        closeEle.addEventListener('click', () => {
-            shopResultEle.classList.toggle('show');
-        })
+function closeBuyBallResult()
+{
+    getID('shop_buy_result_balls').classList.remove('popped');   
+}
+
+getID('close_shop_buy_result').addEventListener('click', () => {
+    // 포켓몬볼 뽑기 결과 닫기 버튼 클릭 시
+    // result html 삭제 후 display none
+    getID('shop_ball_list').innerHTML = '';
+    closeBuyBallResult();
+});
+
+getID('again_buy_balls').addEventListener('click', () => {
+    // 다시 뽑기 클릭 시 
+    getClass('buyBall')[0].click();
+});

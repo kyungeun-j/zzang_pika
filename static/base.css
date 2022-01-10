@@ -1,0 +1,58 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+/* Init */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+#content { 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -250px;
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    /* border-radius: 5px; */
+    overflow: scroll;
+}
+
+#user_info {
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -240px;
+    margin-left: -350px;
+    border: 1px solid black;
+    border-right: 0;
+}
+#menu {
+    width: 70px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -199px;
+    margin-left: -320px;
+}
+#menu li {
+    border: 1px solid black;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-right: 0;
+    border-top: 0;
+    cursor: pointer;
+}
