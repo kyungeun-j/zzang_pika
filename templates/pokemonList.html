@@ -1,62 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div>
-        정렬
-        <select id="pokemonSort">
-            <option value="">기본순</option>
-            <option value="name">이름순</option>
-            <option value="efficiency">효율성순</option>
-        </select>
-    </div>
-    <ul id="pokemons">
+    <ul id="pokemonSort">
+        <li class="">기본순</li>
+        <li class="name">이름순</li>
+        <li class="efficiency">효율성순</li>
     </ul>
-    <script>
-        let pokemonJSON = JSON.parse('{{ datas|tojson }}')
-        const pokemonsUl = getID('pokemons');
-        createPokemons(Object.values(pokemonJSON))
-
-        getID('pokemonSort').addEventListener('change', (e) => {
-
-            let pokemonSort = jsonSort(String(e.target.value))
-            createPokemons(pokemonSort)
-            
-        })
-
-        function createPokemons(pokemonSort) {
-            pokemonsUl.innerHTML = ""
-            pokemonSort.forEach(poke => {
-                let pokemonLi = document.createElement('li');
-                let pokemonA = document.createElement('a');
-                let pokemonImg = document.createElement('img');
-                let pokemonName = document.createElement('div');
-                let pokemonEfficiency = document.createElement('div');
-
-                pokemonA.href="/pokemonDetail/"+poke['id'];
-
-                pokemonImg.src="../static/images/"+poke['id']+".png";
-                pokemonName.innerText = poke['name']
-                pokemonEfficiency.innerText = poke['efficiency']
-
-                pokemonA.appendChild(pokemonImg)
-                pokemonA.appendChild(pokemonName)
-                pokemonA.appendChild(pokemonEfficiency)
-
-                pokemonLi.appendChild(pokemonA)
-
-                pokemonsUl.appendChild(pokemonLi)
-            })
-        }
-
-        function jsonSort(val) {
-            return Object.values(pokemonJSON).sort(function(a, b) {
-                let x = a[val]
-                let y = b[val]
-
-                return (x< y) ? -1 : (x > y) ? 1 : 0;
-            })
-        }
-
-        // console.log(jsonSort('name'))
-    </script>
-{% endblock %}
+    
+    <div class="data" style="display: none;">{{ datas|tojson }}</div>
+    <div id="illustrated_book">
+        <div id="book_view">
+            <ul id="pokemons"></ul>
+        </div>
+    </div>
+    
+    {% endblock %}
+    {% block js %}
+        <script src="../static/pokemonList.js"></script>
+    {% endblock %}  
