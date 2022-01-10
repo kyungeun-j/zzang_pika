@@ -1,20 +1,10 @@
 {
-  "userLength": 3,
+  "userLength": 1,
   "userList": {
     "1234": {
       "password": "11",
-      "lastLogin": "2022-01-09 16:42:10.641972",
+      "lastLogin": "2022-01-10 09:24:43.993000",
       "id": 1
-    },
-    "11": {
-      "password": "11",
-      "lastLogin": "",
-      "id": 2
-    },
-    "123": {
-      "password": "11",
-      "lastLogin": "2022-01-09 16:44:48.620718",
-      "id": 3
     }
   }
 }
