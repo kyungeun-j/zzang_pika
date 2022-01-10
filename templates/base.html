@@ -1,80 +1,43 @@
 <!DOCTYPE html>
 <title>zzangpika</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonList.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='shop.css') }}" />
+
 <script src="../static/common.js"></script>
-<style>
-    .content {    
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-</style>
-<nav id="header">
-    <div id="user_info">
-        <!-- temp -->
-        {% if username != False %}
-        <div id="user_icon"></div>
-            <!-- nickName -->
-            <p id="user_name">{{ username }}</p>
-            <!-- money -->
-            <p id="user_money">300,000</p>
-            <!-- <a href="/logout">로그아웃</a> -->
-        {% else %}
-            <a href="/login">로그인</a>
-        {% endif %}
-    </div>
-    <ul id="menu">
-        <!-- <li>
-            <a href="/">
-                로고
-            </a>
-        </li> -->
+
+<div id="user_info">
+    <!-- temp -->
+    {% if username != False %}
+    <div id="user_icon"></div>
+        <!-- nickName -->
+        <p id="user_name">{{ username }} 님<br />환영합니다.</p>
+        <!-- <a href="/logout">로그아웃</a> -->
+    {% else %}
+        <a href="/login">로그인</a>
+    {% endif %}
+</div>
+
+<nav id="menu">
+    <ul>
         <li>
             <a href="/myPokemon">
                 포켓몬
-                <!-- <img src="../static/icons/ball.jpg" alt="" /> -->
             </a>
         </li>
-        <!-- <li>
-            <a href="/pokemonCatch">
-                포켓몬 찾기
-                <img src="../static/icons/map.png" alt="" />
-            </a>
-        </li> -->
         <li>
             <a href="/pokemonList">
                 도감
-                <!-- <img src="../static/icons/index.png" alt="" /> -->
             </a>
         </li>
-        <!-- <li>
-            <a href="/pokemonRun">
-                포켓몬 일 시키기
-                <img src="../static/icons/work.png" alt="" />
-            </a>
-        </li> -->
-        <!-- <li>
-            <a href="/pokemonLevelUp">
-                포켓몬 합성
-            </a>
-        </li>
-        <li>
-            <a href="/pokemonTraining">
-                포켓몬 훈련
-            </a>
-        </li> -->
         <li>
             <a href="/inventory">
                 가방
-                <!-- <img src="../static/icons/bag.png" alt="" /> -->
             </a>
         </li>
         <li>
             <a href="/shop">
                 상점
-                <!-- <img src="../static/icons/shop.png" alt="" /> -->
             </a>
         </li>
     </ul>
