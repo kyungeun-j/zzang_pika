@@ -26,8 +26,13 @@ def main():
 
 @app.route('/pokemonList')
 def pokemonList():
-    _username = session['username'] if 'id' in session else False
-    return render_template('pokemonList.html', datas=g['pokemonList'], username=_username)
+    if 'id' in session:
+        _username = session['username'] if 'id' in session else False
+        _mypokemon = db.getMyPokemon(session['id'])
+
+        return render_template('pokemonList.html', datas=g['pokemonList'], username=_username, myPokemon=_mypokemon)
+    else:
+        return redirect('/login')
 
 @app.route('/pokemonDetail/<id>')
 def pokemonDetail(id):

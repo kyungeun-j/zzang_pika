@@ -1,18 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <ul id="pokemonSort">
-        <li class="">기본순</li>
-        <li class="name">이름순</li>
-        <li class="efficiency">효율성순</li>
-    </ul>
-    
     <div class="data" style="display: none;">{{ datas|tojson }}</div>
-    <div id="illustrated_book">
-        <div id="book_view">
-            <ul id="pokemons"></ul>
-        </div>
-    </div>
+    <div class="myPokemon" style="display: none;">{{ myPokemon|tojson }}</div>
+    <ul id="pokemons"></ul>
     
     {% endblock %}
     {% block js %}

@@ -1,55 +1,38 @@
 let pokemonJSON = JSON.parse(getClass('data')[0].innerText)
-const pokemonsUl = getID('pokemons');
-createPokemons(Object.values(pokemonJSON));
+let myPokemonJSON = JSON.parse(getClass('myPokemon')[0].innerText)
 
-[...getID('pokemonSort').children].map(pokemon => {
-    pokemon.addEventListener('click', () => {
-        if (pokemon.classList[0] === undefined) {
-            createPokemons(Object.values(pokemonJSON))
-        } else {
-            let pokemonSort = jsonSort(pokemon.classList[0])
-            createPokemons(pokemonSort)
-        }
-    })
+// 보유 포켓몬 구별을 위한 json 생성
+myPokemonJSON = Object.assign(myPokemonJSON['default'], myPokemonJSON['resting'], myPokemonJSON['working']);
+const setMyPokemon = [... new Set(Object.values(myPokemonJSON).map(my => my['id']))]
+const pokemons = []
+setMyPokemon.map(set => {
+    pokemons[set] = pokemonJSON[set]
 })
 
-function createPokemons(pokemonSort) {
+// create pokemon list 
+const pokemonsUl = getID('pokemons');
+createPokemons(Object.keys(pokemonJSON));
+
+function createPokemons(poke) {
     pokemonsUl.innerHTML = ""
-    pokemonSort.forEach(poke => {
+    poke.forEach(key => {
         let pokemonLi = document.createElement('li');
         let pokemonA = document.createElement('a');
         let pokemonImg = document.createElement('img');
         let pokemonName = document.createElement('div');
         let pokemonEfficiency = document.createElement('div');
-
-        pokemonA.href="/pokemonDetail/"+poke['id'];
-
-        pokemonImg.src="../static/images/"+poke['id']+".png";
-        pokemonName.innerText = poke['name']
-        pokemonEfficiency.innerText = poke['efficiency']
-
-        pokemonA.appendChild(pokemonImg)
-        pokemonA.appendChild(pokemonName)
-        pokemonA.appendChild(pokemonEfficiency)
-
-        pokemonLi.appendChild(pokemonA)
-
+        if (pokemons[key] !== undefined) {
+            pokemonA.href="/pokemonDetail/"+pokemonJSON[key]['id'];
+            pokemonImg.src="../static/images/"+pokemonJSON[key]['id']+".png";
+            pokemonName.innerText = pokemonJSON[key]['name']
+            pokemonEfficiency.innerText = pokemonJSON[key]['efficiency']
+            pokemonA.appendChild(pokemonImg)
+            pokemonA.appendChild(pokemonName)
+            pokemonA.appendChild(pokemonEfficiency)
+            pokemonLi.appendChild(pokemonA)
+        } else {
+            pokemonLi.innerText = key
+        }
         pokemonsUl.appendChild(pokemonLi)
     })
 }
-
-function jsonSort(val) {
-    return Object.values(pokemonJSON).sort(function(a, b) {
-        let x = a[val]
-        let y = b[val]
-
-        return (x< y) ? -1 : (x > y) ? 1 : 0;
-    })
-}
-
-// sort menu 고정
-getID('content').addEventListener('scroll', () => {
-	let scrollLocation = getID('content').scrollTop; // content 스크롤바 위치
-    
-    getID('pokemonSort').style.top = (scrollLocation + 16)+'px';
-})
