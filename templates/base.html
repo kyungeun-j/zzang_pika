@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <title>zzangpika</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='pokemonCatch.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonList.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='shop.css') }}" />
 
@@ -20,6 +21,11 @@
 
 <nav id="menu">
     <ul>
+        <li>
+            <a href="/pokemonCatch">
+                찾기
+            </a>
+        </li>
         <li>
             <a href="/myPokemon">
                 포켓몬

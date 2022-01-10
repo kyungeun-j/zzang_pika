@@ -17,19 +17,21 @@ function createPokemons(poke) {
     pokemonsUl.innerHTML = ""
     poke.forEach(key => {
         let pokemonLi = document.createElement('li');
-        let pokemonA = document.createElement('a');
-        let pokemonImg = document.createElement('img');
-        let pokemonName = document.createElement('div');
-        let pokemonEfficiency = document.createElement('div');
+        // let pokemonA = document.createElement('a');
+        // let pokemonImg = document.createElement('img');
+        // let pokemonName = document.createElement('div');
+        // let pokemonEfficiency = document.createElement('div');
         if (pokemons[key] !== undefined) {
-            pokemonA.href="/pokemonDetail/"+pokemonJSON[key]['id'];
-            pokemonImg.src="../static/images/"+pokemonJSON[key]['id']+".png";
-            pokemonName.innerText = pokemonJSON[key]['name']
-            pokemonEfficiency.innerText = pokemonJSON[key]['efficiency']
-            pokemonA.appendChild(pokemonImg)
-            pokemonA.appendChild(pokemonName)
-            pokemonA.appendChild(pokemonEfficiency)
-            pokemonLi.appendChild(pokemonA)
+            pokemonLi.style.backgroundImage = 'url(../static/images/' + pokemonJSON[key]['id'] + '.png';
+            pokemonLi.classList.add('exist');
+            // pokemonA.href="/pokemonDetail/"+pokemonJSON[key]['id'];
+            // pokemonImg.src="../static/images/"+pokemonJSON[key]['id']+".png";
+            // pokemonName.innerText = pokemonJSON[key]['name']
+            // pokemonEfficiency.innerText = pokemonJSON[key]['efficiency']
+            // pokemonA.appendChild(pokemonImg)
+            // pokemonA.appendChild(pokemonName)
+            // pokemonA.appendChild(pokemonEfficiency)
+            // pokemonLi.appendChild(pokemonA)
         } else {
             pokemonLi.innerText = key
         }
