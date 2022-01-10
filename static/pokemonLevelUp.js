@@ -56,7 +56,7 @@ function listPokemon(type, json) {
             const pokemonID = btn.classList[0];
             if (btn.parentElement.classList[1] === 'list') {
                 selectPokemon('select', pokemonID, json)
-            pokemonFilter(pokemonID, pokemonJSON[pokemonID]['id'], pokemonJSON[pokemonID]['level'])
+                pokemonFilter(pokemonID, pokemonJSON[pokemonID]['id'], pokemonJSON[pokemonID]['level'])
             } else if (btn.parentElement.classList[1] === 'filter') {
                 selectPokemon('filter', pokemonID, json)
             }
@@ -77,7 +77,7 @@ function selectPokemon(type, pokemonID, json) {
     const pokemonLSpan3Ele = document.createElement('span');
     const pokemonDivIEle = document.createElement('div')
 
-    pokemonSelDivEle.classList.add(pokemonID, 'select');
+    pokemonSelDivEle.classList.add(pokemonID, 'selectPoke');
 
     pokemonSelDivEle.style.background = "url('../static/images/" + json[pokemonID]['id'] + ".png') no-repeat center"
 
@@ -124,6 +124,7 @@ function selectPokemon(type, pokemonID, json) {
         first = pokemonID
         listPokemon('list', pokemonJSON)
         getClass('selectPokemon')[0].innerHTML = ""
+        getClass('filterPokemon')[0].innerHTML = ""
     })
 
     // 합성하기 버튼 -> post

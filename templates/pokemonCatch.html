@@ -1,10 +1,8 @@
 {%  extends 'base.html' %}
 
 {% block content %}
-    <div id="catchDiv"></div>
+<div id="catchContainer">
     <div id="catchBtns">
-        <button class="catchBtn">찾기</button>
-
         {% for _id in userball %}
         {% if loop.index == 1 %}
             <div class="ball select" ball_id={{ loop.index }} >
@@ -15,5 +13,10 @@
             </div>
         {% endfor %}
     </div>
-    <script src="../static/pokemonCatch.js"></script>
+    <div id="catchDiv"></div>
+</div>
+    <button class="catchBtn">찾기</button>
 {% endblock %}
+{% block js %}
+    <script src="../static/pokemonCatch.js"></script>
+{% endblock %}  

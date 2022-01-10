@@ -2,9 +2,19 @@
     flex-direction: column;
 }
 
+#catchContainer {
+    background: url(./icons/catchBackground.jpeg);
+    background-size: 500px 360px;
+    background-repeat: no-repeat;
+    width: max-content;
+}
+
 #catchDiv {
-    background-color: skyblue;
-    
+    /* background-color: skyblue; */
+    /* background: url('./icons/catchBackground.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; */
     width: 500px;
     height: 300px;
 
@@ -15,11 +25,14 @@
     position: absolute;
     width: 96px;
     height: 96px;
+    transform: scale(1.5);
 }
 
 #catchBtns {
     width: 100%;
     text-align: center;
+    display: flex;
+    justify-content: end;
 }
 
 .ball.select {

@@ -1,54 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <style>
-        .container {
-            flex: 1 1 40%;
-        }
-
-        .pokeContainer {
-            display: flex;
-            flex-wrap: wrap;
-            min-height: 100px;
-            height: auto;
-        }
-
-        .dragPokemon {
-            height: 170px;
-        }
-
-        .rmImg {
-            width: 100px;
-        }
-
-        .using {
-            background: url('../static/icons/RM.png') no-repeat center top / 100px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .percentDiv {
-            width: 100%;
-            height: 14px;
-            background-color: #ddd;
-            border-radius: 7px;
-            overflow: hidden;
-        }
-
-        .percentInnerDiv {
-            height: 100%;
-            background-color: #d94141;
-        }
-
-        .percentLabelDiv {
-            text-align: center;
-            line-height: 16px;
-            color: white;
-            font-size: 8px;
-        }
-    </style>
     <div id="myRM" style="display: none;">{{ myRM }}</div>
     <div id="pokemons" style="display: none;">{{ pokemons }}</div>
     <div id="myPokemons" style="display: none;">{{ mypokemon }}</div>

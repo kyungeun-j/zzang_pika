@@ -60,6 +60,7 @@ function pokeCreate(myPokemonJSON, myPoke) {
     
         if(myPoke === 'working') {
             rmDivEle.classList.add(poke, "dragPokemon", "using");
+            rmImgEle.classList.add('usingImg')
         } else {
             rmDivEle.classList.add(poke, "dragPokemon");
         }

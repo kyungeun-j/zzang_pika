@@ -13,7 +13,7 @@
     text-align: center;
 }
 
-.select {
+.selectPoke {
     height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
