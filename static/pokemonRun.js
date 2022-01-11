@@ -7,11 +7,12 @@ let myPokemonJSON = JSON.parse(getID('myPokemons').innerText.replaceAll("'", '"'
 
 let rmCount = myRMJSON['remain']; // 러닝머신 개수
 
-// running machine create
+// pokeContainer에 포켓몬 추가 
 function RMCreate(myPokemonJSON, rmCount) {
     Object.keys(myPokemonJSON).map(myPoke => {
         if (myPoke == 'working' && rmCount > 0) {
             pokeCreate(myPokemonJSON, myPoke);
+            // 남은 러닝머신 개수만큼 이미지 추가
             for (let rm=1; rm<=rmCount; rm++) {
                 const rmDivEle = document.createElement('div');
                 const rmImgEle = document.createElement('img');
@@ -30,7 +31,7 @@ function RMCreate(myPokemonJSON, rmCount) {
     dragSE(dragEles)
 }
 
-// pokemon create
+// pokemonEle create
 function pokeCreate(myPokemonJSON, myPoke) {
     Object.keys(myPokemonJSON[myPoke]).map(poke => {
         const rmDivEle = document.createElement('div');

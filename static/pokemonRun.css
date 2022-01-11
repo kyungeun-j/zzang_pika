@@ -1,8 +1,15 @@
+.container {
+    border: 1px solid;
+}
+
 .pokeContainer {
     display: flex;
-    flex-wrap: wrap;
-    min-height: 100px;
-    height: auto;
+    /* flex-wrap: wrap; */
+    /* min-height: 100px; */
+    /* height: auto; */
+    height: 136px;
+    width: auto;
+    overflow: scroll;
 }
 
 .dragPokemon {
@@ -15,7 +22,6 @@
 
 .using {
     position: relative;
-    height: 140px;
     background: url('../static/icons/RM.png') no-repeat center top / 100px;
 }
 
