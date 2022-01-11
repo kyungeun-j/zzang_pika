@@ -40,23 +40,32 @@
 /* pop up */
 div.popup {
     display: none;
-    width: 400px;
-    height: 200px;
+    width: 500px;
+    height: 500px;
     border: 1px solid black;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    background: white;
+    top: 99px;
+    left: 199px;
     margin-top: -100px;
     margin-left: -200px;
+    justify-content: center;
+    align-items: center;
 }
 
 div.popup.popped {
-    display: block;
+    display: flex;
+}
+
+#shop_buy_result_balls {
+    width: 400px;
+    height: 200px;
+    background: white;
+    border: 1px solid;
+    position: relative;
 }
 
 #shop_buy_result_balls ul#shop_ball_list {
-    padding: 4.5px;
+    padding: 3.5px;
 }
 #shop_buy_result_balls ul#shop_ball_list li {
     display: inline-block;
@@ -101,8 +110,18 @@ div.popup.popped {
     background-image: url('../static/balls/4.png');
 }
 
+#shop_result_container {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+}
 #shop_result_text {
+    width: 400px;
+    height: 200px;
     font-size: 35pt;
     text-align: center;
     line-height: 200px;
+    border: 1px solid;
+    position: absolute;
+    background: white;
 }

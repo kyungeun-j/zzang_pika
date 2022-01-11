@@ -149,12 +149,12 @@ function shopPost(option) {
 
 function openBuyBallResult()
 {
-    getID('shop_buy_result_balls').classList.add('popped');
+    getID('shop_buy_result_container').classList.add('popped');
 }
 
 function closeBuyBallResult()
 {
-    getID('shop_buy_result_balls').classList.remove('popped');
+    getID('shop_buy_result_container').classList.remove('popped');
 }
 
 getID('close_shop_buy_result').addEventListener('click', () => {
@@ -171,11 +171,11 @@ getID('again_buy_balls').addEventListener('click', () => {
 
 const popup_text = (text) => {
     getID('shop_result_text').innerText = text;
-    getID('shop_result_text').classList.add('popped');
+    getID('shop_result_container').classList.add('popped');
 
     setTimeout(function() {
         // .5초 뒤 닫음
         getID('shop_result_text').innerText = '';
-        getID('shop_result_text').classList.remove('popped');
+        getID('shop_result_container').classList.remove('popped');
     }, 500);
 };
