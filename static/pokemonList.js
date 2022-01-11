@@ -1,40 +1,39 @@
 let pokemonJSON = JSON.parse(getClass('data')[0].innerText)
 let myPokemonJSON = JSON.parse(getClass('myPokemon')[0].innerText)
 
-// 보유 포켓몬 구별을 위한 json 생성
-myPokemonJSON = Object.assign(myPokemonJSON['default'], myPokemonJSON['resting'], myPokemonJSON['working']);
-const setMyPokemon = [... new Set(Object.values(myPokemonJSON).map(my => my['id']))]
-const pokemons = []
-setMyPokemon.map(set => {
-    pokemons[set] = pokemonJSON[set]
-})
+// 0, 10은 일단 white
+const pokemonListBackground = ['#ffffff', '#87e8ff', '#87fffb', '#87ffc3', '#9eff87', '#d0ff87', '#fffd87', '#ffdb87', '#ffb587', '#ff8080', '#ffffff'];
 
-// create pokemon list 
-const pokemonsUl = getID('pokemons');
-createPokemons(Object.keys(pokemonJSON));
+createPokemons();
 
-function createPokemons(poke) {
-    pokemonsUl.innerHTML = ""
-    poke.forEach(key => {
-        let pokemonLi = document.createElement('li');
-        // let pokemonA = document.createElement('a');
-        // let pokemonImg = document.createElement('img');
-        // let pokemonName = document.createElement('div');
-        // let pokemonEfficiency = document.createElement('div');
-        if (pokemons[key] !== undefined) {
-            pokemonLi.style.backgroundImage = 'url(../static/images/' + pokemonJSON[key]['id'] + '.png';
-            pokemonLi.classList.add('exist');
-            // pokemonA.href="/pokemonDetail/"+pokemonJSON[key]['id'];
-            // pokemonImg.src="../static/images/"+pokemonJSON[key]['id']+".png";
-            // pokemonName.innerText = pokemonJSON[key]['name']
-            // pokemonEfficiency.innerText = pokemonJSON[key]['efficiency']
-            // pokemonA.appendChild(pokemonImg)
-            // pokemonA.appendChild(pokemonName)
-            // pokemonA.appendChild(pokemonEfficiency)
-            // pokemonLi.appendChild(pokemonA)
-        } else {
-            pokemonLi.innerText = key
+function createPokemons() {
+    // 초기화
+    const pokemonsUI = getID('pokemons');
+    pokemonsUI.innerHTML = '';
+
+    const pokemonInfo = myPokemonJSON['archive']['pokemon'];
+    Object.keys(pokemonJSON).map(pokemonId => {
+        const liEle = document.createElement('li');
+        // 전체 포켓몬 id 중 pokemonInfo['archive'] (도감)에 있는 포켓몬을 보여줌
+        // 이외 포켓몬은 ID 값만 노출
+        if (pokemonId in pokemonInfo)
+        {
+            liEle.style.backgroundImage = 'url(../static/images/' + pokemonId + '.png';
+            liEle.style.backgroundColor = pokemonListBackground[pokemonInfo[pokemonId]['maxLevel']];
+
+            if (pokemonInfo[pokemonId]['maxLevel'] == 10)
+            {
+                // 금색 배경으로 다시 초기화
+            }
+
+
+            // maxPercent는 나중에 업데이트
         }
-        pokemonsUl.appendChild(pokemonLi)
-    })
+        else
+        {
+            liEle.innerText = pokemonId;
+        }
+
+        pokemonsUI.appendChild(liEle);
+    });
 }

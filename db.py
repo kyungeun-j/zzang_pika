@@ -120,27 +120,27 @@ def updateInventory(userId, field, datas):
     beforeInventory = getInventory(userId)
     if field == 'ball':
         if len(datas) > beforeInventory['999']['remain']:
-            return {'result': False, 'msg': '가방 공간 부족'}
+            return {'result': False, 'msg': '가방 크기가 부족합니다.'}
 
         for ball in datas:
             beforeInventory[ball]['amount'] += 1
         beforeInventory['999']['remain'] -= len(datas)
 
         if len(datas) * SHOP_BALL_PRICE > beforeInventory['0']['amount']:
-            return {'result': False, 'msg': '소지 금액 부족'}
+            return {'result': False, 'msg': '소지 코인이 부족합니다.'}
         beforeInventory['0']['amount'] -= len(datas) * SHOP_BALL_PRICE
 
     elif field == 'RM':
         # datas: 구입하는 갯수
         if datas > beforeInventory['999']['remain']:
-            return {'result': False, 'msg': '가방 공간 부족'}
+            return {'result': False, 'msg': '가방 크기가 부족합니다.'}
         beforeInventory['5']['amount'] += datas
         beforeInventory['5']['remain'] += datas
 
         beforeInventory['999']['remain'] -= datas
 
         if datas * SHOP_RM_PRICE > beforeInventory['0']['amount']:
-            return {'result': False, 'msg': '소지 금액 부족'}
+            return {'result': False, 'msg': '소지 코인이 부족합니다.'}
         beforeInventory['0']['amount'] -= datas * SHOP_RM_PRICE
     
     elif field == 'bag':
@@ -149,7 +149,7 @@ def updateInventory(userId, field, datas):
         beforeInventory['999']['amount'] += SHOP_BAG_SIZE
 
         if SHOP_BAG_PRICE > beforeInventory['0']['amount']:
-            return {'result': False, 'msg': '소지 금액 부족'}
+            return {'result': False, 'msg': '소지 코인이 부족합니다.'}
         beforeInventory['0']['amount'] -= SHOP_BAG_PRICE
 
     elif field == 'pokemonBag':
@@ -158,7 +158,7 @@ def updateInventory(userId, field, datas):
         beforeInventory['999']['amount'] += SHOP_POKEMON_BAG_SIZE
 
         if SHOP_BAG_PRICE > beforeInventory['0']['amount']:
-            return {'result': False, 'msg': '소지 금액 부족'}
+            return {'result': False, 'msg': '소지 코인이 부족합니다.'}
         beforeInventory['0']['amount'] -= SHOP_POKEMON_BAG_PRICE
 
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:

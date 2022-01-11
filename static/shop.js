@@ -69,7 +69,7 @@ getClass('buyBall')[0].addEventListener('click', async () => {
         });
         openBuyBallResult();
     } else {
-        alert(data.msg);
+        popup_text(data.msg);
     }
 });
 
@@ -84,12 +84,15 @@ getClass('expandBagSize')[0].addEventListener('click', async () => {
 
     let result = ''
     if (data.result) {
-        result = '확장 완료'
+        result = '업그레이드 완료!';
         userBag.innerHTML = userBag.innerHTML * 1 + 50;
         userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
     }
-    else result = data.msg
-    alert(result);
+    else {
+        result = data.msg;
+    }
+
+    popup_text(result);
 });
 
 // expandPokemonLength
@@ -102,11 +105,13 @@ getClass('expandPokemonLength')[0].addEventListener('click', async () => {
 
     let result = ''
     if (data.result) {
-        result = '확장 완료';
+        result = '업그레이드 완료!';
         userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
     }
-    else result = data.msg
-    alert(result);
+    else {
+        result = data.msg;
+    }
+    popup_text(result);
 });
 
 // buyRunningMachines
@@ -121,13 +126,13 @@ getClass('buyRunningMachines')[0].addEventListener('click', async () => {
     
     let result = ''
     if (data.result === true) {
+        result = '러닝머신 구입 완료!'
         userMoney.innerHTML -= 1000 * runCount;
         userBag.innerHTML -= 1 * runCount;
-        result = runCount + '개 구입'
     } else {
         result = data.msg
     }
-    alert(result);
+    popup_text(result);
 });
 
 // post
@@ -144,12 +149,12 @@ function shopPost(option) {
 
 function openBuyBallResult()
 {
-    getID('shop_buy_result_balls').classList.add('popped');   
+    getID('shop_buy_result_balls').classList.add('popped');
 }
 
 function closeBuyBallResult()
 {
-    getID('shop_buy_result_balls').classList.remove('popped');   
+    getID('shop_buy_result_balls').classList.remove('popped');
 }
 
 getID('close_shop_buy_result').addEventListener('click', () => {
@@ -163,3 +168,14 @@ getID('again_buy_balls').addEventListener('click', () => {
     // 다시 뽑기 클릭 시 
     getClass('buyBall')[0].click();
 });
+
+const popup_text = (text) => {
+    getID('shop_result_text').innerText = text;
+    getID('shop_result_text').classList.add('popped');
+
+    setTimeout(function() {
+        // .5초 뒤 닫음
+        getID('shop_result_text').innerText = '';
+        getID('shop_result_text').classList.remove('popped');
+    }, 500);
+};
