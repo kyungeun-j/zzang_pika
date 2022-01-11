@@ -113,7 +113,7 @@ async function catchPokemon(e){
 
 const openCatchResultPopUp = (text) => {
     getID('catchResultPopUp').classList.add('popped');
-    getID('catchResultPopUp').innerText = text;
+    getID('popupText').innerText = text;
 
     setTimeout(function() {
         // 1초 뒤 닫음
@@ -123,5 +123,5 @@ const openCatchResultPopUp = (text) => {
 
 const closeCatchResultPopUp = () => {
     getID('catchResultPopUp').classList.remove('popped');
-    getID('catchResultPopUp').innerText = '';
+    getID('popupText').innerText = '';
 };

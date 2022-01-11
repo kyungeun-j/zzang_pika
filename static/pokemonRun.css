@@ -1,34 +1,15 @@
 .container {
-    border: 1px solid black;
-    height: 150px;
-    overflow-y: hidden;
-    overflow-x: scroll;
+    border: 1px solid;
 }
+
 .pokeContainer {
-    white-space: nowrap;
-}
-
-.pokemonCard {
-    display: inline-block;
-    width: 98px;
-    height: 120px;
-    text-align: center;
-}
-.pokemonCard img {
-    width: 100%;
-    height: auto;
-    margin-top: -20px;
-    margin-bottom: -20px;
-}
-
-.pokemonCard p:nth-child(1) {
-    /* name */
-    font-weight: bold;
-}
-
-.pokemonCard p:nth-child(2) {
-    /* percent */
-    font-size: 6pt;
+    display: flex;
+    /* flex-wrap: wrap; */
+    /* min-height: 100px; */
+    /* height: auto; */
+    height: 136px;
+    width: auto;
+    overflow: scroll;
 }
 
 .dragPokemon {
@@ -41,7 +22,6 @@
 
 .using {
     position: relative;
-    height: 140px;
     background: url('../static/icons/RM.png') no-repeat center top / 100px;
 }
 
