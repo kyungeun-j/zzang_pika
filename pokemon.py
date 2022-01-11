@@ -1,5 +1,6 @@
 import db
 import random
+import time
 
 POKEMON_TRANING_PRICE = 10000
 

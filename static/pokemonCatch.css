@@ -10,11 +10,6 @@
 }
 
 #catchDiv {
-    /* background-color: skyblue; */
-    /* background: url('./icons/catchBackground.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center; */
     width: 500px;
     height: 300px;
 
@@ -25,22 +20,24 @@
     position: absolute;
     width: 96px;
     height: 96px;
-    transform: scale(1.5);
+    /* transform: scale(1.5); */
+    cursor: pointer;
 }
 
 #catchBtns {
     width: 100%;
     text-align: center;
-    display: flex;
-    justify-content: end;
 }
 
 .ball.select {
-    border: 2px solid black;
+    border: 3px solid #666;
+    margin: -2px;
+    background-color: #eee;
 }
 .ball {
+    display: inline-block;
     cursor: pointer;
-    border: 1px solid #eee;
+    border: 1px solid #aaa;
     padding: 3px;
     width: 50px;
     height: 50px;
@@ -62,4 +59,33 @@
 }
 .hidden {
     display: none;
+}
+
+.catchBtn {
+    padding: 3px 10px;
+    border: 1px solid black;
+    background: white;
+    font-weight: bold;
+    font-size: 15pt;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+/* 잡기 결과 */
+#catchResultPopUp {
+    display: none;
+    position: absolute;
+    height: 100px;
+    width: 100%;
+    background: #000000d1;
+    top: 100px;
+    color: white;
+    font-size: 40pt;
+    text-align: center;
+    line-height: 100px;
+}
+
+#catchResultPopUp.popped {
+    display: block;
 }

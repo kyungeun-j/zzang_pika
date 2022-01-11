@@ -28,7 +28,7 @@ function pokemonImgCreate(pokemon) {
 
 
 // 잡기 버튼 클릭
-catchBtn.addEventListener('click', getPokemon)
+catchBtn.addEventListener('click', getPokemon);
 
 async function getPokemon(catchResult) {
     // get pokemonList
@@ -68,19 +68,37 @@ async function catchPokemon(e){
         })
     });
     const catchData = await catchRes.json();
-    if (catchData.result === true) {
-        alert('성공')
-    } else if (catchData.result == false) alert('포켓볼이 부족합니다.')
-    else if (catchData.result == 'run') alert('도망갔다!')
-    else {
-        alert('실패')
+    if (catchData.result === true) 
+    {
+        // alert('성공')
+        openCatchResultPopUp('성공!');
+    }
+    else if (catchData.result == false) 
+    {
+        openCatchResultPopUp('몬스터볼이 부족합니다.');
+    }
+    else if (catchData.result == 'run')
+    {
+        // alert('도망갔다!')
+        openCatchResultPopUp('도망갔다!');
+    }
+    else 
+    {
+        // alert('실패')
+        openCatchResultPopUp('실패!');
         numberOfTry = Number(catchData.result);
     }
 
     getPokemon(catchData.result)
     
     // 포켓볼이 부족하지 않은 경우 -1
-    if (catchData.result != false) getClass('select')[0].children[1].innerHTML -= 1;
+    if (catchData.result != false) 
+    {
+        // 사용한 포켓볼 업데이트
+        console.log(getClass('select')[0].children[0].innerHTML);
+        getClass('select')[0].children[0].innerHTML -= 1;
+    }
+    
 }
 
 // ball select
@@ -92,3 +110,18 @@ async function catchPokemon(e){
         if (b.getAttribute('ball_id')) b.classList.add('select')
     })
 });
+
+const openCatchResultPopUp = (text) => {
+    getID('catchResultPopUp').classList.add('popped');
+    getID('catchResultPopUp').innerText = text;
+
+    setTimeout(function() {
+        // 1초 뒤 닫음
+        closeCatchResultPopUp();
+    }, 1000);
+};
+
+const closeCatchResultPopUp = () => {
+    getID('catchResultPopUp').classList.remove('popped');
+    getID('catchResultPopUp').innerText = '';
+};

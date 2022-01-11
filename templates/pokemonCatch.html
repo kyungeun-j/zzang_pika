@@ -2,20 +2,26 @@
 
 {% block content %}
 <div id="catchContainer">
-    <div id="catchBtns">
-        {% for _id in userball %}
-        {% if loop.index == 1 %}
-            <div class="ball select" ball_id={{ loop.index }} >
-        {% else %}
-            <div class="ball" ball_id={{ loop.index }} >
-        {% endif %}
-                <div class="ball_amount">{{ _id['amount'] }}</div>
-            </div>
-        {% endfor %}
-    </div>
     <div id="catchDiv"></div>
 </div>
+
+<div id="catchBtns">
     <button class="catchBtn">찾기</button>
+    <br/>
+    {% for _id in userball %}
+    {% if loop.index == 1 %}
+        <div class="ball select" ball_id={{ loop.index }} >
+    {% else %}
+        <div class="ball" ball_id={{ loop.index }} >
+    {% endif %}
+            <div class="ball_amount">{{ _id['amount'] }}</div>
+        </div>
+    {% endfor %}
+</div>
+
+<div id="catchResultPopUp">
+
+</div>
 {% endblock %}
 {% block js %}
     <script src="../static/pokemonCatch.js"></script>
