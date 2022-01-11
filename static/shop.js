@@ -84,15 +84,14 @@ getClass('expandBagSize')[0].addEventListener('click', async () => {
 
     let result = ''
     if (data.result) {
-        result = '확장 완료'
-        console.log(userMoney.innerHTML);
-        console.log(parseInt(userMoney.innerHTML));
-        console.log(userMoney.innerHTML * 1);
-        console.log(userMoney.innerHTML * 1 - 10000);
+        result = '업그레이드 완료!';
         userBag.innerHTML = userBag.innerHTML * 1 + 50;
         userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
     }
-    else result = data.msg
+    else {
+        result = data.msg;
+    }
+
     popup_text(result);
 });
 
@@ -106,14 +105,12 @@ getClass('expandPokemonLength')[0].addEventListener('click', async () => {
 
     let result = ''
     if (data.result) {
-        result = '확장 완료';
-        console.log(userMoney.innerHTML);
-        console.log(parseInt(userMoney.innerHTML));
-        console.log(userMoney.innerHTML * 1);
-        console.log(userMoney.innerHTML * 1 - 10000);
+        result = '업그레이드 완료!';
         userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
     }
-    else result = data.msg
+    else {
+        result = data.msg;
+    }
     popup_text(result);
 });
 
@@ -129,9 +126,9 @@ getClass('buyRunningMachines')[0].addEventListener('click', async () => {
     
     let result = ''
     if (data.result === true) {
+        result = '러닝머신 구입 완료!'
         userMoney.innerHTML -= 1000 * runCount;
         userBag.innerHTML -= 1 * runCount;
-        result = runCount + '개 구입'
     } else {
         result = data.msg
     }
