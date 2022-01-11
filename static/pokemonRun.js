@@ -15,16 +15,16 @@ function RMCreate(myPokemonJSON, rmCount) {
             for (let rm=1; rm<=rmCount; rm++) {
                 const rmDivEle = document.createElement('div');
                 const rmImgEle = document.createElement('img');
-
+                rmDivEle.setAttribute('class', 'rm');
                 rmImgEle.setAttribute('class', 'rmImg');
                 rmImgEle.src = '../static/icons/RM.png';
                 rmDivEle.append(rmImgEle);
                 getClass(myPoke)[0].children[1].append(rmDivEle);
             }
-        } else {
+        } else if (myPoke == 'resting' || myPoke == 'default') {
             pokeCreate(myPokemonJSON, myPoke);
         }
-    })
+    });
 
     dragEles = [...getClass('dragPokemon')];
     dragSE(dragEles)
@@ -43,6 +43,7 @@ function pokeCreate(myPokemonJSON, myPoke) {
         const percentLabelDiv = document.createElement('div')
 
         if(myPoke === 'default') {
+            rmDivEle.classList.add('pokemonCard');
             percentDiv.classList.add('percentDiv');
             percentInnerDiv.classList.add('percentInnerDiv');
             percentLabelDiv.classList.add('percentLabelDiv');
@@ -59,10 +60,12 @@ function pokeCreate(myPokemonJSON, myPoke) {
         }
     
         if(myPoke === 'working') {
-            rmDivEle.classList.add(poke, "dragPokemon", "using");
+            rmDivEle.classList.add("dragPokemon", "using");
+            rmDivEle.setAttribute('my_pokemon_id', poke);
             rmImgEle.classList.add('usingImg')
         } else {
-            rmDivEle.classList.add(poke, "dragPokemon");
+            rmDivEle.classList.add("dragPokemon");
+            rmDivEle.setAttribute('my_pokemon_id', poke);
         }
         rmDivEle.setAttribute("pokemon_id", myPokemonJSON[myPoke][poke]['id']);
         rmDivEle.setAttribute('percent', myPokemonJSON[myPoke][poke]['percent']);
@@ -73,6 +76,7 @@ function pokeCreate(myPokemonJSON, myPoke) {
         rmPEle.innerText = pokemons[myPokemonJSON[myPoke][poke]['id']]['name'];
         rmDivEle.appendChild(rmPEle);
         rmPEle2.innerText = parseInt(Math.round(parseFloat(myPokemonJSON[myPoke][poke]['percent']) * myPokemonJSON[myPoke][poke]['max'])) + " (" + parseInt(Math.round(parseFloat(myPokemonJSON[myPoke][poke]['percent']) * 100))+"%)";
+        rmPEle2.classList.add('percentOfPokemonCard');
         rmDivEle.appendChild(rmPEle2);
         getClass(myPoke)[0].children[1].append(rmDivEle);
     })
@@ -117,7 +121,7 @@ function dragSE(dragEles) {
             const option = new URLSearchParams({
                 startCont: startCont,
                 endCont: endCont,
-                dragPokemon: draggable.classList[0]
+                dragPokemon: draggable.getAttribute('my_pokemon_id')
             });
             const post = await runPost(option)
             const data = await post.json();
@@ -155,10 +159,10 @@ function updateJSON(startCont, endCont, pokemon) {
     
     myPokemonJSON[endCont] = {
         ...myPokemonJSON[endCont],
-        [pokemon.classList[0]]: myPokemonJSON[startCont][pokemon.classList[0]]
+        [pokemon.getAttribute('my_pokemon_id')]: myPokemonJSON[startCont][pokemon.getAttribute('my_pokemon_id')]
     }  
 
-    delete myPokemonJSON[startCont][pokemon.classList[0]]
+    delete myPokemonJSON[startCont][pokemon.getAttribute('my_pokemon_id')]
 
     return rmCount
 }
