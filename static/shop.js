@@ -80,7 +80,6 @@ getClass('expandBagSize')[0].addEventListener('click', async () => {
     });
     const post = await shopPost(option);
     const data = await post.json();
-    console.log(data)
 
     let result = ''
     if (data.result) {

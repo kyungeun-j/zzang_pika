@@ -10,13 +10,14 @@ let rmCount = myRMJSON['remain']; // 러닝머신 개수
 // pokeContainer에 포켓몬 추가 
 function RMCreate(myPokemonJSON, rmCount) {
     Object.keys(myPokemonJSON).map(container => {
-        if (container == 'working' && rmCount > 0) {
+        if (container == 'working') {
             pokeCreate(myPokemonJSON, container);
             // 남은 러닝머신 개수만큼 이미지 추가
             for (let rm=1; rm<=rmCount; rm++) {
                 const rmDivEle = document.createElement('div');
                 const rmImgEle = document.createElement('img');
                 rmDivEle.setAttribute('class', 'rm');
+                rmDivEle.setAttribute('rm', rm);
                 rmImgEle.setAttribute('class', 'rmImg');
                 rmImgEle.src = '../static/icons/RM.png';
                 rmDivEle.append(rmImgEle);
@@ -187,7 +188,7 @@ function dragSE(dragEles) {
 
             // client를 위한 json 변경 함수 호출
             if (data.result !== false || data !== undefined) {
-
+                // 포켓몬의 동작 시작 시간, 체력이 업데이트 되면 바로 갱신
                 if ('startTime' in data)
                 {
                     myPokemonJSON[startCont][dragPokemonId]['startTime'] = data['startTime'];
@@ -198,6 +199,12 @@ function dragSE(dragEles) {
                     myPokemonJSON[startCont][dragPokemonId]['hp'] = data['hp'];
                 }
 
+                // 남은 rm 개수도 업데이트 될 때마다 갱신
+                if ('rm' in data)
+                {
+                    rmCount = data['rm'];
+                }
+                // 임시로 획득 코인은 console.log()
                 if ('coin' in data)
                 {
                     console.log(data['coin']);
@@ -243,8 +250,12 @@ async function runPost(option) {
         method: 'POST',
         cache: 'no-cache',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/x-www-form-urlencoded'
         },
         body: option
     });
+
+    // 'Content-Type': 'application/json',
+    // 'Accept': 'application/json'
 }

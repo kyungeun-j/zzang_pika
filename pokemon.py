@@ -15,7 +15,8 @@ def workPokemon(userId, myPokemonId):
         myPokemon['working'][str(myPokemonId)] = working
 
         db.setMyPokemon(userId, myPokemon)
-        return {'startTime': working['startTime']}
+        
+        return {'startTime': working['startTime'], 'rm': db.useRM(userId, -1)}
     
     return False
 
@@ -39,7 +40,7 @@ def workEndPokemon(userId, myPokemonId):
         db.setMyPokemon(userId, myPokemon)
         db.updateMoney(userId, coin)
 
-        return {'coin': coin, 'hp': default['hp'] }
+        return {'coin': coin, 'hp': default['hp'], 'rm': db.useRM(userId, 1)}
 
     return False
 
