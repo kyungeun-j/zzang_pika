@@ -95,7 +95,6 @@ async function catchPokemon(e){
     if (catchData.result != false) 
     {
         // 사용한 포켓볼 업데이트
-        console.log(getClass('select')[0].children[0].innerHTML);
         getClass('select')[0].children[0].innerHTML -= 1;
     }
     

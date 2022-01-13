@@ -14,7 +14,6 @@ function RMCreate(myPokemonJSON, rmCount) {
             pokeCreate(myPokemonJSON, container);
             // 남은 러닝머신 개수만큼 이미지 추가
             for (let rm=1; rm<=rmCount; rm++) {
-                console.log(rm);
                 const rmDivEle = document.createElement('div');
                 const rmImgEle = document.createElement('img');
                 rmDivEle.setAttribute('class', 'rm');
@@ -204,7 +203,6 @@ function dragSE(dragEles) {
                 if ('rm' in data)
                 {
                     rmCount = data['rm'];
-                    console.log(rmCount);
                 }
                 // 임시로 획득 코인은 console.log()
                 if ('coin' in data)
@@ -229,7 +227,6 @@ function dragSE(dragEles) {
 });
 
 function updateJSON(startCont, endCont, pokemon) {
-    console.log('after: ' + rmCount);
     if (startCont === 'working') {
         pokemon.classList.remove('using')
         rmCount += 1;
@@ -237,7 +234,6 @@ function updateJSON(startCont, endCont, pokemon) {
         pokemon.classList.add('using')
         rmCount -= 1;
     }
-    console.log('after: ' + rmCount);
     
     myPokemonJSON[endCont] = {
         ...myPokemonJSON[endCont],
