@@ -102,28 +102,71 @@ def pokemonRun():
         _myRM = db.getInventory(session['id'])['5']
 
         if request.form['startCont'] == 'working':
+
+            # 일 -> 휴식
             if request.form['endCont'] == 'resting':
-                _coin = p.workEndPokemon(_userid, request.form['dragPokemon'])
-                _result = p.restPokemon(_userid, request.form['dragPokemon'])
-                return jsonify({'result': _result, 'coin': _coin})
+                _workEndResult = p.workEndPokemon(_userid, request.form['dragPokemon'])
+                _restStartResult = p.restPokemon(_userid, request.form['dragPokemon'])
+
+                if _workEndResult == False or _restStartResult == False:
+                    # 하나라도 문제가 생기면 False return, error 처리는 나중에
+                    return jsonify({
+                        'result': False
+                    })
+
+                return jsonify({
+                    'result': True,
+                    'coin': _workEndResult['coin'],
+                    'startTime': _restStartResult['startTime'],
+                    'hp': _workEndResult['hp']
+                })
+
+            # 일 -> 아무것도 안함
             elif request.form['endCont'] == 'default':
-                _coin = p.workEndPokemon(_userid, request.form['dragPokemon'])
-                return jsonify({'coin': _coin})
+                _result = p.workEndPokemon(_userid, request.form['dragPokemon'])
+                return jsonify(_result) # coin, hp
+
         elif request.form['startCont'] == 'resting':
+            # 휴식 -> 일
             if request.form['endCont'] == 'working':
-                _hp = p.restEndPokemon(_userid, request.form['dragPokemon'])
-                _result = p.workPokemon(_userid, request.form['dragPokemon'])
-                return jsonify({'result': _result, 'hp': _hp})
+                _restEndResult = p.restEndPokemon(_userid, request.form['dragPokemon'])
+                _workStartResult = p.workPokemon(_userid, request.form['dragPokemon'])
+
+                if _restEndResult == False or _workStartResult == False:
+                    # 하나라도 문제가 생기면 False return, error 처리는 나중에
+                    return jsonify({
+                        'result': False
+                    })
+
+                return jsonify({
+                    'result': True,
+                    'hp': _restEndResult['hp'],
+                    'startTime': _workStartResult['startTime']
+                })
+            # 휴식 -> 아무것도 안함
             elif request.form['endCont'] == 'default':
-                _hp = p.restEndPokemon(_userid, request.form['dragPokemon'])
-                return jsonify({'hp': _hp})
+                _result = p.restEndPokemon(_userid, request.form['dragPokemon'])
+                return jsonify(_result)
+
         elif request.form['startCont'] == 'default':
+            # 아무것도 안함 -> 일
             if request.form['endCont'] == 'working':
                 _result = p.workPokemon(_userid, request.form['dragPokemon'])
-                return jsonify({'result': _result})
+                if _result == False:
+                    return jsonify({'result': False})
+
+                return jsonify({
+                    'startTime': _result['startTime']
+                })
+
+            # 아무것도 안함 -> 휴식
             elif request.form['endCont'] == 'resting':
                 _result = p.restPokemon(_userid, request.form['dragPokemon'])
-                return jsonify({'result': _result})
+                return jsonify({
+                    'startTime': _result['startTime']
+                })
+        
+        # 같은 곳으로 이동 (무시)
         elif request.form['startCont'] == request.form['endCont']:
             return jsonify({'result': False})
 

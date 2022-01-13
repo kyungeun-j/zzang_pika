@@ -9,74 +9,136 @@ let rmCount = myRMJSON['remain']; // 러닝머신 개수
 
 // pokeContainer에 포켓몬 추가 
 function RMCreate(myPokemonJSON, rmCount) {
-    Object.keys(myPokemonJSON).map(myPoke => {
-        if (myPoke == 'working' && rmCount > 0) {
-            pokeCreate(myPokemonJSON, myPoke);
+    Object.keys(myPokemonJSON).map(container => {
+        if (container == 'working' && rmCount > 0) {
+            pokeCreate(myPokemonJSON, container);
             // 남은 러닝머신 개수만큼 이미지 추가
             for (let rm=1; rm<=rmCount; rm++) {
                 const rmDivEle = document.createElement('div');
                 const rmImgEle = document.createElement('img');
-
+                rmDivEle.setAttribute('class', 'rm');
                 rmImgEle.setAttribute('class', 'rmImg');
                 rmImgEle.src = '../static/icons/RM.png';
                 rmDivEle.append(rmImgEle);
-                getClass(myPoke)[0].children[1].append(rmDivEle);
+                getClass(container)[0].children[1].append(rmDivEle);
             }
-        } else {
-            pokeCreate(myPokemonJSON, myPoke);
+        } else if (container == 'resting' || container == 'default') {
+            pokeCreate(myPokemonJSON, container);
         }
-    })
+    });
 
     dragEles = [...getClass('dragPokemon')];
     dragSE(dragEles)
 }
 
 // pokemonEle create
-function pokeCreate(myPokemonJSON, myPoke) {
-    Object.keys(myPokemonJSON[myPoke]).map(poke => {
+function pokeCreate(myPokemonJSON, container) {
+    Object.keys(myPokemonJSON[container]).map(myPokemonId => {
+        // myPokemonId: 유저별 해당 포켓몬을 얻은 순서에 따라 부여되는 id
+
+        // pokemonCard, 이미지
         const rmDivEle = document.createElement('div');
         const rmImgEle = document.createElement('img');
+
+        // 체력바
+        const percentDiv = document.createElement('div');
+        const percentInnerDiv = document.createElement('div');
+        const percentLabelDiv = document.createElement('div');
+
+        // 이름, percent 
         const rmPEle = document.createElement('p');
         const rmPEle2 = document.createElement('p');
+        const rmPEle3 = document.createElement('p');
 
-        const percentDiv = document.createElement('div')
-        const percentInnerDiv = document.createElement('div')
-        const percentLabelDiv = document.createElement('div')
+        // pokemon card 설정
+        rmDivEle.classList.add('dragPokemon');
+        rmDivEle.classList.add('pokemonCard');  // for style
+        rmDivEle.setAttribute('my_pokemon_id', myPokemonId);
+        rmDivEle.setAttribute('pokemon_id', myPokemonJSON[container][myPokemonId]['id']);
+        rmDivEle.setAttribute('percent', myPokemonJSON[container][myPokemonId]['percent']);
+        rmDivEle.setAttribute('max', myPokemonJSON[container][myPokemonId]['max']);
+        rmDivEle.setAttribute('draggable', 'true');
 
-        if(myPoke === 'default') {
-            percentDiv.classList.add('percentDiv');
-            percentInnerDiv.classList.add('percentInnerDiv');
-            percentLabelDiv.classList.add('percentLabelDiv');
+        // 상단 체력바 추가
+        percentDiv.classList.add('percentDiv');
+        percentInnerDiv.classList.add('percentInnerDiv');
+        percentLabelDiv.classList.add('percentLabelDiv');
+        
+        const startHp = myPokemonJSON[container][myPokemonId]['hp'];
+        const maxHp = myPokemonJSON[container][myPokemonId]['maxHp'];
+        const now = (Date.now() + '').slice(0,-3) * 1;
+        const before = myPokemonJSON[container][myPokemonId]['startTime'];
 
-            
-            const percent = Math.round(myPokemonJSON[myPoke][poke]['hp'] / myPokemonJSON[myPoke][poke]['maxHp'] * 100)
-            percentInnerDiv.style.width = percent+'%';
-            percentLabelDiv.innerHTML = percent+'%';
+        // for resting
+        const hpRecoveryPercent = container == 'resting'
+            ?  Math.round((now - before) / 86400 * 100) / 100
+            : 0;
 
-            percentInnerDiv.appendChild(percentLabelDiv)
-            percentDiv.appendChild(percentInnerDiv)
+        // for working
+        let hpDecrease = container == 'working'
+            ? now - before    // 초당 1의 체력이 소모
+            : 0;
 
-            rmDivEle.appendChild(percentDiv)
+        // 반올림 오차로 now - before이 음수가 되는 경우 0으로 초기화
+        hpDecrease = hpDecrease < 0
+            ? 0
+            : hpDecrease;
+
+        // Hp 소모량이 시작 체력을 넘을 수 없음
+        hpDecrease = hpDecrease > startHp
+            ? startHp
+            : hpDecrease
+
+        const hpPercent = Math.round((startHp - hpDecrease)/ maxHp * 100);
+        percentInnerDiv.style.width = hpPercent + hpRecoveryPercent * 100 + '%';
+        
+        if (container == 'default')
+        {
+            percentLabelDiv.innerText = startHp + ' / ' + maxHp;
         }
-    
-        if(myPoke === 'working') {
-            rmDivEle.classList.add(poke, "dragPokemon", "using");
-            rmImgEle.classList.add('usingImg')
-        } else {
-            rmDivEle.classList.add(poke, "dragPokemon");
+        else
+        {
+            // container가 working인 경우 hpRecovery가 0, hp: startHp - hpDecrease
+            // resting인 경우 hpDecrease가 0, hp: startHp
+            percentLabelDiv.innerText = Math.round(startHp - hpDecrease + hpRecoveryPercent * maxHp) + ' / ' + maxHp;
         }
-        rmDivEle.setAttribute("pokemon_id", myPokemonJSON[myPoke][poke]['id']);
-        rmDivEle.setAttribute('percent', myPokemonJSON[myPoke][poke]['percent']);
-        rmDivEle.setAttribute('max', myPokemonJSON[myPoke][poke]['max']);
-        rmDivEle.setAttribute('draggable', "true");
-        rmImgEle.src="../static/images/"+myPokemonJSON[myPoke][poke]['id']+".png";
+
+        percentDiv.appendChild(percentInnerDiv);
+        percentDiv.appendChild(percentLabelDiv);
+
+        rmDivEle.appendChild(percentDiv);
+
+        // 포켓몬 이미지 추가
+        if(container === 'working') {
+            rmDivEle.classList.add('using');
+            rmImgEle.classList.add('usingImg');
+
+            // usingImg가 absolute이므로 간격을 위해 빈 박스 추가
+            const emptyDiv = document.createElement('div');
+            emptyDiv.classList.add('emptyBlockForUsingImg');
+            rmDivEle.appendChild(emptyDiv);
+        }
+        rmImgEle.src='../static/images/' + myPokemonJSON[container][myPokemonId]['id']+'.png';
         rmDivEle.appendChild(rmImgEle);
-        rmPEle.innerText = pokemons[myPokemonJSON[myPoke][poke]['id']]['name'];
+
+        // name
+        rmPEle.innerText = pokemons[myPokemonJSON[container][myPokemonId]['id']]['name'];
+        rmPEle.classList.add('name');
         rmDivEle.appendChild(rmPEle);
-        rmPEle2.innerText = parseInt(Math.round(parseFloat(myPokemonJSON[myPoke][poke]['percent']) * myPokemonJSON[myPoke][poke]['max'])) + " (" + parseInt(Math.round(parseFloat(myPokemonJSON[myPoke][poke]['percent']) * 100))+"%)";
+
+        // percent
+        rmPEle2.innerText = parseInt(Math.round(parseFloat(myPokemonJSON[container][myPokemonId]['percent']) * myPokemonJSON[container][myPokemonId]['max'])) + ' (' + parseInt(Math.round(parseFloat(myPokemonJSON[container][myPokemonId]['percent']) * 100))+'%)';
+        rmPEle2.classList.add('percentOfPokemonCard');
+        rmPEle2.classList.add('percent');
         rmDivEle.appendChild(rmPEle2);
-        getClass(myPoke)[0].children[1].append(rmDivEle);
-    })
+
+        // level
+        rmPEle3.innerText = 'Lv.' + myPokemonJSON[container][myPokemonId]['level'];
+        rmPEle3.classList.add('level');
+        rmDivEle.appendChild(rmPEle3);
+
+        getClass(container)[0].children[1].append(rmDivEle);
+    });
 }
 
 RMCreate(myPokemonJSON, rmCount);
@@ -85,26 +147,26 @@ RMCreate(myPokemonJSON, rmCount);
 function dragSE(dragEles) {
     dragEles.forEach(ele => {
         ele.addEventListener('dragstart', () => {
-            ele.classList.add("dragging");
+            ele.classList.add('dragging');
         });
 
-        ele.addEventListener("dragend", () => {
-            ele.classList.remove("dragging");
+        ele.addEventListener('dragend', () => {
+            ele.classList.remove('dragging');
         });
     });
 }
 
 // drag Over & drop
 [...containerEles].forEach(container => {
-    container.addEventListener("dragover", (e) => {
+    container.addEventListener('dragover', (e) => {
         e.preventDefault();
     });
 
-    container.addEventListener("drop", async (e) => {
-        const draggable = getClass("dragging")[0];
+    container.addEventListener('drop', async (e) => {
+        const draggable = getClass('dragging')[0];
         const startCont = draggable.parentElement.parentElement.classList[0];
         const endCont = container.classList[0];
-
+        const dragPokemonId = draggable.getAttribute('my_pokemon_id');
         // 같은 section 안에선 이동 못함 ex) working -> working
         if (startCont === endCont) {
             e.preventDefault();
@@ -118,23 +180,35 @@ function dragSE(dragEles) {
             const option = new URLSearchParams({
                 startCont: startCont,
                 endCont: endCont,
-                dragPokemon: draggable.classList[0]
+                dragPokemon: dragPokemonId
             });
-            const post = await runPost(option)
-            const data = await post.json();
+            const post = await runPost(option);
+            const data = await post.json();            
 
             // client를 위한 json 변경 함수 호출
             if (data.result !== false || data !== undefined) {
-                rmCount = updateJSON(startCont, container.classList[0], draggable)
-                if (data.coin) { 
-                    alert('+'+data.coin+'coin')
-                } else if (data.hp) {
-                    alert('+'+data.hp+'hp')
+
+                if ('startTime' in data)
+                {
+                    myPokemonJSON[startCont][dragPokemonId]['startTime'] = data['startTime'];
                 }
+
+                if ('hp' in data)
+                {
+                    myPokemonJSON[startCont][dragPokemonId]['hp'] = data['hp'];
+                }
+
+                if ('coin' in data)
+                {
+                    console.log(data['coin']);
+                }
+
+                rmCount = updateJSON(startCont, endCont, draggable);
             } else if (data.result === false) {
                 alert('포켓몬을 이동시킬 수 없습니다.')
             }
 
+            // 초기화 <- 나중에 효율적으로 수정해야 할듯
             getClass('working')[0].children[1].innerHTML = ''
             getClass('resting')[0].children[1].innerHTML = ''
             getClass('default')[0].children[1].innerHTML = ''
@@ -142,7 +216,7 @@ function dragSE(dragEles) {
             // create function 실행
             RMCreate(myPokemonJSON, rmCount);
         }
-    })
+    });
 });
 
 function updateJSON(startCont, endCont, pokemon) {
@@ -156,10 +230,10 @@ function updateJSON(startCont, endCont, pokemon) {
     
     myPokemonJSON[endCont] = {
         ...myPokemonJSON[endCont],
-        [pokemon.classList[0]]: myPokemonJSON[startCont][pokemon.classList[0]]
+        [pokemon.getAttribute('my_pokemon_id')]: myPokemonJSON[startCont][pokemon.getAttribute('my_pokemon_id')]
     }  
 
-    delete myPokemonJSON[startCont][pokemon.classList[0]]
+    delete myPokemonJSON[startCont][pokemon.getAttribute('my_pokemon_id')]
 
     return rmCount
 }
@@ -172,5 +246,5 @@ async function runPost(option) {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: option
-    })
+    });
 }
