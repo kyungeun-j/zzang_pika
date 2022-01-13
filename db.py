@@ -166,6 +166,18 @@ def updateInventory(userId, field, datas):
 
     return {'result': True}
 
+def useRM(userId, count):
+    beforeInventory = getInventory(userId)
+    if beforeInventory['5']['remain'] + count < 0:
+        return {'result': False, 'remain': beforeInventory['5']['remain']}
+    
+    beforeInventory['5']['remain'] += count
+
+    with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
+        f.write(json.dumps(beforeInventory, indent=2))
+        
+    return {'result': True, 'remain': beforeInventory['5']['remain']}
+
 def replaceInventory(userId, inventory):
     # catch에서 사용
     with open(DB_INVENTORY + str(userId) + '.json', 'w') as f:
