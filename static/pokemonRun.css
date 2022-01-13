@@ -1,42 +1,116 @@
-.container {
-    border: 1px solid;
+/* 스크롤 바 숨기기 */
+::-webkit-scrollbar {
+    display: none;
 }
 
+.container {
+    height: 100px;
+    padding: 10px;
+    margin-top: 20px;
+}
+.container h1 {
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+
+.btn1 {
+    position: absolute;
+    left: 0;
+    padding: 5px 10px;
+    border: 1px solid black;
+    margin: 10px;
+}
+.btn2 {
+    position: absolute;
+    right: 0;
+    padding: 5px 10px;
+    border: 1px solid black;
+    margin: 10px;
+}
+.working {
+    margin-top: 50px;
+}
+.working, .resting {
+    padding-bottom: 33px;
+    border-top: 2px solid black;
+}
+
+.default {
+    /* default container */
+    background: radial-gradient(#c7c7c7, #23b35b);
+}
+
+.default .pokeContainer {
+    height: 110px;
+}
 .pokeContainer {
     display: flex;
-    /* flex-wrap: wrap; */
-    /* min-height: 100px; */
-    /* height: auto; */
     height: 136px;
     width: auto;
     overflow: scroll;
 }
 
-.dragPokemon {
-    height: 120px;
+.pokemonCard {
+    width: 98px;
+    text-align: center;
+}
+
+.pokemonCard img {
+    margin-top: -20px;
+    margin-bottom: -20px;
+}
+.pokemonCard p.name {
+    font-weight: bold;
+}
+.pokemonCard p.percent {
+    font-size: 6pt;
+}
+
+.pokemonCard p.level {
+    font-size: 7pt;
+    margin-top: -45px;
+    margin-left: -40px;
 }
 
 .rmImg {
     width: 100px;
 }
 
+.emptyBlockForUsingImg {
+    width: 98px;    /* pokemonCard width와 같은 사이즈*/
+    height: 98px;
+    margin-bottom: -20px;
+}
 .using {
     position: relative;
     background: url('../static/icons/RM.png') no-repeat center top / 100px;
 }
 
 .usingImg {
-    animation: motion 0.3s linear 0s infinite alternate; margin-top: 0;
+    position: absolute;
+    top: 10px;
+    left: 0;
+
+    /* 통통 튀는 애니메이션 */
+    animation: motion 0.3s linear 0s infinite alternate;
 }
 
+.usingImg:before {
+    content: '';
+    width: 98px;
+    height: 98px;
+    background: black;
+}
 @keyframes motion {
-    0% {margin-top: 0px;}
-    100% {margin-top: 10px;}
+    0% {top: 10px;}
+    100% {top: 20px;}
 }
 .hidden {
     display: none;
 }
 
+/* 체력바 */
 .percentDiv {
     margin-left: 5%;
     width: 90%;
@@ -49,6 +123,13 @@
     overflow: hidden;
 }
 
-.percentInnerDiv {
+/* 진행바 */
+.percentDiv .percentInnerDiv {
+    height: 100%;
     background-color: #21a154;
+}
+
+/* Text */
+.percentDiv .percentLabelDiv {
+    margin-top: -9px;
 }

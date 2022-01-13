@@ -4,6 +4,9 @@ import time
 
 POKEMON_TRANING_PRICE = 10000
 
+# work, rest start 함수는 등록 시간을 return
+# work, rest end 함수는 현재 체력을 return
+
 def workPokemon(userId, myPokemonId):
     myPokemon = db.getMyPokemon(str(userId))
     if str(myPokemonId) in myPokemon['default']:
@@ -12,7 +15,7 @@ def workPokemon(userId, myPokemonId):
         myPokemon['working'][str(myPokemonId)] = working
 
         db.setMyPokemon(userId, myPokemon)
-        return True
+        return {'startTime': working['startTime']}
     
     return False
 
@@ -26,16 +29,17 @@ def workEndPokemon(userId, myPokemonId):
         default = myPokemon['working'].pop(str(myPokemonId))
         startTime = default.pop('startTime')
         if (now - startTime > default['hp']):
-            gold = int(default['hp'] / 60 * float(default['percent']) * default['max'])
+            coin = int(default['hp'] / 60 * float(default['percent']) * default['max'])
             default['hp'] = 0
         else:
-            gold = int((now - startTime) / 60 * float(default['percent']) * default['max'])
+            coin = int((now - startTime) / 60 * float(default['percent']) * default['max'])
             default['hp'] -= now - startTime
 
         myPokemon['default'][str(myPokemonId)] = default
         db.setMyPokemon(userId, myPokemon)
-        db.updateMoney(userId, gold)
-        return gold
+        db.updateMoney(userId, coin)
+
+        return {'coin': coin, 'hp': default['hp'] }
 
     return False
 
@@ -48,7 +52,7 @@ def restPokemon(userId, myPokemonId):
 
         db.setMyPokemon(userId, myPokemon)
 
-        return True
+        return { 'startTime': resting['startTime'] }
     
     return False
 
@@ -58,11 +62,12 @@ def restEndPokemon(userId, myPokemonId):
 
     if str(myPokemonId) in myPokemon['resting']:
         now = round(time.time())
-        # working 리스트에서 제거
+        # resting 리스트에서 제거
         default = myPokemon['resting'].pop(str(myPokemonId))
         startTime = default.pop('startTime')
         
-        hpRecovery = int((now - startTime) / 3)
+        hpRecoveryPercent = round((now - startTime) / 86400, 2)   # 하루 지나면 체력 100% 회복
+        hpRecovery = hpRecoveryPercent * default['maxHp']
 
         if (default['hp'] + hpRecovery <= default['maxHp']):
             default['hp'] += hpRecovery
@@ -72,7 +77,7 @@ def restEndPokemon(userId, myPokemonId):
         myPokemon['default'][str(myPokemonId)] = default
         db.setMyPokemon(userId, myPokemon)
 
-        return default['hp']
+        return { 'hp': default['hp'] }
 
     return False
 
