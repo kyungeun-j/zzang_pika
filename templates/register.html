@@ -1,16 +1,20 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    <form method="post" id="registerForm">
-        <input name="username" id="username" placeholder="ID" check="false" oninput=IDValue() >
-        <input type="button" onclick="checkID()" value="중복 확인">
-        <div class="idInfo"></div>
-        <input type="password" name="password" id="password" value="" placeholder="PASSWORD" onchange="Password()" >
-        <div class="pwInfo"></div>
-        <input type="password" id="cPassword" value="" placeholder="CONFIRM PASSWORD" oninput="ConfirmPassword()" >
-        <div class="cpwInfo"></div>
-        <input type="button" value="Register" onclick="checkInfo()" />
-    </form>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}" />
+<script src="../static/common.js"></script>
+    <div id="registerContainer">
+        <form method="post" id="registerForm">
+            <div class="idInputDiv">
+                <input name="username" id="username" placeholder="ID" check="false" oninput=IDValue() >
+                <input type="button" onclick="checkID()" value="중복 확인">
+            </div>
+            <div class="idInfo"></div>
+            <input type="password" name="password" id="password" value="" placeholder="PASSWORD" onchange="Password()" >
+            <div class="pwInfo"></div>
+            <input type="password" id="cPassword" value="" placeholder="CONFIRM PASSWORD" oninput="ConfirmPassword()" >
+            <div class="cpwInfo"></div>
+            <input type="button" value="가입하기" onclick="checkInfo()" />
+        </form>
+    </div>
 
     <script>
         function IDValue() {
@@ -91,4 +95,3 @@
             }
         }
     </script>
-{% endblock %}

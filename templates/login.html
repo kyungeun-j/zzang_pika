@@ -1,15 +1,28 @@
-{% block content %}
-    <form method="post">
-        <label for="username">Username</label>
-        <input name="username" id="username" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Log In">
-    </form>
-    <a href="/register">회원가입</a>
-    {% if message == True %}
-        <script>
-            alert("아이디 또는 패스워드가 잘못 되었습니다.")
-        </script>
-    {% endif %}
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}" />
+    <div id="loginContainer">
+        <div class="loginImg">
+            <i class="fas fa-user"></i>
+        </div>
+        <form method="post">
+            <div class="inputs">
+                <div class="loginInput">
+                    <label for="username"><i class="fas fa-user"></i></label>
+                    <input name="username" id="username" placeholder="username" required>
+                </div>
+                <div class="loginInput">
+                    <label for="password"><i class="fas fa-lock"></i></label>
+                    <input type="password" name="password" id="password" placeholder="password" required>
+                </div>
+            </div>
+            <input class="loginBtn" type="submit" value="로그인">
+        </form>
+        <div class="registerA">
+            <a href="/register">회원가입</a>
+        </div>
+        {% if message == True %}
+            <script>
+                alert("아이디 또는 패스워드가 잘못 되었습니다.")
+            </script>
+        {% endif %}
+    </div>
