@@ -94,8 +94,11 @@ async function catchPokemon(e){
     // 포켓볼이 부족하지 않은 경우 -1
     if (catchData.result != false) {
         // 사용한 포켓볼 업데이트
-        getClass('select')[0].children[0].innerText -= 1;
-        getClass('select')[0].style.filter = 'grayscale(1)';
+        const ballCount = getClass('select')[0];
+        ballCount.children[0].innerText -= 1;
+        if (ballCount.children[0].innerText < 1) {
+            ballCount.style.filter = 'grayscale(1)';
+        }
     }
     
 }
