@@ -61,8 +61,7 @@ function listPokemon(type, json) {
             // 포켓몬 1 선택했을 떄
             if (btn.parentElement.classList[1] === 'list') {
                 selectPokemon('select', pokemonID, json)
-                pokemonFilter(pokemonID, json[pokemonID]['id'], json[pokemonID]['level'])
-
+                pokemonFilter(pokemonID, json[pokemonID]['id'], json[pokemonID]['level'], json)
                 getID('pokemonSort').style.display = 'none';
             }
             // 포켓몬 2 선택했을 때
@@ -142,7 +141,6 @@ function selectPokemon(type, pokemonID, json) {
     // 합성하기 버튼 -> post
     if (second > 0) {
         getClass('levelup')[0].addEventListener('click', async (e) => {
-
             const post = await fetch('/pokemonLevelUp', {
                 method: 'POST',
                 cache: 'no-cache',
@@ -166,20 +164,22 @@ function selectPokemon(type, pokemonID, json) {
             }
             getClass('selectPokemon')[0].innerHTML = ""
             getClass('filterPokemon')[0].innerHTML = ""
+            getID('pokemonSort').style.display = 'block';
+            sortPokemon(getID('pokemonSort').value)
         })
     }
     
 }
 
 // 선택한 포켓몬과 합성할 수 있는 포켓몬 필터링
-function pokemonFilter(selectPokemon, id, level) {
-    const filterPokemon = Object.keys(pokemonJSON).filter(pokemon => {
-        return pokemonJSON[pokemon]['id'] === id && pokemonJSON[pokemon]['level'] === level && pokemon !== selectPokemon
+function pokemonFilter(selectPokemon, id, level, json) {
+    const filterPokemon = Object.keys(json).filter(pokemon => {
+        return json[pokemon]['id'] === id && json[pokemon]['level'] === level && pokemon !== selectPokemon
     })
-
+    
     let filterJSON = {};
     filterPokemon.forEach(pokemon => {
-        filterJSON[pokemon] = pokemonJSON[pokemon]
+        filterJSON[pokemon] = json[pokemon]
         
     })
 
@@ -197,7 +197,6 @@ function sortPokemon(e) {
         json = pokemonJSON;
     } else if (value === 'pokemonId') {
         json = Object.values(pokemonJSON).sort(function(a, b) {
-            // console.log(a)
             let x = Number(a['id'])
             let y = Number(b['id'])
 
