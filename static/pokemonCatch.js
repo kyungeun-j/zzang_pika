@@ -92,16 +92,21 @@ async function catchPokemon(e){
     getPokemon(catchData.result)
     
     // 포켓볼이 부족하지 않은 경우 -1
-    if (catchData.result != false) 
-    {
+    if (catchData.result != false) {
         // 사용한 포켓볼 업데이트
-        getClass('select')[0].children[0].innerHTML -= 1;
+        getClass('select')[0].children[0].innerText -= 1;
+        getClass('select')[0].style.filter = 'grayscale(1)';
     }
     
 }
 
 // ball select
 [...getClass('ball')].map(b => {
+    // ball 갯수가 1개보다 적으면 이미지 흑백처리
+    if(Number(b.children[0].innerText) < 1) {
+        console.log(b.children[0])
+        b.style.filter = 'grayscale(1)'
+    }
     b.addEventListener('click', () => {
         for (let i=0; i<[...getClass('ball')].length; i++) {
             if ([...getClass('ball')][i].classList.contains('select')) [...getClass('ball')][i].classList.remove('select')
