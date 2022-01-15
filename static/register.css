@@ -27,36 +27,33 @@ body {
     margin-top: 45px;
 }
 
-form input {
+.inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 0 13px;
     height: 50px;
     border: 1px solid #c6c6c6;
 }
 
-.idInputDiv #username {
-    width: 301px;
-}
-
-.idInputDiv [type="button"] {
-    border: 0;
-}
-
-.loginInput {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 0 13px;
-}
-
-.loginInput label {
+.inputs i {
     transform: scale(1.1);
     color: #c6c6c6;
     width: 23px;
 }
 
-.loginInput input {
+.inputEle {
     height: 50px;
     width: 100%;
-    outline: none;
     border: 0;
+    outline: none;
+}
+
+input[type="button"] {
+    border: 0;
+    height: 50px;
+}
+
+.infoEle {
+    font-size: 12px;
 }

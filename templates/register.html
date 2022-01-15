@@ -3,15 +3,24 @@
 <script src="../static/common.js"></script>
     <div id="registerContainer">
         <form method="post" id="registerForm">
-            <div class="idInputDiv">
-                <input name="username" id="username" placeholder="ID" check="false" oninput=IDValue() >
+            <div class="inputs">
+                <i class="fas fa-user"></i>
+                <input name="username" id="username" class="inputEle" placeholder="ID" check="false" oninput=IDValue() >
                 <input type="button" onclick="checkID()" value="중복 확인">
             </div>
-            <div class="idInfo"></div>
-            <input type="password" name="password" id="password" value="" placeholder="PASSWORD" onchange="Password()" >
-            <div class="pwInfo"></div>
-            <input type="password" id="cPassword" value="" placeholder="CONFIRM PASSWORD" oninput="ConfirmPassword()" >
-            <div class="cpwInfo"></div>
+            <div class="idInfo infoEle"></div>
+
+            <div class="inputs">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="password" class="inputEle" value="" placeholder="PASSWORD" onchange="Password()" >
+            </div>
+            <div class="pwInfo infoEle"></div>
+
+            <div class="inputs">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="cPassword" class="inputEle" value="" placeholder="CONFIRM PASSWORD" oninput="ConfirmPassword()" >
+            </div>
+            <div class="cpwInfo infoEle"></div>
             <input type="button" value="가입하기" onclick="checkInfo()" />
         </form>
     </div>
