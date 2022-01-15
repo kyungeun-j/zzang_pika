@@ -3,7 +3,7 @@
 {% block content %}
     <div id="pokemons" style="display: none;">{{ pokemons|tojson }}</div>
     <div id="default" style="display: none;">{{ default|tojson }}</div>
-    <div class="LevelUpContainer">
+    <div class="levelUpContainer">
         <div class="selectContainer">
             <div class="scItem selectPokemon">
 
@@ -12,6 +12,10 @@
 
             </div>
         </div>
+        <select id="pokemonSort">
+            <option value="catchId">잡은순</option>
+            <option value="pokemonId">아이디순</option>
+        </select>
         <ul class="listContainer">
         </ul>
     </div>

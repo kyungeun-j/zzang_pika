@@ -7,6 +7,10 @@
     position: relative;
 }
 
+.levelUpContainer {
+    position: relative;
+}
+
 .scItem {
     width: 117px;
     border: 1px solid;
@@ -23,6 +27,12 @@
 .scItem div:nth-child(1) div:nth-child(1) {
     display: flex;
     justify-content: space-between;
+}
+
+#pokemonSort {
+    position: absolute;
+    top: 126px;
+    right: 3px;;
 }
 
 .listContainer {
