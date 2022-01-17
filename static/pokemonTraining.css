@@ -1,0 +1,19 @@
+#trainingContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#trainingContainer .pokemon {
+    width: 115px;
+    height: 115px;
+    margin: 3.9px;
+    position: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.poke_top {
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <ul class="container">
+    <ul id="trainingContainer">
         {% for _id in default %}
-        <li class="{{ _id }} pokemon">
-            <p class="pokeLevel">LEVEL {{ default[_id]['level']}}</p>
-            <img src="../static/images/{{ default[_id]['id'] }}.png" />
-            <p>{{ pokemons[default[_id]['id']]['name'] }}</p>
-            <p>{{ (default[_id]['percent']|float * default[_id]['max'])|round|int }} ({{ (default[_id]['percent']|float * 100)|round|int }}%)</p>
-            <input type="button" class="trainingBtn" value="선택">
+        <li class="{{ _id }} pokemon trainingBtn">
+            <div class="poke_top">
+                <div>
+                    <span>Lv.</span>
+                    <span>{{ default[_id]['level']}}</span>
+                </div>
+                <span>{{ pokemons[default[_id]['id']]['name'] }}</span>
+            </div>
+            <div>{{ (default[_id]['percent']|float * default[_id]['max'])|round|int }} ({{ (default[_id]['percent']|float * 100)|round|int }}%)</div>
+            <!-- <input type="button" class="trainingBtn" value="선택"> -->
         </li>
 
         {% endfor %}
@@ -22,16 +26,23 @@
                     const percent = pokemonJSON[pokemons]['percent'] * 100
                     const pokemon = getClass(pokemons)[0];
                     if (percent === 100) {
-                        pokemon.style.background = 'black'
-                        pokemon.style.color = 'rgb(177 161 78)'
-                    } else if (percent >= 90) {
-                        pokemon.style.background = 'red'
-                    } else if (percent >= 50) {
-                        pokemon.style.background = 'green'
-                    } else if (percent >= 30) {
-                        pokemon.style.background = 'blue'
-                    }  else {
-                        pokemon.style.background = 'yellow'
+                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.border = '1px solid wheat'
+                    } else if (percent > 90) {
+                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.border = '1px solid purple'
+                    } else if (percent > 80) {
+                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.border = '1px solid red'
+                    } else if (percent > 70) {
+                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.border = '1px solid blue'
+                    } else if (percent > 60) {
+                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.border = '1px solid green'
+                    } else {
+                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.border = '1px solid white'
                     }
             })
         }
@@ -39,8 +50,7 @@
 
         trainingBtn.forEach(btn => {
             btn.addEventListener('click', async (e) => {
-                const pokemonID = e.target.parentElement.classList[0];
-                console.log(pokemonID)
+                const pokemonID = e.currentTarget.classList[0];
                 const option = new URLSearchParams({
                     field: 'training',
                     pokemonID: pokemonID
@@ -48,11 +58,11 @@
                 
                 const post = await myPokemonPost(option)
                 const data = await post.json();
-
+                console.log(data)
                 if (!data.msg) {
                     alert('percent가 ' + data*100 + '(이)가 되었다!')
                     pokemonJSON[pokemonID]['percent'] = data;
-                    getClass(pokemonID)[0].children[3].innerText = parseFloat(Math.round(pokemonJSON[pokemonID]['percent'] * pokemonJSON[pokemonID]['max'])) + " (" + parseInt(Math.round(parseFloat(pokemonJSON[pokemonID]['percent']) * 100)) + "%)";
+                    getClass(pokemonID)[0].children[1].innerText = parseFloat(Math.round(pokemonJSON[pokemonID]['percent'] * pokemonJSON[pokemonID]['max'])) + " (" + parseInt(Math.round(parseFloat(pokemonJSON[pokemonID]['percent']) * 100)) + "%)";
                     setBackgroundColor()
                 } else {
                     alert(data.msg)
