@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='shop.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonLevelUp.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonRun.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='pokemonTraining.css') }}" />
 
 <script src="../static/common.js"></script>
 
@@ -15,6 +16,7 @@
     <div id="user_icon"></div>
         <!-- nickName -->
         <p id="user_name">{{ username }} 님<br />환영합니다.</p>
+
         <!-- <a href="/logout">로그아웃</a> -->
     {% else %}
         <a href="/login">로그인</a>
