@@ -6,6 +6,8 @@ Object.keys(pokemonJSON).forEach(poke => {
     pokemonJSON[poke]['catchID'] = poke
 })
 
+sortPokemon(getID('pokemonSort').value)
+
 // default 포켓몬 리스트를 만들어줌
 function listPokemon(type, json) {
     const listDivEle = getClass('listContainer')[0]
@@ -75,7 +77,6 @@ function listPokemon(type, json) {
         })
     })
 }
-listPokemon('list', pokemonJSON)
 
 // 합성할 포켓몬 선택했을 때 selectContainer에 이미지 넣어주기
 function selectPokemon(type, pokemonID, json) {
@@ -154,6 +155,7 @@ function selectPokemon(type, pokemonID, json) {
             })
 
             const data = await post.json();
+            console.log(data)
             if (data.result === true) {
                 alert('성공')
 
@@ -167,7 +169,7 @@ function selectPokemon(type, pokemonID, json) {
 
                 delete pokemonJSON[getClass('selectPokemon')[0].children[0].getAttribute('catchID')]
             }
-            
+
             getClass('selectPokemon')[0].innerHTML = ""
             getClass('filterPokemon')[0].innerHTML = ""
             getID('pokemonSort').style.display = 'block';
@@ -192,7 +194,12 @@ function sortPokemon(e) {
     let json = {}
 
     if (value == 'catchId') {
-        json = pokemonJSON;
+        json = Object.values(pokemonJSON).sort(function(a, b) {
+            let x = Number(a['catchID'])
+            let y = Number(b['catchID'])
+
+            return (x < y) ? 1 : (x === y) ? 0 : -1;
+        })
     } else if (value === 'pokemonId') {
         json = Object.values(pokemonJSON).sort(function(a, b) {
             let x = Number(a['id'])
