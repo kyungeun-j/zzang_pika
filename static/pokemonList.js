@@ -1,5 +1,5 @@
-let pokemonJSON = JSON.parse(getClass('data')[0].innerText)
-let myPokemonJSON = JSON.parse(getClass('myPokemon')[0].innerText)
+let pokemonJSON = JSON.parse(getClass('data')[0].innerText);
+let myPokemonJSON = JSON.parse(getClass('myPokemon')[0].innerText);
 
 // 0, 10은 일단 white
 const pokemonListBackground = ['#ffffff', '#87e8ff', '#87fffb', '#87ffc3', '#9eff87', '#d0ff87', '#fffd87', '#ffdb87', '#ffb587', '#ff8080', '#ffffff'];

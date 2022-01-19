@@ -29,7 +29,7 @@ function RMCreate(myPokemonJSON, rmCount) {
     });
 
     dragEles = [...getClass('dragPokemon')];
-    dragSE(dragEles)
+    dragSE(dragEles);
 }
 
 // pokemonEle create
@@ -88,7 +88,7 @@ function pokeCreate(myPokemonJSON, container) {
         // Hp 소모량이 시작 체력을 넘을 수 없음
         hpDecrease = hpDecrease > startHp
             ? startHp
-            : hpDecrease
+            : hpDecrease;
 
         const hpPercent = Math.round((startHp - hpDecrease)/ maxHp * 100);
         percentInnerDiv.style.width = hpPercent + hpRecoveryPercent * 100 + '%';
@@ -175,7 +175,7 @@ function dragSE(dragEles) {
         // 러닝머신 개수와 working의 pokemon 수가 동일하다면 이동을 막음
         else if (endCont === 'working' && rmCount <= 0) {
                 e.preventDefault();
-                alert('러닝머신이 부족합니다.')
+                alert('러닝머신이 부족합니다.');
         } else {
             // post
             const option = new URLSearchParams({
@@ -212,13 +212,13 @@ function dragSE(dragEles) {
 
                 rmCount = updateJSON(startCont, endCont, draggable);
             } else if (data.result === false) {
-                alert('포켓몬을 이동시킬 수 없습니다.')
+                alert('포켓몬을 이동시킬 수 없습니다.');
             }
 
             // 초기화 <- 나중에 효율적으로 수정해야 할듯
-            getClass('working')[0].children[1].innerHTML = ''
-            getClass('resting')[0].children[1].innerHTML = ''
-            getClass('default')[0].children[1].innerHTML = ''
+            getClass('working')[0].children[1].innerHTML = '';
+            getClass('resting')[0].children[1].innerHTML = '';
+            getClass('default')[0].children[1].innerHTML = '';
 
             // create function 실행
             RMCreate(myPokemonJSON, rmCount);
@@ -228,21 +228,21 @@ function dragSE(dragEles) {
 
 function updateJSON(startCont, endCont, pokemon) {
     if (startCont === 'working') {
-        pokemon.classList.remove('using')
+        pokemon.classList.remove('using');
         rmCount += 1;
     } else if (endCont === 'working') {
-        pokemon.classList.add('using')
+        pokemon.classList.add('using');
         rmCount -= 1;
     }
     
     myPokemonJSON[endCont] = {
         ...myPokemonJSON[endCont],
         [pokemon.getAttribute('my_pokemon_id')]: myPokemonJSON[startCont][pokemon.getAttribute('my_pokemon_id')]
-    }  
+    };
 
-    delete myPokemonJSON[startCont][pokemon.getAttribute('my_pokemon_id')]
+    delete myPokemonJSON[startCont][pokemon.getAttribute('my_pokemon_id')];
 
-    return rmCount
+    return rmCount;
 }
 
 async function runPost(option) {
@@ -255,7 +255,4 @@ async function runPost(option) {
         },
         body: option
     });
-
-    // 'Content-Type': 'application/json',
-    // 'Accept': 'application/json'
 }

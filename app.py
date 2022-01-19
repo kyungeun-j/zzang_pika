@@ -23,7 +23,6 @@ g['nPokemon'] = len(g['pokemonList'].keys())
 def main():
     _username = session['username'] if 'id' in session else False
     return render_template('index.html', username=_username)
-
 @app.route('/pokemonList')
 def pokemonList():
     if 'id' in session:
@@ -191,8 +190,10 @@ def pokemonLevelUp():
             _default = db.getMyPokemon(session['id'])['default']
             return render_template('pokemonLevelUp.html', username=_username, pokemons=g['pokemonList'], default=_default)
         elif request.method == 'POST':
-            
-            return jsonify(p.levelUpPokemon(session['id'], int(request.form['first']), int(request.form['second'])))
+            _result = p.levelUpPokemon(session['id'], int(request.form['first']), int(request.form['second']))
+            if _result == True:
+                _levelUpPoke = db.getMyPokemon(session['id'])['default'][request.form['first']]
+            return jsonify({'result':_result, "levelUpPoke": _levelUpPoke})
     else:
         return redirect('/login')
 
