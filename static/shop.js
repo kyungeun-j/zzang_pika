@@ -8,11 +8,11 @@ const ballPlusEle = getClass('ballPlus')[0];
 
 let ballCount = ballCountEle.innerText * 1;
 ballMinusEle.addEventListener('click', () => {
-    ballCount = minus(ballCount, ballCountEle)
+    ballCount = minus(ballCount, ballCountEle);
 });
 ballPlusEle.addEventListener('click', () => {
     ballMinusEle.disabled = false;
-    ballCount = plus(ballCount, ballCountEle)
+    ballCount = plus(ballCount, ballCountEle);
 });
 getClass('setMax')[0].addEventListener('click', () => {
     ballCountEle.innerText = 40;
@@ -102,7 +102,7 @@ getClass('expandPokemonLength')[0].addEventListener('click', async () => {
     const post = await shopPost(option);
     const data = await post.json();
 
-    let result = ''
+    let result = '';
     if (data.result) {
         result = '업그레이드 완료!';
         userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
@@ -123,13 +123,13 @@ getClass('buyRunningMachines')[0].addEventListener('click', async () => {
     const post = await shopPost(option);
     const data = await post.json();
     
-    let result = ''
+    let result = '';
     if (data.result === true) {
-        result = '러닝머신 구입 완료!'
+        result = '러닝머신 구입 완료!';
         userMoney.innerHTML -= 1000 * runCount;
         userBag.innerHTML -= 1 * runCount;
     } else {
-        result = data.msg
+        result = data.msg;
     }
     popup_text(result);
 });
@@ -143,7 +143,7 @@ function shopPost(option) {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: option
-    })
+    });
 }
 
 function openBuyBallResult()
