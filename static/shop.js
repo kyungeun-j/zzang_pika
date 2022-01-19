@@ -95,23 +95,23 @@ getClass('expandBagSize')[0].addEventListener('click', async () => {
 });
 
 // expandPokemonLength
-getClass('expandPokemonLength')[0].addEventListener('click', async () => {
-    const option = new URLSearchParams({
-        feild: 'expandPokemonLength'
-    });
-    const post = await shopPost(option);
-    const data = await post.json();
+// getClass('expandPokemonLength')[0].addEventListener('click', async () => {
+//     const option = new URLSearchParams({
+//         feild: 'expandPokemonLength'
+//     });
+//     const post = await shopPost(option);
+//     const data = await post.json();
 
-    let result = '';
-    if (data.result) {
-        result = '업그레이드 완료!';
-        userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
-    }
-    else {
-        result = data.msg;
-    }
-    popup_text(result);
-});
+//     let result = '';
+//     if (data.result) {
+//         result = '업그레이드 완료!';
+//         userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
+//     }
+//     else {
+//         result = data.msg;
+//     }
+//     popup_text(result);
+// });
 
 // buyRunningMachines
 getClass('buyRunningMachines')[0].addEventListener('click', async () => {
