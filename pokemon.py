@@ -1,4 +1,5 @@
 import db
+import archive
 import random
 import time
 
@@ -92,31 +93,50 @@ def levelUpPokemon(userId, first, second):
         return False
 
     myPokemon = db.getMyPokemon(str(userId))
+    if not str(first) in myPokemon['default'] and str(second) in myPokemon['default']:
+        # 둘 다 default 내에 있어야 함
+        return False
 
-    if str(first) in myPokemon['default'] and str(second) in myPokemon['default']:
-        if myPokemon['default'][str(first)]['level'] == myPokemon['default'][str(second)]['level'] \
-            and myPokemon['default'][str(first)]['id'] == myPokemon['default'][str(second)]['id']:
-            # id와 level이 동일한 경우
-            # level + 1, maxHp * 2, hp1 + hp2, average percent
-            myPokemon['default'][str(first)]['level'] += 1
-            myPokemon['default'][str(first)]['maxHp'] *= 2
-            myPokemon['default'][str(first)]['hp'] += myPokemon['default'][str(second)]['hp']
-            newPercent = round((float(myPokemon['default'][str(first)]['percent']) + float(myPokemon['default'][str(second)]['percent'])) / 2, 2)
-            myPokemon['default'][str(first)]['percent'] = newPercent
-            myPokemon['default'].pop(str(second))
-            
-            myPokemon['length'] -= 1
+    if not myPokemon['default'][str(first)]['id'] == myPokemon['default'][str(second)]['id']:
+        # 같은 id의 포켓몬이어야 함
+        return False
 
-            # 업적 업데이트 (level)
-            _id = myPokemon['default'][str(first)]['id']
-            maxLevel = max(myPokemon['default'][str(first)]['level'], myPokemon['archive']['pokemon'][_id]['maxLevel'])
-            myPokemon['archive']['pokemon'][_id]['maxLevel'] = maxLevel
-            db.setMyPokemon(userId, myPokemon)
+    if not myPokemon['default'][str(first)]['level'] == myPokemon['default'][str(second)]['level']:
+        # 포켓몬 레벨이 같아야 함
+        return False
 
-            return True
+    pokemonId = myPokemon['default'][str(first)]['id']
+    pokemonList = db.getPokemonList()
+    if pokemonList[pokemonId]['evolution'] == None or pokemonList[pokemonId]['evolution'][-1] == pokemonId * 1:
+        # 다음 진화가 없는 포켓몬인 경우
+        # level + 1, maxHp * 2, hp1 + hp2, average percent
+        myPokemon['default'][str(first)]['level'] += 1
+        myPokemon['default'][str(first)]['maxHp'] *= 2
+        myPokemon['default'][str(first)]['hp'] += myPokemon['default'][str(second)]['hp']
+        newPercent = round((float(myPokemon['default'][str(first)]['percent']) + float(myPokemon['default'][str(second)]['percent'])) / 2, 2)
+        myPokemon['default'][str(first)]['percent'] = newPercent
+    else:
+        # 다음 진화가 있는 포켓몬인 경우
+        myPokemon['default'][str(first)]['id'] = str((int(myPokemon['default'][str(first)]['id']) + 1))
+        
+        newHp = round((int(myPokemon['default'][str(first)]['hp']) + int(myPokemon['default'][str(second)]['hp'])) / 2)
+        newPercent = round((float(myPokemon['default'][str(first)]['percent']) + float(myPokemon['default'][str(second)]['percent'])) / 2, 2)
+        myPokemon['default'][str(first)]['hp'] = newHp
+        myPokemon['default'][str(first)]['percent'] = newPercent
+        archive.addPokemon(userId, myPokemon['default'][str(first)]['id'])     # id가 없는 경우, 진화일 때
+        db.setMyPokemon(userId, myPokemon)
+        myPokemon = db.getMyPokemon(str(userId))
+        
+    myPokemon['default'].pop(str(second))
+    myPokemon['length'] -= 1
 
-    # 둘 다 default 내에 있어야 함
-    return False
+    # 업적 업데이트 (level)
+    _id = myPokemon['default'][str(first)]['id']
+    maxLevel = max(myPokemon['default'][str(first)]['level'], myPokemon['archive']['pokemon'][_id]['maxLevel'])
+    myPokemon['archive']['pokemon'][_id]['maxLevel'] = maxLevel
+    db.setMyPokemon(userId, myPokemon)
+
+    return True     
 
 def trainingPokemon(userId, myPokemonId):
     myPokemon = db.getMyPokemon(str(userId))

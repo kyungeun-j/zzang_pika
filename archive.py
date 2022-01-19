@@ -24,3 +24,19 @@ def updateArchive(userId, archiveType, datas):
         pass
 
     db.setMyPokemon(userId, myPokemon)
+
+def addPokemon(userId, pokemonId):
+    # updatePokemon의 get이 아닌 경우 (ex. level up)에만 사용
+    # pokemon이 이미 있는 경우 count += 1
+    myPokemon = db.getMyPokemon(userId)
+
+    if str(pokemonId) in myPokemon['archive']['pokemon']:
+        myPokemon['archive']['pokemon'][str(pokemonId)]['count'] += 1
+
+    myPokemon['archive']['pokemon'][str(pokemonId)] = {
+        'count': 0,
+        'maxLevel': 1,
+        'maxPercent': 0
+    }
+
+    db.setMyPokemon(userId, myPokemon)
