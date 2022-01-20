@@ -256,3 +256,7 @@ async function runPost(option) {
         body: option
     });
 }
+
+// const updateHpBar = (container) => {
+
+// }
