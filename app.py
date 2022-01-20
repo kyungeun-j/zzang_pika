@@ -258,4 +258,4 @@ def catch():
         else:
             return redirect('/login')
     
-app.run()
+app.run('0.0.0.0', port='3000')
