@@ -68,7 +68,7 @@ def restEndPokemon(userId, myPokemonId):
         default = myPokemon['resting'].pop(str(myPokemonId))
         startTime = default.pop('startTime')
         
-        hpRecoveryPercent = round((now - startTime) / 86400, 2)   # 하루 지나면 체력 100% 회복
+        hpRecoveryPercent = round((now - startTime) / 43200, 2)   # 하루 지나면 체력 100% 회복
         hpRecovery = hpRecoveryPercent * default['maxHp']
 
         if (default['hp'] + hpRecovery <= default['maxHp']):
@@ -123,17 +123,26 @@ def levelUpPokemon(userId, first, second):
         newPercent = round((float(myPokemon['default'][str(first)]['percent']) + float(myPokemon['default'][str(second)]['percent'])) / 2, 2)
         myPokemon['default'][str(first)]['hp'] = newHp
         myPokemon['default'][str(first)]['percent'] = newPercent
-        archive.addPokemon(userId, myPokemon['default'][str(first)]['id'])     # id가 없는 경우, 진화일 때
-        db.setMyPokemon(userId, myPokemon)
-        myPokemon = db.getMyPokemon(str(userId))
+        
+        if not str(pokemonId) in myPokemon['archive']['pokemon']:
+            myPokemon['archive']['pokemon'][str(pokemonId)] = {
+                'count': 0,
+                'maxLevel': 1,
+                'maxPercent': 0
+            }
+
+        myPokemon['archive']['pokemon'][str(pokemonId)]['count'] += 1
         
     myPokemon['default'].pop(str(second))
     myPokemon['length'] -= 1
 
     # 업적 업데이트 (level)
-    _id = myPokemon['default'][str(first)]['id']
-    maxLevel = max(myPokemon['default'][str(first)]['level'], myPokemon['archive']['pokemon'][_id]['maxLevel'])
-    myPokemon['archive']['pokemon'][_id]['maxLevel'] = maxLevel
+    if pokemonId in myPokemon['archive']['pokemon']:
+        maxLevel = max(myPokemon['default'][str(first)]['level'], myPokemon['archive']['pokemon'][pokemonId]['maxLevel'])
+    else:
+        maxLevel = myPokemon['default'][str(first)]['level']
+
+    myPokemon['archive']['pokemon'][pokemonId]['maxLevel'] = maxLevel
     db.setMyPokemon(userId, myPokemon)
 
     return True     
