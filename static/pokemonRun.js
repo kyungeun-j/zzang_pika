@@ -95,7 +95,7 @@ function pokeCreate(myPokemonJSON, container) {
         
         if (container == 'default')
         {
-            percentLabelDiv.innerText = startHp + ' / ' + maxHp;
+            percentLabelDiv.innerText = Math.round(startHp) + ' / ' + maxHp;
         }
         else
         {
