@@ -15,8 +15,17 @@ ballPlusEle.addEventListener('click', () => {
     ballCount = plus(ballCount, ballCountEle);
 });
 getClass('setMax')[0].addEventListener('click', () => {
-    ballCountEle.innerText = 40;
-    ballCount = 40;
+    if (userMoney.innerText * 1 > 4000)
+    {
+        ballCountEle.innerText = 40;
+        ballCount = 40;
+    }
+    else
+    {
+        const maxAmount = Math.floor(userMoney.innerText * 1 / 100);
+        ballCountEle.innerText = maxAmount;
+        ballCount = maxAmount;
+    }
 });
 
 getClass('setMin')[0].addEventListener('click', () => {

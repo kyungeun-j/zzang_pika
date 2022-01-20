@@ -1,20 +1,4 @@
 {
-  "userLength": 3,
-  "userList": {
-    "1234": {
-      "password": "11",
-      "lastLogin": "2022-01-13 11:46:38.147457",
-      "id": 1
-    },
-    "jehyeon": {
-      "password": "1234",
-      "lastLogin": "2022-01-13 10:56:08.898063",
-      "id": 2
-    },
-    "jehyeon62": {
-      "password": "jehyeon62!!",
-      "lastLogin": "2022-01-19 15:39:27.829888",
-      "id": 3
-    }
-  }
+  "userLength": 0,
+  "userList": {}
 }

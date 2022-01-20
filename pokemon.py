@@ -68,7 +68,7 @@ def restEndPokemon(userId, myPokemonId):
         default = myPokemon['resting'].pop(str(myPokemonId))
         startTime = default.pop('startTime')
         
-        hpRecoveryPercent = round((now - startTime) / 43200, 2)   # 하루 지나면 체력 100% 회복
+        hpRecoveryPercent = round((now - startTime) / 43200, 2)   # 12시간이 지나면 체력 100% 회복
         hpRecovery = hpRecoveryPercent * default['maxHp']
 
         if (default['hp'] + hpRecovery <= default['maxHp']):
@@ -118,20 +118,21 @@ def levelUpPokemon(userId, first, second):
     else:
         # 다음 진화가 있는 포켓몬인 경우
         myPokemon['default'][str(first)]['id'] = str((int(myPokemon['default'][str(first)]['id']) + 1))
-        
+        newPokemonId = myPokemon['default'][str(first)]['id']
         newHp = round((int(myPokemon['default'][str(first)]['hp']) + int(myPokemon['default'][str(second)]['hp'])) / 2)
         newPercent = round((float(myPokemon['default'][str(first)]['percent']) + float(myPokemon['default'][str(second)]['percent'])) / 2, 2)
         myPokemon['default'][str(first)]['hp'] = newHp
         myPokemon['default'][str(first)]['percent'] = newPercent
         
-        if not str(pokemonId) in myPokemon['archive']['pokemon']:
-            myPokemon['archive']['pokemon'][str(pokemonId)] = {
+        if not str(newPokemonId) in myPokemon['archive']['pokemon']:
+            myPokemon['archive']['pokemon'][str(newPokemonId)] = {
                 'count': 0,
                 'maxLevel': 1,
                 'maxPercent': 0
             }
 
-        myPokemon['archive']['pokemon'][str(pokemonId)]['count'] += 1
+        myPokemon['archive']['pokemon'][str(newPokemonId)]['count'] += 1
+        pokemonId = newPokemonId
         
     myPokemon['default'].pop(str(second))
     myPokemon['length'] -= 1
