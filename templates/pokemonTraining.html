@@ -12,36 +12,35 @@
                 <span>{{ pokemons[default[_id]['id']]['name'] }}</span>
             </div>
             <div>{{ (default[_id]['percent']|float * default[_id]['max'])|round|int }} ({{ (default[_id]['percent']|float * 100)|round|int }}%)</div>
-            <!-- <input type="button" class="trainingBtn" value="선택"> -->
         </li>
-
         {% endfor %}
     </ul>
     <script>
-        const pokemonJSON = JSON.parse('{{default|tojson}}');
+        const defaultJSON = JSON.parse('{{default|tojson}}');
+        const pokemonsJSON = JSON.parse('{{pokemons|tojson}}');
         const trainingBtn = [...getClass('trainingBtn')]
 
         function setBackgroundColor() {
-            Object.keys(pokemonJSON).forEach(pokemons => {
-                    const percent = pokemonJSON[pokemons]['percent'] * 100
+            Object.keys(defaultJSON).forEach(pokemons => {
+                    const percent = defaultJSON[pokemons]['percent'] * 100
                     const pokemon = getClass(pokemons)[0];
                     if (percent === 100) {
-                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
                         pokemon.style.border = '1px solid wheat'
                     } else if (percent > 90) {
-                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
                         pokemon.style.border = '1px solid purple'
                     } else if (percent > 80) {
-                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
                         pokemon.style.border = '1px solid red'
                     } else if (percent > 70) {
-                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
                         pokemon.style.border = '1px solid blue'
                     } else if (percent > 60) {
-                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
                         pokemon.style.border = '1px solid green'
                     } else {
-                        pokemon.style.background = 'url(../static/images/'+ pokemon.classList[0] +'.png) no-repeat center'
+                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
                         pokemon.style.border = '1px solid white'
                     }
             })
@@ -61,8 +60,8 @@
                 console.log(data)
                 if (!data.msg) {
                     alert('percent가 ' + data*100 + '(이)가 되었다!')
-                    pokemonJSON[pokemonID]['percent'] = data;
-                    getClass(pokemonID)[0].children[1].innerText = parseFloat(Math.round(pokemonJSON[pokemonID]['percent'] * pokemonJSON[pokemonID]['max'])) + " (" + parseInt(Math.round(parseFloat(pokemonJSON[pokemonID]['percent']) * 100)) + "%)";
+                    defaultJSON[pokemonID]['percent'] = data;
+                    getClass(pokemonID)[0].children[1].innerText = parseFloat(Math.round(defaultJSON[pokemonID]['percent'] * defaultJSON[pokemonID]['max'])) + " (" + parseInt(Math.round(parseFloat(defaultJSON[pokemonID]['percent']) * 100)) + "%)";
                     setBackgroundColor()
                 } else {
                     alert(data.msg)
