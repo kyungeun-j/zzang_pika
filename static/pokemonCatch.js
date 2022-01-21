@@ -79,6 +79,7 @@ async function catchPokemon(e){
     else if (catchData.result == 'run')
     {
         openCatchResultPopUp('도망갔다!');
+        numberOfTry = 1;
     }
     else 
     {
