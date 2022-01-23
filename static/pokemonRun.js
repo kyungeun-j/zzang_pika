@@ -32,6 +32,36 @@ function RMCreate(myPokemonJSON, rmCount) {
     dragSE(dragEles);
 }
 
+const updateHpBar = (container, startHp, maxHp, before) => {
+    const now = (Date.now() + '').slice(0,-3) * 1;
+
+    const hpRecoveryPercent = container == 'resting'
+            ?  Math.round((now - before) / 86400 * 100) / 100
+            : 0;
+
+    // for working
+    let hpDecrease = container == 'working'
+        ? now - before    // 초당 1의 체력이 소모
+        : 0;
+
+    // 반올림 오차로 now - before이 음수가 되는 경우 0으로 초기화
+    hpDecrease = hpDecrease < 0
+        ? 0
+        : hpDecrease;
+
+    // Hp 소모량이 시작 체력을 넘을 수 없음
+    hpDecrease = hpDecrease > startHp
+        ? startHp
+        : hpDecrease;
+
+    const hpPercent = Math.round((startHp - hpDecrease)/ maxHp * 100);
+
+    // hpResult가 maxHp보다 커지지 않게
+    const hpLabel = Math.round(startHp - hpDecrease + hpRecoveryPercent * maxHp) > maxHp ? maxHp : Math.round(startHp - hpDecrease + hpRecoveryPercent * maxHp);
+
+    return ({'percentInnerDiv': hpPercent + hpRecoveryPercent * 100 + '%', 'wor_res_percentLabelDiv': hpLabel + ' / ' + maxHp});
+}
+
 // pokemonEle create
 function pokeCreate(myPokemonJSON, container) {
     Object.keys(myPokemonJSON[container]).map(myPokemonId => {
@@ -67,31 +97,10 @@ function pokeCreate(myPokemonJSON, container) {
         
         const startHp = myPokemonJSON[container][myPokemonId]['hp'];
         const maxHp = myPokemonJSON[container][myPokemonId]['maxHp'];
-        const now = (Date.now() + '').slice(0,-3) * 1;
         const before = myPokemonJSON[container][myPokemonId]['startTime'];
 
-        // for resting
-        const hpRecoveryPercent = container == 'resting'
-            ?  Math.round((now - before) / 86400 * 100) / 100
-            : 0;
-
-        // for working
-        let hpDecrease = container == 'working'
-            ? now - before    // 초당 1의 체력이 소모
-            : 0;
-
-        // 반올림 오차로 now - before이 음수가 되는 경우 0으로 초기화
-        hpDecrease = hpDecrease < 0
-            ? 0
-            : hpDecrease;
-
-        // Hp 소모량이 시작 체력을 넘을 수 없음
-        hpDecrease = hpDecrease > startHp
-            ? startHp
-            : hpDecrease;
-
-        const hpPercent = Math.round((startHp - hpDecrease)/ maxHp * 100);
-        percentInnerDiv.style.width = hpPercent + hpRecoveryPercent * 100 + '%';
+        const hpBar = updateHpBar(container, startHp, maxHp, before);
+        percentInnerDiv.style.width = hpBar.percentInnerDiv;
         
         if (container == 'default')
         {
@@ -101,7 +110,7 @@ function pokeCreate(myPokemonJSON, container) {
         {
             // container가 working인 경우 hpRecovery가 0, hp: startHp - hpDecrease
             // resting인 경우 hpDecrease가 0, hp: startHp
-            percentLabelDiv.innerText = Math.round(startHp - hpDecrease + hpRecoveryPercent * maxHp) + ' / ' + maxHp;
+            percentLabelDiv.innerText = hpBar.wor_res_percentLabelDiv;
         }
 
         percentDiv.appendChild(percentInnerDiv);
@@ -257,6 +266,26 @@ async function runPost(option) {
     });
 }
 
-// const updateHpBar = (container) => {
+// percentBarDiv 1초마다 업데이트
+setInterval(() => {
+    Object.values(getClass('container')).map(containerDiv => {
+        Object.values(containerDiv.children[1].children).map(containItem => {
+            // container가 working이거나 resting일 때에만 업데이트
+            if ((containerDiv.classList[0] === 'working' && containItem.classList.contains('using')) || containerDiv.classList[0] === 'resting')
+            {
+                const container = containerDiv.classList[0];
+                const myPokemonId = containItem.getAttribute('my_pokemon_id');
 
-// }
+                const startHp = myPokemonJSON[container][myPokemonId]['hp'];
+                const maxHp = myPokemonJSON[container][myPokemonId]['maxHp'];
+                const before = myPokemonJSON[container][myPokemonId]['startTime'];
+
+                const hpBar = updateHpBar(container, startHp, maxHp, before);
+                
+                const percentDiv = document.querySelector('[my_pokemon_id="'+myPokemonId+'"]').children[0];
+                percentDiv.children[0].style.width = hpBar.percentInnerDiv;
+                percentDiv.children[1].innerText = hpBar.wor_res_percentLabelDiv;
+            }
+        })
+    })
+}, 1000);
