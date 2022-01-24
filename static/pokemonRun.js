@@ -32,6 +32,7 @@ function RMCreate(myPokemonJSON, rmCount) {
     dragSE(dragEles);
 }
 
+// hpBar 값 계산
 const updateHpBar = (container, startHp, maxHp, before) => {
     const now = (Date.now() + '').slice(0,-3) * 1;
 
@@ -286,6 +287,6 @@ setInterval(() => {
                 percentDiv.children[0].style.width = hpBar.percentInnerDiv;
                 percentDiv.children[1].innerText = hpBar.wor_res_percentLabelDiv;
             }
-        })
-    })
+        });
+    });
 }, 1000);

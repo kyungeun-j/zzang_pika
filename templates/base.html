@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <title>zzangpika</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonCatch.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonList.css') }}" />
@@ -7,24 +8,22 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonLevelUp.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonRun.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='pokemonTraining.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='myInventory.css') }}" />
 
 <script src="../static/common.js"></script>
 
-<div id="user_info">
-    <!-- temp -->
-    {% if username != False %}
-    <div id="user_icon"></div>
-        <!-- nickName -->
-        <p id="user_name">{{ username }} 님<br />환영합니다.</p>
-
-        <!-- <a href="/logout">로그아웃</a> -->
-    {% else %}
-        <a href="/login">로그인</a>
-    {% endif %}
-</div>
-
+<div id="username" style="display: none;">{{ username }}</div>
 <nav id="menu">
+    <i class="fas fa-bars"></i>
     <ul>
+        {% if username != False %}
+        <li>
+                <!-- nickName -->
+                <p id="user_name">{{ username }} 님</p>
+        </li>
+        <li>
+                <a href="/logout">로그아웃</a>
+        </li>
         <li>
             <a href="/pokemonCatch">
                 찾기
@@ -41,7 +40,7 @@
             </a>
         </li>
         <li>
-            <a href="/inventory">
+            <a href="/myInventory">
                 가방
             </a>
         </li>
@@ -50,6 +49,11 @@
                 상점
             </a>
         </li>
+        {% else %}
+        <li>
+            <a href="/login">로그인</a>
+        </li>
+        {% endif %}
     </ul>
 </nav>
 <section id="content">
@@ -57,3 +61,4 @@
 </section>
 
 {% block js %}{% endblock %}
+<script src="../static/base.js"></script>
