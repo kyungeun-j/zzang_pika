@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="inventoryContainer">
+    <div class="notBallInventory">
+        <div>
+            <div>{{ inventory['0']['name'] }}</div>
+            <div>{{ inventory['0']['amount'] }}</div>
+        </div>
+        <div>
+            <div>{{ inventory['5']['name'] }}</div>
+            <div>{{ inventory['5']['amount'] }}</div>
+        </div>
+        <div>
+            <div>{{ inventory['999']['name'] }}</div>
+            <div>{{ inventory['999']['amount'] }}</div>
+        </div>
+    </div>
+    <div class="ballInventory">
+    {% for _ball in range(1, 5) %}
+        <div type={{ _ball }}>
+            <!-- <img src="../static/balls/{{ _ball }}.png" /> -->
+            <span>{{ inventory[_ball|string]['name'] }}</span>
+            <span class="ballCount">{{ inventory[_ball|string]['amount'] }}</span>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -198,36 +198,35 @@ def pokemonLevelUp():
         return redirect('/login')
 
 
-@app.route('/shop')
+@app.route('/shop', methods=['GET', 'POST'])
 def shopGet():
     _username = session['username'] if 'id' in session else False
     if 'id' in session:
-        inventory = db.getInventory(session['id'])
-        money = inventory['0']['amount']
-        remainBagSize = inventory['999']['remain']
-        return render_template('shop.html', username=_username, money=money, remainBagSize=remainBagSize)
+        if request.method == 'GET':
+            inventory = db.getInventory(session['id'])
+            money = inventory['0']['amount']
+            remainBagSize = inventory['999']['remain']
+            return render_template('shop.html', username=_username, money=money, remainBagSize=remainBagSize)
+        elif request.method == 'POST':
+            _userid = session['id'] if 'id' in session else False
+            # buyball
+            if request.form['feild'] == 'buyball':
+                _ballResult = s.buyBall(_userid, int(request.form['ballCount']))
+                return jsonify(_ballResult)
+            # expandBagSize
+            elif request.form['feild'] == 'expandBagSize':
+                _bagResult = s.expandBackSize(_userid)
+                return _bagResult
+            # buyRunningMachines
+            elif request.form['feild'] == 'buyRunningMachines':
+                _runningResult = s.buyRunningMachines(_userid, int(request.form['runCount']))
+                return _runningResult
+            # expandPokemonLength
+            elif request.form['feild'] == 'expandPokemonLength':
+                _pokemonLResult = s.expandPokemonLength(_userid)
+                return _pokemonLResult
     else:
         return redirect('/login')
-
-@app.route('/shop', methods=['POST'])
-def shopPost():
-    _userid = session['id'] if 'id' in session else False
-    # buyball
-    if request.form['feild'] == 'buyball':
-        _ballResult = s.buyBall(_userid, int(request.form['ballCount']))
-        return jsonify(_ballResult)
-    # expandBagSize
-    elif request.form['feild'] == 'expandBagSize':
-        _bagResult = s.expandBackSize(_userid)
-        return _bagResult
-    # buyRunningMachines
-    elif request.form['feild'] == 'buyRunningMachines':
-        _runningResult = s.buyRunningMachines(_userid, int(request.form['runCount']))
-        return _runningResult
-    # expandPokemonLength
-    elif request.form['feild'] == 'expandPokemonLength':
-        _pokemonLResult = s.expandPokemonLength(_userid)
-        return _pokemonLResult
 
 @app.route('/pokemonCatch', methods=['GET', 'POST'])
 def catch():
@@ -258,5 +257,15 @@ def catch():
         else:
             return redirect('/login')
     
+@app.route('/myInventory')
+def inventory():
+    _username = session['username'] if 'id' in session else False
+    if request.method == 'GET':
+        if 'id' in session:
+            _inventory = db.getInventory(session['id'])
+            return render_template('myInventory.html', username=_username, inventory=_inventory)
+        else:
+            return redirect('/login')
+
 if __name__ == "__main__":
     app.run()

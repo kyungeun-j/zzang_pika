@@ -1,0 +1,54 @@
+#inventoryContainer {
+    height: inherit;
+}
+
+.notBallInventory {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ballInventory {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.ballInventory div {
+    height: 80px;
+    flex: 0 0 40%;
+    background-repeat: no-repeat;
+    background-size: 50px;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+}
+
+.ballInventory .ballCount {
+    position: absolute;
+    top: 14px;
+    right: 74px;
+    background: yellow;
+    border-radius: 3px;
+    padding: 0 3px;
+}
+
+/* 볼 이미지 */
+.ballInventory div[type="1"] {
+    background-image: url('../static/balls/1.png');
+}
+
+.ballInventory div[type="2"] {
+    background-image: url('../static/balls/2.png');
+}
+.ballInventory div[type="3"] {
+    background-image: url('../static/balls/3.png');
+}
+
+.ballInventory div[type="4"] {
+    background-image: url('../static/balls/4.png');
+}
