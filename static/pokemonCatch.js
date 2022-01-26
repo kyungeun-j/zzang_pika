@@ -26,10 +26,6 @@ function pokemonImgCreate(pokemon) {
     });
 }
 
-
-// 잡기 버튼 클릭
-catchBtn.addEventListener('click', getPokemon);
-
 async function getPokemon(catchResult) {
     // get pokemonList
     const res = await fetch('/pokemonCatch', {
@@ -47,7 +43,8 @@ async function getPokemon(catchResult) {
 
     pokemonImgCreate(data);
 }
-
+// 바로 포켓몬 생성
+getPokemon();
 
 // catch pokemon
 let numberOfTry = 1;
@@ -92,10 +89,12 @@ async function catchPokemon(e){
     // 포켓볼이 부족하지 않은 경우 -1
     if (catchData.result != false) {
         // 사용한 포켓볼 업데이트
-        const ballCount = getClass('select')[0];
-        ballCount.children[0].innerText -= 1;
-        if (ballCount.children[0].innerText < 1) {
-            ballCount.style.filter = 'grayscale(1)';
+        const ballCountEle = getClass('select')[0];
+        const ballCount = Number(ballCountEle.children[0].innerText.split('x')[1]) - 1;
+        ballCountEle.children[0].innerText = 'x'+ballCount;
+
+        if (ballCount < 1) {
+            ballCountEle.style.filter = 'grayscale(1)';
         }
     }
     
@@ -104,7 +103,7 @@ async function catchPokemon(e){
 // ball select
 [...getClass('ball')].map(b => {
     // ball 갯수가 1개보다 적으면 이미지 흑백처리
-    if(Number(b.children[0].innerText) < 1) {
+    if(Number(b.children[0].innerText.split('x')[1]) < 1) {
         b.style.filter = 'grayscale(1)';
     }
     b.addEventListener('click', () => {

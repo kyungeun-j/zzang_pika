@@ -6,15 +6,13 @@
 </div>
 
 <div id="catchBtns">
-    <button class="catchBtn">찾기</button>
-    <br/>
     {% for _id in userball %}
     {% if loop.index == 1 %}
         <div class="ball select" ball_id={{ loop.index }} >
     {% else %}
         <div class="ball" ball_id={{ loop.index }} >
     {% endif %}
-            <div class="ball_amount">{{ _id['amount'] }}</div>
+            <div class="ball_amount">x{{ _id['amount'] }}</div>
         </div>
     {% endfor %}
 </div>
