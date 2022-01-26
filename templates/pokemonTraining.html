@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- 포케몬 페이지 이동 메뉴(러닝, 합성, 훈련) -->
+{% include 'pokemonRunMenu.html' %}
     <ul id="trainingContainer">
         {% for _id in default %}
         <li class="{{ _id }} pokemon trainingBtn">

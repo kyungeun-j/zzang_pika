@@ -4,23 +4,30 @@
     <div id="myRM" style="display: none;">{{ myRM }}</div>
     <div id="pokemons" style="display: none;">{{ pokemons }}</div>
     <div id="myPokemons" style="display: none;">{{ mypokemon }}</div>
-    <a class="btn1" href="/pokemonLevelUp">합성</a>
-    <a class="btn2" href="/pokemonTraining">훈련</a>
+    
+    <!-- 포케몬 페이지 이동 메뉴(러닝, 합성, 훈련) -->
+    {% include 'pokemonRunMenu.html' %}
+    
     <section class="working container">
-        <h1>헬스장</h1>
+        <h5>돈버는 친구들</h5>
         <div class="pokeContainer">
         </div>
     </section>
     <section class="resting container">
-        <h1>쉼터</h1>
+        <h5>충전하는 친구들</h5>
         <div class="pokeContainer">
         </div>
     </section>
+
     <section class="default container">
-        <h1></h1>
+        <h5>아무것도 안하는 친구들</h5>
         <div class="pokeContainer">
         </div>
     </section>
+
+    <div class="popup">
+        <div id="shop_result_text"></div>
+    </div>
 {% endblock %}
 {% block js %}
     <script src="../static/pokemonRun.js"></script>

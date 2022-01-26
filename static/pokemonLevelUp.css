@@ -3,12 +3,14 @@
     height: 117px;
     display: flex;
     justify-content: space-evenly;
-    margin: 30px 0;
+    margin-bottom: 30px;
     position: relative;
 }
 
 .levelUpContainer {
     position: relative;
+    margin-top: 50px;
+    margin-bottom: 10px;
 }
 
 .scItem {
@@ -40,7 +42,7 @@
     display: flex;
     flex-wrap: wrap;
     width: inherit;
-    height: 323px;
+    height: 293px;
     margin: 0;
     padding: 0;
     overflow: scroll;

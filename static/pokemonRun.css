@@ -6,7 +6,6 @@
 .container {
     height: 100px;
     padding: 10px;
-    margin-top: 20px;
 }
 .container h1 {
     text-align: center;
@@ -14,35 +13,29 @@
     margin-bottom: 5px;
 }
 
-.btn1 {
-    position: absolute;
-    left: 0;
-    padding: 5px 10px;
-    border: 1px solid black;
-    margin: 10px;
-}
-.btn2 {
-    position: absolute;
-    right: 0;
-    padding: 5px 10px;
-    border: 1px solid black;
-    margin: 10px;
-}
-.working {
-    margin-top: 50px;
+.resting {
+    float: right;
 }
 .working, .resting {
-    padding-bottom: 33px;
-    border-top: 2px solid black;
+    display: inline-block;
+    width: 50%;
+    height: 306px;
+    box-sizing: border-box;
+    margin-top: 50px;
+}
+.working .pokeContainer, .resting .pokeContainer {
+    flex-wrap: wrap;
+    height: 270px;
 }
 
 .default {
     /* default container */
     background: radial-gradient(#c7c7c7, #23b35b);
+    height: 124px;
 }
 
 .default .pokeContainer {
-    height: 110px;
+    height: 117px;
 }
 .pokeContainer {
     display: flex;
@@ -51,9 +44,11 @@
     overflow: scroll;
 }
 
-.pokemonCard {
+.pokemonCard, .rm img {
     width: 98px;
+    height: 100px;
     text-align: center;
+    margin: 8.5px;
 }
 
 .pokemonCard img {
