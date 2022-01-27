@@ -1,27 +1,36 @@
 #pokemons {
+    padding: 10px;
     list-style: none;
     margin: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     text-align: center;
+    background: linear-gradient(#F4EEFF, #DCD6F7, #A6B1E1);
 }
 
 ul#pokemons li {
-    background-color: white;
-    width: 50px;
-    height: 50px;
-    margin: 0;
-    line-height: 50px;
-    
-    background-position: center center;
+    width: 48px;
+    height: 48px;
+    margin: 0px;
+    line-height: 44px;
+    background-position: center;
     background-size: 50px;
     background-repeat: no-repeat;
 }
 
-ul#pokemons li.exist {
-    background-color: #d4ffd6;
+ul#pokemons li.notIn {
+    width: 40px;
+    height: 40px;
+    margin: 4px;
+    color: white;
+    background: #4248746b;
+    border-radius: 5px;
 }
+
+/* ul#pokemons li.exist {
+    background-color: #d4ffd6;
+} */
 /* ul#pokemonSort {
     position: absolute;
     right: 66px;
