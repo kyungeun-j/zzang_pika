@@ -185,7 +185,8 @@ function dragSE(dragEles) {
         // 러닝머신 개수와 working의 pokemon 수가 동일하다면 이동을 막음
         else if (endCont === 'working' && rmCount <= 0) {
                 e.preventDefault();
-                alert('러닝머신이 부족합니다.');
+                // alert('러닝머신이 부족합니다.');
+                popup_text('러닝머신이 부족합니다.');
         } else {
             // post
             const option = new URLSearchParams({
@@ -207,6 +208,7 @@ function dragSE(dragEles) {
                 if ('hp' in data)
                 {
                     myPokemonJSON[startCont][dragPokemonId]['hp'] = data['hp'];
+                    popup_text('+' + data['hp'] + 'hp');
                 }
 
                 // 남은 rm 개수도 업데이트 될 때마다 갱신
@@ -217,12 +219,14 @@ function dragSE(dragEles) {
                 // 임시로 획득 코인은 console.log()
                 if ('coin' in data)
                 {
-                    console.log(data['coin']);
+                    // console.log(data['coin']);
+                    popup_text('+' + data['coin'] + 'coin');
                 }
 
                 rmCount = updateJSON(startCont, endCont, draggable);
             } else if (data.result === false) {
-                alert('포켓몬을 이동시킬 수 없습니다.');
+                // alert('포켓몬을 이동시킬 수 없습니다.');
+                popup_text('포켓몬을 이동시킬 수 없습니다.');
             }
 
             // 초기화 <- 나중에 효율적으로 수정해야 할듯

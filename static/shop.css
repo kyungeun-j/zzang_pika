@@ -109,19 +109,3 @@ div.popup.popped {
 #shop_buy_result_balls ul#shop_ball_list li[type="4"] {
     background-image: url('../static/balls/4.png');
 }
-
-#shop_result_container {
-    position: absolute;
-    width: inherit;
-    height: inherit;
-}
-#shop_result_text {
-    width: 400px;
-    height: 200px;
-    font-size: 25pt;
-    text-align: center;
-    line-height: 200px;
-    border: 1px solid;
-    position: absolute;
-    background: white;
-}

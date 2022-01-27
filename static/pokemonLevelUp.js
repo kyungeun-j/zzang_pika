@@ -156,7 +156,8 @@ function selectPokemon(type, pokemonID, json) {
 
             const data = await post.json();
             if (data.result === true) {
-                alert('성공');
+                // alert('성공');
+                popup_text('성공');
 
                 pokemonJSON[first] = data.levelUpPoke;
                 pokemonJSON[first]['catchID'] = first;
@@ -164,7 +165,8 @@ function selectPokemon(type, pokemonID, json) {
 
                 listPokemon('list', pokemonJSON);
             } else {
-                alert('실패');
+                // alert('실패');
+                popup_text('실패');
 
                 delete pokemonJSON[getClass('selectPokemon')[0].children[0].getAttribute('catchID')];
             }

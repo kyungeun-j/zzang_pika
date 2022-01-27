@@ -101,3 +101,21 @@ body {
     color: white;
     text-decoration: none;
 }
+
+
+
+#result_container {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+}
+#result_text {
+    width: 400px;
+    height: 200px;
+    font-size: 25pt;
+    text-align: center;
+    line-height: 200px;
+    border: 1px solid;
+    position: absolute;
+    background: white;
+}

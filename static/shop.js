@@ -176,14 +176,3 @@ getID('again_buy_balls').addEventListener('click', () => {
     // 다시 뽑기 클릭 시 
     getClass('buyBall')[0].click();
 });
-
-const popup_text = (text) => {
-    getID('shop_result_text').innerText = text;
-    getID('shop_result_container').classList.add('popped');
-
-    setTimeout(function() {
-        // .5초 뒤 닫음
-        getID('shop_result_text').innerText = '';
-        getID('shop_result_container').classList.remove('popped');
-    }, 500);
-};
