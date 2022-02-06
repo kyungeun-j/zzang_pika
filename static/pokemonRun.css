@@ -5,37 +5,63 @@
 
 .container {
     height: 100px;
-    padding: 10px;
+    margin: 10px 10px 0 10px;
+    padding: 4px 2px;
+    background: #fbfbfb;
+    box-shadow: 0px 0px 3px 0px #dadce0;
+    border-radius: 5px;
 }
-.container h1 {
-    text-align: center;
-    margin-top: -5px;
-    margin-bottom: 5px;
+
+.container h5 {
+    padding: 0 5px;
 }
 
 .resting {
     float: right;
 }
+
 .working, .resting {
     display: inline-block;
-    width: 50%;
-    height: 306px;
+    width: 230px;
+    height: 266px;
     box-sizing: border-box;
     margin-top: 50px;
+    margin-bottom: 3px;
 }
+
 .working .pokeContainer, .resting .pokeContainer {
     flex-wrap: wrap;
-    height: 270px;
+    height: 241px;
+}
+
+.working img {
+    margin-top: -20px;
+    margin-bottom: -20px;
+}
+
+.resting img, .default img {
+    width: 85px;
+    height: 85px;
+    margin-top: -5px;
+}
+
+.container span {
+    position: absolute;
+    top: 53px;
+    left: 153px;
+    border-radius: 5px;
+    padding: 1px 4px;
+    color: #2f325c;
+    font-weight: 500;
 }
 
 .default {
-    /* default container */
-    background: radial-gradient(#c7c7c7, #23b35b);
-    height: 124px;
+    height: 153px;
+    margin: 10px;
 }
 
 .default .pokeContainer {
-    height: 117px;
+    height: 138px;
 }
 .pokeContainer {
     display: flex;
@@ -46,18 +72,15 @@
 
 .pokemonCard, .rm img {
     width: 98px;
-    height: 100px;
+    height: 123px;
     text-align: center;
-    margin: 8.5px;
+    margin: 7.5px;
 }
 
-.pokemonCard img {
-    margin-top: -20px;
-    margin-bottom: -20px;
-}
 .pokemonCard p.name {
     font-weight: bold;
 }
+
 .pokemonCard p.percent {
     font-size: 6pt;
 }
@@ -74,12 +97,15 @@
 
 .emptyBlockForUsingImg {
     width: 98px;    /* pokemonCard width와 같은 사이즈*/
-    height: 98px;
+    height: 85px;
     margin-bottom: -20px;
+    margin: 0px;
 }
+
 .using {
+    height: 123px;
     position: relative;
-    background: url('../static/icons/RM.png') no-repeat center top / 100px;
+    background: url('../static/icons/RM.png') no-repeat center 3px / 100px;
 }
 
 .usingImg {

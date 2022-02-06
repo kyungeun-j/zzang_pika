@@ -19,7 +19,7 @@
 
 /* 선택된 페이지일 경우 */
 .selected {
-    background: #33856b;
+    background: #2f325c;
 }
 .selected a {
     color: white;

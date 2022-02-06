@@ -63,6 +63,16 @@ const updateHpBar = (container, startHp, maxHp, before) => {
     return ({'percentInnerDiv': hpPercent + hpRecoveryPercent * 100 + '%', 'wor_res_percentLabelDiv': hpLabel + ' / ' + maxHp});
 }
 
+function RMUsingInfo(rmCount) {
+
+    const amount = myRMJSON['amount'];
+    const using = amount - rmCount;
+
+    getClass('working')[0].children[0].innerHTML = '돈버는 친구들 <span> (' + using + ' / ' + amount + ' 사용 중) </span>'
+}
+
+RMUsingInfo(rmCount)
+
 // pokemonEle create
 function pokeCreate(myPokemonJSON, container) {
     Object.keys(myPokemonJSON[container]).map(myPokemonId => {
@@ -236,6 +246,7 @@ function dragSE(dragEles) {
 
             // create function 실행
             RMCreate(myPokemonJSON, rmCount);
+            RMUsingInfo(rmCount);
         }
     });
 });
