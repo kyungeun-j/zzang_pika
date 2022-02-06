@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div id="default" style="display: none;">{{ default }}</div>
+<div id="pokemons" style="display: none;">{{ pokemons }}</div>
+
 <!-- 포케몬 페이지 이동 메뉴(러닝, 합성, 훈련) -->
 {% include 'pokemonRunMenu.html' %}
+
     <ul id="trainingContainer">
         {% for _id in default %}
         <li class="{{ _id }} pokemon trainingBtn">
@@ -23,71 +27,7 @@
         </div>
     </div>
 
-    <script>
-        const defaultJSON = JSON.parse('{{default|tojson}}');
-        const pokemonsJSON = JSON.parse('{{pokemons|tojson}}');
-        const trainingBtn = [...getClass('trainingBtn')]
-
-        function setBackgroundColor() {
-            Object.keys(defaultJSON).forEach(pokemons => {
-                    const percent = defaultJSON[pokemons]['percent'] * 100
-                    const pokemon = getClass(pokemons)[0];
-                    if (percent === 100) {
-                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                        pokemon.style.border = '2px solid wheat'
-                    } else if (percent > 90) {
-                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                        pokemon.style.border = '2px solid purple'
-                    } else if (percent > 80) {
-                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                        pokemon.style.border = '2px solid red'
-                    } else if (percent > 70) {
-                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                        pokemon.style.border = '2px solid blue'
-                    } else if (percent > 60) {
-                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                        pokemon.style.border = '2px solid green'
-                    } else {
-                        pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                        pokemon.style.border = '2px solid white'
-                    }
-            })
-        }
-        setBackgroundColor();
-
-        trainingBtn.forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                const pokemonID = e.currentTarget.classList[0];
-                const option = new URLSearchParams({
-                    field: 'training',
-                    pokemonID: pokemonID
-                });
-                
-                const post = await myPokemonPost(option)
-                const data = await post.json();
-                console.log(data)
-                if (!data.msg) {
-                    // alert('percent가 ' + data*100 + '(이)가 되었다!')
-                    popup_text(data*100 + '% (이)가 되었다!')
-                    defaultJSON[pokemonID]['percent'] = data;
-                    getClass(pokemonID)[0].children[1].innerText = parseFloat(Math.round(defaultJSON[pokemonID]['percent'] * defaultJSON[pokemonID]['max'])) + " (" + parseInt(Math.round(parseFloat(defaultJSON[pokemonID]['percent']) * 100)) + "%)";
-                    setBackgroundColor()
-                } else {
-                    // alert(data.msg)
-                    popup_text(data.msg)
-                }
-            })
-        })
-
-        async function myPokemonPost(option) {
-            return fetch('/pokemonTraining', {
-                method: 'POST',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: option
-            })
-        }
-    </script>
 {% endblock %}
+{% block js %}
+    <script src="../static/pokemonTraining.js"></script>
+{% endblock %}  
