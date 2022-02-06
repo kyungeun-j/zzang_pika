@@ -6,7 +6,7 @@
     flex-wrap: wrap;
     align-items: center;
     text-align: center;
-    background: linear-gradient(#F4EEFF, #DCD6F7, #A6B1E1);
+    /* background: linear-gradient(#F4EEFF, #DCD6F7, #A6B1E1); */
 }
 
 ul#pokemons li {
@@ -19,7 +19,7 @@ ul#pokemons li {
     background-repeat: no-repeat;
 }
 
-ul#pokemons li.notIn {
+ul#pokemons li.existence {
     width: 40px;
     height: 40px;
     margin: 4px;
