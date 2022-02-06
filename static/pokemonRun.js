@@ -63,8 +63,8 @@ const updateHpBar = (container, startHp, maxHp, before) => {
     return ({'percentInnerDiv': hpPercent + hpRecoveryPercent * 100 + '%', 'wor_res_percentLabelDiv': hpLabel + ' / ' + maxHp});
 }
 
+// woking container -> 사용중인 러닝머신 / 러닝머신 총 개수 알려주는 ele 생성
 function RMUsingInfo(rmCount) {
-
     const amount = myRMJSON['amount'];
     const using = amount - rmCount;
 
