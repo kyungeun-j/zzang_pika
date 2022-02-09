@@ -15,8 +15,10 @@
 
 .scItem {
     width: 117px;
-    border: 1px solid;
     text-align: center;
+    border-radius: 5px;
+    border: 2px solid #8e8fa2;
+    box-shadow: 0px 0px 3px 0px #dadce0;
 }
 
 .selectPoke {
@@ -43,24 +45,26 @@
     flex-wrap: wrap;
     width: inherit;
     height: 293px;
-    margin: 0;
+    margin: 0 10px;
     padding: 0;
     overflow: scroll;
 }
 
 .lsItem{
-    width: 115px;
-    height: 115px;
+    width: 110px;
+    height: 110px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 1px solid;
-    margin: 3.9px;
+    border-radius: 5px;
+    margin: 5px;
+    box-shadow: 0px 0px 3px 0px #dadce0;
 }
 
 .lsItem div:nth-child(1) {
     display: flex;
     justify-content: space-between;
+    padding: 1px 2px;
 }
 
 .lsItem div:nth-child(2) {
@@ -68,14 +72,21 @@
 }
 
 .selectBtn {
-position: absolute;
-top: 122px;
+    top: 121px;
+    width: 70px;
+    height: 25px;
+    border: 0;
+    border-radius: 5px;
+    background: #6c6fa5;
+    color: white;
+    position: absolute;
+    right: 0;
 }
 
 .reSelect {
-left: 113px;
+    left: 111px;
 }
 
 .levelup {
-left: 325px;
+    right: 111px;
 }

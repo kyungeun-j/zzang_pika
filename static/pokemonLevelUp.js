@@ -39,7 +39,7 @@ function listPokemon(type, json) {
 
             pokemonLiEle.classList.add('lsItem');
             pokemonLiEle.setAttribute('catchID', pokemon['catchID']);
-            pokemonLiEle.style.background = 'url(../static/images/' + pokemon['id'] + '.png) no-repeat center';
+            pokemonLiEle.style.background = '#fbfbfb url(../static/images/' + pokemon['id'] + '.png) no-repeat center';
 
             pokemonLSpanEle.innerText = 'Lv.';
             pokemonLSpan2Ele.innerText = pokemon['level'];
@@ -158,6 +158,7 @@ function selectPokemon(type, pokemonID, json) {
             if (data.result === true) {
                 // alert('성공');
                 popup_text('성공');
+                // popup_text(data.levelUpPoke)
 
                 pokemonJSON[first] = data.levelUpPoke;
                 pokemonJSON[first]['catchID'] = first;
