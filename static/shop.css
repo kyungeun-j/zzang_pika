@@ -1,11 +1,31 @@
+.shopContainer {
+    height: 480px;
+    margin: 10px;
+}
+
+.shopContainer .inventoryDiv {
+    text-align: end;
+    margin-right: 10px;
+}
+
+.shopContainer .inventoryDiv img {
+    width: 25px;
+}
+
+.shopContainer .inventoryDiv span {
+    vertical-align: super;
+}
+
 .shopItem {
     position: relative;
-    border: 1px solid black;
+    border: 1px solid #eaeaea;
+    box-shadow: 0px 0px 3px 0px #dadce0;
+    border-radius: 5px;
     height: 50px;
     left: 10px;
-    right: px;
     margin-right: 20px;
-    margin-top: 5px;
+    margin-top: 15px;
+    padding: 20px;
 }
 
 .shopItem h1 {
@@ -22,19 +42,45 @@
 .shopItem div {
     position: absolute;
     top: 0;
-    right: 90px;
+    right: 20px;
     line-height: 50px;
+}
+
+.shopItem .ballBtn span input {
+    font-size: 11px;
+    width: 25px;
+    height: 20px;
+    border: 0;
+    border-radius: 5px;
+    margin-top: -4px;
+    background: #bcbcbc;
+    color: white;
+}
+
+.shopItem .ballBtn .buyBall {
+    display: block;
+    width: 70px;
+    height: 30px;
+    border: 0;
+    border-radius: 5px;
+    margin-top: -4px;
+    background: #58bcad;
+    color: white;
+    position: absolute;
+    right: 0;
 }
 
 .shopItem .buyBtn {
     position: absolute;
     top: 50%;
-    right: 5px;
+    right: 20px;
     width: 70px;
     height: 30px;
-    border: 1px solid black;
+    border: 0;
+    border-radius: 5px;
     margin-top: -15px;
-    background: white;
+    background: #58bcad;
+    color: white;
 }
 
 /* pop up */
