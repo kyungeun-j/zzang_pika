@@ -1,39 +1,72 @@
 #inventoryContainer {
-    height: inherit;
+    height: 480px;
+    margin: 10px;
+}
+
+#inventoryContainer span, .ballInventory h4 {
+    font-size: smaller;
+    font-weight: 700;
+    vertical-align: super;
 }
 
 .notBallInventory {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    position: absolute;
+    top: 30px;
+    width: 480px;
+}
+
+.notBallInventory section {
+    width: 115px;
+    text-align: center;
+    margin: 24px 11px;
+}
+
+.notBallInventory section:nth-child(2) {
+    border-right: 2px solid #2f325c;
+    border-left: 2px solid #2f325c;
+}
+
+.notBallInventory img {
+    width: 29px;
 }
 
 .ballInventory {
+    position: absolute;
+    top: 180px;
+    left: 30px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    height: 200px;
+    height: 290px;
+    width: 440px;
+    background: #fbfbfb;
+    box-shadow: 0px 0px 3px 0px #dadce0;
+    border-radius: 5px;
 }
 
 .ballInventory div {
-    height: 80px;
+    padding: 10px 0;
+    height: 60px;
     flex: 0 0 40%;
     background-repeat: no-repeat;
-    background-size: 50px;
-    background-position: center;
+    background-size: 45px;
+    background-position: center 26px;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: initial;
     align-items: center;
 }
 
 .ballInventory .ballCount {
     position: absolute;
-    top: 14px;
-    right: 74px;
-    background: yellow;
-    border-radius: 3px;
+    top: 50px;
+    left: 91px;
+    background: #F5FDB0;
+    border-radius: 8px;
     padding: 0 3px;
 }
 
