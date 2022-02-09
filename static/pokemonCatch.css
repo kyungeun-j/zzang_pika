@@ -37,22 +37,18 @@
 }
 
 .ball.select {
-    padding: 4px;
-    background-color: #aaa;
-    border: 1px solid #e9e9e9;
-    box-shadow: 0px 0px 3px 1px #cdced1;
+    background-color: #2f325c;
+    border: 2px solid #e9e9e9;
+    box-shadow: 0px 0px 2px 1px #2f325c;
     z-index: 2;
-}
-.ball.select .ball_amount {
-    top: 36px;
 }
 
 .ball {
     position: relative;
     display: inline-block;
     cursor: pointer;
-    border: 1px solid #aaa;
-    background: #aaaaaa42;
+    border: 2px solid #2f325c;
+    background: #aaaaaa2b;
     border-radius: 5px;
     box-shadow: 0px 0px 1px 1px #dadce0;
     margin: 0.5px;
