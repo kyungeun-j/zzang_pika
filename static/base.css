@@ -113,7 +113,10 @@ body {
     font-size: 25pt;
     text-align: center;
     line-height: 200px;
-    border: 1px solid;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px 0px #dadce0;
     position: absolute;
-    background: white;
+    color: white;
+    background: #6c6f96e8;
 }

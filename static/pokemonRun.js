@@ -218,6 +218,8 @@ function dragSE(dragEles) {
                 if ('hp' in data)
                 {
                     myPokemonJSON[startCont][dragPokemonId]['hp'] = data['hp'];
+                    // if (type(data['hp']))
+                    if (!Number.isInteger(data['hp'])) data['hp'] *= 100;
                     popup_text('+' + data['hp'] + 'hp');
                 }
 

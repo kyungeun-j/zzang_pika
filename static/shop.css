@@ -105,8 +105,10 @@ div.popup.popped {
 #shop_buy_result_balls {
     width: 400px;
     height: 200px;
-    background: white;
+    color: white;
+    background: #6c6f96e8;
     border: 1px solid;
+    border-radius: 5px;
     position: relative;
 }
 
@@ -115,7 +117,7 @@ div.popup.popped {
 }
 #shop_buy_result_balls ul#shop_ball_list li {
     display: inline-block;
-    border: 1px solid black;
+    border: 1px solid transparent;
     width: 28px;
     background-size: cover;
     height: 28px;
@@ -132,8 +134,9 @@ div.popup.popped {
 }
 
 #shop_buy_result_balls div#shop_buy_result_btns span {
-    border: 1px solid black;
-    background: white;
+    border: 1px solid #424d71;
+    border-radius: 5px;
+    background: #424d71;
     padding: 5px;
     margin: 3px;
     cursor: pointer;
