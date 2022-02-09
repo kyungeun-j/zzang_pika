@@ -4,33 +4,8 @@ const trainingBtn = [...getClass('trainingBtn')]
 
 function setBackgroundColor() {
     Object.keys(defaultJSON).forEach(pokemons => {
-            const percent = defaultJSON[pokemons]['percent'] * 100
-            const pokemon = getClass(pokemons)[0];
-            if (percent === 100) {
-                // black
-                pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                pokemon.style.border = '2px solid black'
-            } else if (percent > 90) {
-                // purple
-                pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                pokemon.style.border = '2px solid #9334D7'
-            } else if (percent > 80) {
-                // red
-                pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                pokemon.style.border = '2px solid #E93D3D'
-            } else if (percent > 70) {
-                // blue
-                pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                pokemon.style.border = '2px solid #546CE1'
-            } else if (percent > 60) {
-                // green
-                pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                pokemon.style.border = '2px solid #4AB520'
-            } else {
-                // white
-                pokemon.style.background = 'url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center'
-                pokemon.style.border = '2px solid #f5f5f5'
-            }
+        const pokemon = getClass(pokemons)[0];
+        pokemon.style.background = '#fbfbfb url(../static/images/'+ defaultJSON[pokemons]['id'] +'.png) no-repeat center';
     })
 }
 setBackgroundColor();
