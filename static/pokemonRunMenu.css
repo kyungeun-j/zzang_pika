@@ -7,14 +7,16 @@
     background: #e3e2e2;
     border-radius: 5px;
     overflow: hidden;
+    display: flex;
 }
 
 .runMenuContainer li {
-    display: inline-block;
     width: 67px;
     height: 30px;
     text-align: center;
-    line-height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 선택된 페이지일 경우 */

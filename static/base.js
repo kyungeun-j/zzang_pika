@@ -27,3 +27,13 @@ menuEle.addEventListener('click', (e) => {
         tg[0].classList.replace('fa-times', 'fa-bars');
     }
 });
+
+// 기본 메뉴 - 현재페이지 하이라이트
+// 포켓몬 합성/훈련일 경우 포켓몬에 하이라이트
+const routePathname = window.location.pathname === '/pokemonLevelUp' || window.location.pathname === '/pokemonTraining' ? '/pokemonRun' : window.location.pathname;
+Object.values(menuEle.children[1].children).forEach(aTag => {
+    if(aTag.children[0].href !== undefined && aTag.children[0].href.indexOf(routePathname) > 0)
+    {
+        aTag.style.backgroundColor = '#6266a5';
+    }
+})
