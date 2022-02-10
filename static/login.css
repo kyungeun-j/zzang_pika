@@ -89,6 +89,7 @@ body {
     border-radius: 3px;
     background: #2f325c;
     color: white;
+    cursor: pointer;
 }
 
 .registerA {

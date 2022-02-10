@@ -1,3 +1,4 @@
+from email import message
 import json
 from random import seed
 import re
@@ -40,17 +41,20 @@ def pokemonDetail(id):
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
-    if request.method == 'GET':
-        return render_template('login.html')
-    elif request.method == 'POST':
-        userId = db.login(request.form['username'], request.form['password'])
-        # 로그인 실패 -> fail message, 성공 -> /으로 이동
-        if userId == False:
-            return jsonify('fail')
-        else:
-            session['id'] = userId
-            session['username'] = request.form['username']
-            return redirect('/')
+    if 'id' in session:
+        return redirect('/')
+    else:
+        if request.method == 'GET':
+            return render_template('login.html')
+        elif request.method == 'POST':
+            userId = db.login(request.form['username'], request.form['password'])
+            # 로그인 실패 -> fail message, 성공 -> success -> js replace()로 '/' 라우트 이동
+            if userId == False:
+                return jsonify('fail')
+            else:
+                session['id'] = userId
+                session['username'] = request.form['username']
+                return jsonify('success')
 
 @app.route('/logout')
 def logout():

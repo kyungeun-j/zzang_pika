@@ -30,7 +30,8 @@
                 loginFailResultEle.innerText = '아이디를 입력해주세요.';
             } else if (document.getElementById('password').value === '') {
                 loginFailResultEle.innerText = '비밀번호를 입력해주세요.';
-            } else {
+            } 
+            else {
                 const post = await fetch('/login', {
                     method: 'POST',
                     cache: 'no-cache',
@@ -43,8 +44,8 @@
                     })
                 });
                 const data = await post.json();
-                
                 if (data === 'fail') loginFailResultEle.innerText = '아이디 또는 패스워드가 잘못 되었습니다.';
+                else window.location.replace('/');
             }  
         })
     </script>
