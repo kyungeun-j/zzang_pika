@@ -72,11 +72,18 @@ body {
     border: 0;
 }
 
+.loginFailResult {
+    width: inherit;
+    height: 20px;
+}
+
 .loginBtn {
-    margin-top: 34px;
+    margin-top: 14px;
     height: 50px;
     border: 0;
     border-radius: 3px;
+    background: #2f325c;
+    color: white;
 }
 
 .registerA {
@@ -86,4 +93,5 @@ body {
 
 .registerA a {
     text-decoration: none;
+    color: #2f325c;
 }

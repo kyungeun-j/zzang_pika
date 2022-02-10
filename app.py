@@ -44,8 +44,9 @@ def login():
         return render_template('login.html')
     elif request.method == 'POST':
         userId = db.login(request.form['username'], request.form['password'])
+        # 로그인 실패 -> fail message, 성공 -> /으로 이동
         if userId == False:
-            return render_template('login.html', message=True)
+            return jsonify('fail')
         else:
             session['id'] = userId
             session['username'] = request.form['username']

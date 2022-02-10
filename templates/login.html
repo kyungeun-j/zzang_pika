@@ -1,28 +1,50 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}" />
     <div id="loginContainer">
-        <div class="loginImg">
-            <i class="fas fa-user"></i>
-        </div>
         <form method="post">
             <div class="inputs">
                 <div class="loginInput">
                     <label for="username"><i class="fas fa-user"></i></label>
-                    <input name="username" id="username" placeholder="username" required>
+                    <input name="username" id="username" placeholder="username">
                 </div>
                 <div class="loginInput">
                     <label for="password"><i class="fas fa-lock"></i></label>
-                    <input type="password" name="password" id="password" placeholder="password" required>
+                    <input type="password" name="password" id="password" placeholder="password">
                 </div>
             </div>
+            <div class="loginFailResult"></div>
             <input class="loginBtn" type="submit" value="로그인">
         </form>
         <div class="registerA">
             <a href="/register">회원가입</a>
         </div>
-        {% if message == True %}
-            <script>
-                alert("아이디 또는 패스워드가 잘못 되었습니다.")
-            </script>
-        {% endif %}
     </div>
+
+    <script>
+        const loginBtnEle = document.getElementsByClassName('loginBtn')[0];
+        const loginFailResultEle = document.getElementsByClassName('loginFailResult')[0];
+        
+        loginBtnEle.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (document.getElementById('username').value === '') {
+                loginFailResultEle.innerText = '아이디를 입력해주세요.';
+            } else if (document.getElementById('password').value === '') {
+                loginFailResultEle.innerText = '비밀번호를 입력해주세요.';
+            } else {
+                const post = await fetch('/login', {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        username: document.getElementById('username').value,
+                        password: document.getElementById('password').value
+                    })
+                });
+                const data = await post.json();
+                
+                if (data === 'fail') loginFailResultEle.innerText = '아이디 또는 패스워드가 잘못 되었습니다.';
+            }  
+        })
+    </script>
