@@ -14,6 +14,7 @@
 
 .shopContainer .inventoryDiv span {
     vertical-align: super;
+    color: gray;
 }
 
 .shopItem {
@@ -55,6 +56,7 @@
     margin-top: -4px;
     background: #bcbcbc;
     color: white;
+    cursor: pointer;
 }
 
 .shopItem .ballBtn .buyBall {
@@ -68,6 +70,7 @@
     color: white;
     position: absolute;
     right: 0;
+    cursor: pointer;
 }
 
 .shopItem .buyBtn {
@@ -81,6 +84,7 @@
     margin-top: -15px;
     background: #58bcad;
     color: white;
+    cursor: pointer;
 }
 
 /* pop up */

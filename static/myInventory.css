@@ -63,11 +63,14 @@
 
 .ballInventory .ballCount {
     position: absolute;
-    top: 50px;
-    left: 91px;
-    background: #F5FDB0;
-    border-radius: 8px;
+    top: 47px;
+    left: 90px;
     padding: 0 3px;
+    border: 1px solid #2f325c;
+    border-radius: 9px;
+    font-size: 11px;
+    background: #7277b9;
+    color: white;
 }
 
 /* 볼 이미지 */
