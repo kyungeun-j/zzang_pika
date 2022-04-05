@@ -1,5 +1,6 @@
 const catchEle = getID('catchDiv');
 const catchBtn = getClass('catchBtn')[0];
+let myPokemonJSON = JSON.parse(getClass('myPokemon')[0].innerText);
 
 function pokemonImgCreate(pokemon) {
     catchEle.innerHTML = '';
@@ -17,6 +18,14 @@ function pokemonImgCreate(pokemon) {
 
         img.style.left = randomX+'px';
         img.style.top = randomY+'px';
+
+
+        // 보유 포켓몬인지 확인을 위함
+        const possessionPoke = Object.keys(myPokemonJSON).filter(myPoke =>  myPoke == poke[0]);
+        if (possessionPoke.length === 0)
+        {
+            img.style.background = 'radial-gradient(rgb(255 106 0 / 36%) 35%, rgb(255 96 0 / 34%) 36%, rgba(255, 255, 255, 0) 68%)';
+        }
 
         catchEle.appendChild(img);
     });

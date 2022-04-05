@@ -240,9 +240,11 @@ def catch():
         if 'id' in session:
             _userball = []
             userinventory = db.getInventory(session['id'])
+            _mypokemon = db.getMyPokemon(session['id'])['archive']['pokemon']
+            
             for _id in range(1, 5):
                 _userball.append(userinventory[str(_id)])
-            return render_template('pokemonCatch.html', username=_username, userball=_userball)
+            return render_template('pokemonCatch.html', username=_username, userball=_userball, myPokemon=_mypokemon)
         else:
             return redirect('/login')
     elif request.method == 'POST':

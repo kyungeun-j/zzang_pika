@@ -1,6 +1,8 @@
 {%  extends 'base.html' %}
 
 {% block content %}
+<div class="myPokemon" style="display: none;">{{ myPokemon|tojson }}</div>
+
 <div id="catchContainer">
     <div id="catchDiv"></div>
 </div>
