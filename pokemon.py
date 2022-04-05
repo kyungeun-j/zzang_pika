@@ -107,7 +107,7 @@ def levelUpPokemon(userId, first, second):
 
     pokemonId = myPokemon['default'][str(first)]['id']
     pokemonList = db.getPokemonList()
-    if pokemonList[pokemonId]['evolution'] == None or pokemonList[pokemonId]['evolution'][-1] == pokemonId * 1:
+    if pokemonList[pokemonId]['evolution'] == None or pokemonList[pokemonId]['evolution'][-1] == int(pokemonId):
         # 다음 진화가 없는 포켓몬인 경우
         # level + 1, maxHp * 2, hp1 + hp2, average percent
         myPokemon['default'][str(first)]['level'] += 1
