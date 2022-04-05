@@ -68,7 +68,7 @@ function RMUsingInfo(rmCount) {
     const amount = myRMJSON['amount'];
     const using = amount - rmCount;
 
-    getClass('working')[0].children[0].innerHTML = '돈버는 친구들 <span> (' + using + ' / ' + amount + ' 사용 중) </span>'
+    getClass('working')[0].children[0].innerHTML = '코인 생산 <span> (' + using + ' / ' + amount + ' 사용 중) </span>'
 }
 
 RMUsingInfo(rmCount)
