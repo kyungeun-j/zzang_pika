@@ -33,7 +33,7 @@ menuEle.addEventListener('click', (e) => {
 const routePathname = window.location.pathname === '/pokemonLevelUp' || window.location.pathname === '/pokemonTraining' ? '/pokemonRun' : window.location.pathname;
 
 Object.values(menuEle.children[1].children).forEach(aTag => {
-    if(aTag.children[0].href !== undefined && aTag.children[0].href.indexOf('/login') < 0 && aTag.children[0].href.indexOf(routePathname) > 0)
+    if(aTag.children[0].href !== undefined && routePathname !== '/' && aTag.children[0].href.indexOf(routePathname) > 0)
     {
         aTag.style.backgroundColor = '#6266a5';
     }
