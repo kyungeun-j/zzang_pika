@@ -2,6 +2,8 @@ let defaultJSON = JSON.parse(getID('default').innerText.replaceAll("'", '"'));
 const pokemons = JSON.parse(getID('pokemons').innerText.replaceAll("'", '"').replaceAll('None', 'null'));
 const trainingBtn = [...getClass('trainingBtn')]
 
+console.log(defaultJSON)
+
 function setBackgroundColor() {
     Object.keys(defaultJSON).forEach(pokemons => {
         const pokemon = getClass(pokemons)[0];
@@ -20,15 +22,12 @@ trainingBtn.forEach(btn => {
         
         const post = await myPokemonPost(option)
         const data = await post.json();
-        console.log(data)
         if (!data.msg) {
-            // alert('percent가 ' + data*100 + '(이)가 되었다!')
             popup_text(data*100 + '% (이)가 되었다!')
             defaultJSON[pokemonID]['percent'] = data;
             getClass(pokemonID)[0].children[1].innerText = parseFloat(Math.round(defaultJSON[pokemonID]['percent'] * defaultJSON[pokemonID]['max'])) + " (" + parseInt(Math.round(parseFloat(defaultJSON[pokemonID]['percent']) * 100)) + "%)";
             setBackgroundColor()
         } else {
-            // alert(data.msg)
             popup_text(data.msg)
         }
     })
