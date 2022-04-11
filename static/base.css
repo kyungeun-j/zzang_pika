@@ -55,7 +55,8 @@ body {
     position: absolute;
     bottom: -7px;
     right: 55px;
-    width: 450px;
+    cursor: auto;
+    width: max-content;
     background: #2f325c;
     border-radius: 5px;
     padding: 9px;
@@ -93,6 +94,8 @@ body {
     height: 30px;
     text-align: center;
     line-height: 30px;
+    padding: 0 6px;
+    margin: 0 6px;
 }
 
 #menu li a {
@@ -104,8 +107,8 @@ body {
 }
 
 #menu .routeMenu {
-    width: 10%;
     border-radius: 5px;
+    width: max-content;
 }
 
 #result_container {
