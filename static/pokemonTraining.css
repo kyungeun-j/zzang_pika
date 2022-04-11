@@ -1,29 +1,30 @@
 #trainingContainer {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 50px 10px 10px;
-    height: 440px;
-    overflow: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 50px 5px 10px 10px;
+  height: 440px;
+  overflow-y: hidden;
 }
 
 #trainingContainer .pokemon {
-    width: 110px;
-    height: 110px;
-    margin: 5px;
-    position: unset;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 5px;
-    box-shadow: 0px 0px 3px 0px #dadce0;
+  width: 110px;
+  height: 110px;
+  margin: 5px;
+  position: unset;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px 0px #dadce0;
 }
 
 #trainingContainer div:nth-child(2) {
-    text-align: center;
+  text-align: center;
+  font-size: 13px;
 }
 
 .poke_top {
-    display: flex;
-    justify-content: space-between;
-    padding: 3px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
 }

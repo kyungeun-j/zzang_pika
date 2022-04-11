@@ -4,162 +4,183 @@
 } */
 
 .container {
-    height: 100px;
-    margin: 10px 10px 0 10px;
-    padding: 4px 2px;
-    background: #fbfbfb;
-    box-shadow: 0px 0px 3px 0px #dadce0;
-    border-radius: 5px;
+  height: 100px;
+  margin: 10px 10px 0 10px;
+  padding: 4px 2px;
+  background: #fbfbfb;
+  box-shadow: 0px 0px 3px 0px #dadce0;
+  border-radius: 5px;
 }
 
 .container h5 {
-    padding: 0 5px;
+  padding: 0 5px;
+  font-size: 14px;
 }
 
 .working {
-    position: relative;
+  position: relative;
 }
 
 .resting {
-    float: right;
+  float: right;
 }
 
-.working, .resting {
-    display: inline-block;
-    width: 230px;
-    height: 266px;
-    box-sizing: border-box;
-    margin-top: 50px;
-    margin-bottom: 3px;
+.working,
+.resting {
+  display: inline-block;
+  width: 230px;
+  height: 266px;
+  box-sizing: border-box;
+  margin-top: 60px;
+  margin-bottom: 10px;
 }
 
-.working .pokeContainer, .resting .pokeContainer {
-    flex-wrap: wrap;
-    height: 241px;
-}
+/* .working .pokeContainer,
+.resting .pokeContainer,
+.default .pokeContainer {
+  flex-wrap: wrap;
+  height: 237px;
+} */
 
 .working img {
-    margin-top: -20px;
-    margin-bottom: -20px;
+  margin-top: -20px;
+  margin-bottom: -20px;
 }
 
-.resting img, .default img {
-    width: 85px;
-    height: 85px;
-    margin-top: -5px;
+.resting img,
+.default img {
+  width: 75px;
+  height: 75px;
+  margin-top: -5px;
 }
 
 .container span {
-    position: absolute;
-    top: 3px;
-    right: 0;
-    border-radius: 5px;
-    padding: 1px 4px;
-    color: #2f325c;
-    font-weight: 500;
+  position: absolute;
+  top: 3px;
+  right: 0;
+  border-radius: 5px;
+  padding: 1px 4px;
+  color: #2f325c;
+  font-weight: 500;
+  font-size: 1px;
 }
 
 .default {
-    height: 153px;
-    margin: 10px;
+  height: 136px;
+  margin: 10px;
 }
 
 .default .pokeContainer {
-    height: 138px;
+  height: 116px;
 }
 .pokeContainer {
-    display: flex;
-    height: 136px;
-    width: auto;
-    overflow: scroll;
+  display: flex;
+  height: 136px;
+  width: auto;
+  margin-left: 5px;
+  overflow-y: hidden;
+  flex-wrap: wrap;
+  height: 237px;
 }
 
-.pokemonCard, .rm img {
-    width: 98px;
-    height: 123px;
-    text-align: center;
-    margin: 7.5px;
+.default .pokemonCard {
+  margin: 7.5px 0;
+}
+
+.pokemonCard,
+.rm img {
+  width: 93px;
+  height: 103px;
+  text-align: center;
+  margin: 7.5px;
 }
 
 .pokemonCard p.name {
-    font-weight: bold;
+  font-weight: bold;
+  font-size: 12px;
+  margin-top: -8px;
 }
 
 .pokemonCard p.percent {
-    font-size: 6pt;
+  font-size: 1px;
 }
 
 .pokemonCard p.level {
-    font-size: 7pt;
-    margin-top: -45px;
-    margin-left: -40px;
+  font-size: 1px;
+  margin-top: -44px;
+  margin-left: -41px;
 }
 
 .rmImg {
-    width: 100px;
+  width: 100px;
 }
 
 .emptyBlockForUsingImg {
-    width: 98px;    /* pokemonCard width와 같은 사이즈*/
-    height: 85px;
-    margin-bottom: -20px;
-    margin: 0px;
+  width: 93px;
+  height: 75px;
+  margin-top: 2.5px;
 }
 
 .using {
-    height: 123px;
-    position: relative;
-    background: url('../static/icons/RM.png') no-repeat center 3px / 100px;
+  height: 103px;
+  position: relative;
+  background: url("../static/icons/RM.png") no-repeat center 4.5px / 89px;
 }
 
 .usingImg {
-    position: absolute;
-    top: 10px;
-    left: 0;
+  position: absolute;
+  top: 10px;
+  left: 0;
 
-    /* 통통 튀는 애니메이션 */
-    animation: motion 0.3s linear 0s infinite alternate;
+  /* 통통 튀는 애니메이션 */
+  animation: motion 0.3s linear 0s infinite alternate;
 }
 
 .usingImg:before {
-    content: '';
-    width: 98px;
-    height: 98px;
-    background: black;
+  content: "";
+  width: 98px;
+  height: 98px;
+  background: black;
 }
 @keyframes motion {
-    0% {top: 10px;}
-    100% {top: 20px;}
+  0% {
+    top: 10px;
+  }
+  100% {
+    top: 20px;
+  }
 }
 .hidden {
-    display: none;
+  display: none;
 }
 
 /* 체력바 */
 .percentDiv {
-    margin-left: 5%;
-    width: 90%;
-    font-size: 7px;
-    height: 11px;
-    color: white;
-    background: #d94141;
-    border-radius: 7px;
-    overflow: hidden;
-    position: relative;
+  margin-left: 5%;
+  width: 90%;
+  font-size: 7px;
+  height: 11px;
+  color: white;
+  background: #d94141;
+  border-radius: 7px;
+  overflow: hidden;
+  position: relative;
 }
 
 /* 진행바 */
 .percentDiv .percentInnerDiv {
-    height: 100%;
-    background-color: #21a154;
+  height: 100%;
+  background-color: #21a154;
 }
 
 /* Text */
 .percentDiv .percentLabelDiv {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: inherit;
-    display: flex;
-    justify-content: center;
+  position: absolute;
+  top: -0.5px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 100;
 }

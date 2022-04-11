@@ -1,32 +1,32 @@
 #pokemons {
-    height: 480px;
-    margin: 10px;
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    text-align: center;
-    overflow: scroll;
+  height: 480px;
+  margin: 10px 5px 10px 10px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+  overflow-y: hidden;
 }
 
 ul#pokemons li {
-    width: 48px;
-    height: 48px;
-    margin: 0px;
-    line-height: 44px;
-    background-position: center;
-    background-size: 50px;
-    background-repeat: no-repeat;
+  width: 48px;
+  height: 48px;
+  margin: 0px;
+  line-height: 44px;
+  background-position: center;
+  background-size: 50px;
+  background-repeat: no-repeat;
 }
 
 ul#pokemons li.existence {
-    width: 40px;
-    height: 40px;
-    margin: 4px;
-    color: white;
-    background: #4248746b;
-    border-radius: 5px;
-    box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  color: white;
+  background: #4248746b;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 /* ul#pokemons li.exist {
