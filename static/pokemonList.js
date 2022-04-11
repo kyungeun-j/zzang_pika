@@ -38,3 +38,6 @@ function createPokemons() {
         pokemonsUI.appendChild(liEle);
     });
 }
+
+// common.js
+show_scroll_bar(getID('pokemons'));

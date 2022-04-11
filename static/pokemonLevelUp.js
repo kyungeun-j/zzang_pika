@@ -212,3 +212,6 @@ function sortPokemon(e) {
     }
     listPokemon('list', json);
 }
+
+//common.js
+show_scroll_bar(getClass('listContainer')[0]);

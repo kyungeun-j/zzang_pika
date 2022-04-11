@@ -12,3 +12,17 @@ const popup_text = (text) => {
         getID('result_container').classList.remove('popped');
     }, 1000);
 };
+
+const show_scroll_bar = (ele) => {
+    const eleOverflow = document.defaultView.getComputedStyle(ele).getPropertyValue("overflow-y");
+
+    if (eleOverflow === 'hidden')
+    {
+        ele.addEventListener('mouseover', () => {
+            ele.style.overflowY = 'scroll';
+        });
+        ele.addEventListener('mouseout', () => {
+            ele.style.overflowY = 'hidden';
+        });
+    }
+}

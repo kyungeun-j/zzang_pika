@@ -231,7 +231,6 @@ function dragSE(dragEles) {
                 // 임시로 획득 코인은 console.log()
                 if ('coin' in data)
                 {
-                    // console.log(data['coin']);
                     popup_text('+' + data['coin'] + 'coin');
                 }
 
@@ -307,3 +306,9 @@ setInterval(() => {
         });
     });
 }, 1000);
+
+// common.js
+const pokeContainers = getClass('pokeContainer');
+[...pokeContainers].map(container => {
+    show_scroll_bar(container);
+});
