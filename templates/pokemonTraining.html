@@ -7,24 +7,19 @@
 <!-- 포케몬 페이지 이동 메뉴(러닝, 합성, 훈련) -->
 {% include 'pokemonRunMenu.html' %}
 
-    <ul id="trainingContainer">
-        {% if default|length != 0 %}
-        {% for _id in default %}
-        <li class="{{ _id }} pokemon trainingBtn">
-            <div class="poke_top">
-                <div>
-                    <span>Lv.</span>
-                    <span>{{ default[_id]['level']}}</span>
-                </div>
-                <span>{{ pokemons[default[_id]['id']]['name'] }}</span>
+    <div id="trainingContainer">
+        <div class="selectContainer">
+            <div class="scItem selectPokemon">
+
             </div>
-            <div>{{ (default[_id]['percent']|float * default[_id]['max'])|round|int }} ({{ (default[_id]['percent']|float * 100)|round|int }}%)</div>
-        </li>
-        {% endfor %}
-        {% else %}
-            훈련할 수 있는 포켓몬이 없습니다.
-        {% endif %}
-    </ul>
+        </div>
+        <select id="pokemonSort">
+            <option value="catchId">잡은순</option>
+            <option value="pokemonId">아이디순</option>
+        </select>
+        <ul class="listContainer">
+        </ul>
+    </div>
 
     <div id="result_container" class="popup">
         <div id="result_text">
