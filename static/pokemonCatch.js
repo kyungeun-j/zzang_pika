@@ -81,24 +81,24 @@ async function catchPokemon(e){
     const catchData = await catchRes.json();
     if (catchData.result === true) 
     {
-        openCatchResultPopUp('성공!');
+        openCatchResultPopUp('성공!', catchData.result);
     }
     else if (catchData.result == false) 
     {
-        openCatchResultPopUp('몬스터볼이 부족합니다.');
+        openCatchResultPopUp('몬스터볼이 부족합니다.', catchData.result);
     }
     else if (catchData.result == 'run')
     {
-        openCatchResultPopUp('도망갔다!');
+        openCatchResultPopUp('도망갔다!', catchData.result);
         numberOfTry = 1;
     }
     else 
     {
-        openCatchResultPopUp('실패!');
+        openCatchResultPopUp('실패!', catchData.result);
         numberOfTry = Number(catchData.result);
     }
 
-    getPokemon(catchData.result);
+    // getPokemon(catchData.result);
     
     // 포켓볼이 부족하지 않은 경우 -1
     if (catchData.result != false) {
@@ -128,17 +128,18 @@ async function catchPokemon(e){
     });
 });
 
-const openCatchResultPopUp = (text) => {
+const openCatchResultPopUp = (text, nextPokemon) => {
     getID('catchResultPopUp').classList.add('popped');
     getID('popupText').innerText = text;
 
     setTimeout(function() {
         // 1초 뒤 닫음
-        closeCatchResultPopUp();
+        closeCatchResultPopUp(nextPokemon);
     }, 1000);
 };
 
-const closeCatchResultPopUp = () => {
+const closeCatchResultPopUp = (nextPokemon) => {
     getID('catchResultPopUp').classList.remove('popped');
     getID('popupText').innerText = '';
+    getPokemon(nextPokemon);
 };

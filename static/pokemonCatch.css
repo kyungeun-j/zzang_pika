@@ -23,16 +23,18 @@
 .pokemon::after {
   content: var(--content);
   position: absolute;
-  top: 10px;
-  left: 20px;
-  border: 1px solid;
+  top: 17px;
+  left: 21px;
+  border: 1.5px solid;
   border-radius: 10px;
-  width: 11px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
   text-align: center;
-  line-height: 1;
-  font-size: 11px;
-  color: #ff4646;
+  line-height: .8;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ff0000;
+  background: #ffffffba;
 }
 
 #catchBtns {
