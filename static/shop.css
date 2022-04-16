@@ -3,9 +3,10 @@
     margin: 10px;
 }
 
-.shopContainer .inventoryDiv {
+.shopContainer .userMoney {
     text-align: end;
     margin-right: 10px;
+    color: goldenrod;
 }
 
 .shopContainer .inventoryDiv img {

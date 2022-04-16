@@ -1,5 +1,4 @@
-const userMoney = getClass('userMoney')[0];
-const userBag = getClass('userBag')[0];
+const userMoney = getClass('userMoney')[0].children[0];
 
 // buyBall count
 const ballCountEle = getClass('ballCount')[0];
@@ -65,8 +64,7 @@ getClass('buyBall')[0].addEventListener('click', async () => {
     const data = await post.json();
 
     if (data.result !== false) {
-        userMoney.innerHTML -= 100 * ballCount;
-        userBag.innerHTML -= 1 * ballCount;
+        userMoney.innerHTML = userMoney.innerHTML * 1 - 100 * ballCount;
     }
 
     if (!data.msg) {
@@ -93,7 +91,6 @@ getClass('expandBagSize')[0].addEventListener('click', async () => {
     let result = ''
     if (data.result) {
         result = '업그레이드 완료!';
-        userBag.innerHTML = userBag.innerHTML * 1 + 50;
         userMoney.innerHTML = userMoney.innerHTML * 1 - 10000;
     }
     else {
@@ -135,8 +132,7 @@ getClass('buyRunningMachines')[0].addEventListener('click', async () => {
     let result = '';
     if (data.result === true) {
         result = '러닝머신 구입 완료!';
-        userMoney.innerHTML -= 1000 * runCount;
-        userBag.innerHTML -= 1 * runCount;
+        userMoney.innerHTML = userMoney.innerHTML * 1 - 1000 * runCount;
     } else {
         result = data.msg;
     }
