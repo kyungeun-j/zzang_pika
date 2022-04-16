@@ -4,33 +4,31 @@
 <div id="inventoryContainer">
     <div class="notBallInventory">
         <!-- 코인 -->
-        <section>
-            <img src="../static/icons/coin.png">
-            <span>{{ inventory['0']['name'] }}</span>
-            <div>{{ inventory['0']['amount'] }}</div>
-        </section>
-        <!-- 러닝머신 -->
-        <section>
-            <img src="../static/icons/RM.png">
-            <span>{{ inventory['5']['name'] }}</span>
-            <div>{{ inventory['5']['amount'] }}</div>
+        <section class="coin">
+            <div>{{ inventory['0']['amount'] }} coin</div>
         </section>
         <!-- 가방 사이즈 -->
         <section>
-            <img src="../static/icons/bag.png">
-            <span>{{ inventory['999']['name'] }}</span>
-            <div>{{ inventory['999']['amount'] }}</div>
+            <div>{{ inventory['999']['remain'] }} / {{ inventory['999']['amount'] }}</div>
         </section>
     </div>
 
     <div class="ballInventory">
     {% for _ball in range(1, 5) %}
+        {% if inventory[_ball|string]['amount'] > 0 %}
         <div type={{ _ball }}>
-            <!-- <img src="../static/balls/{{ _ball }}.png" /> -->
-            <span>{{ inventory[_ball|string]['name'] }}</span>
-            <span class="ballCount">x{{ inventory[_ball|string]['amount'] }}</span>
+            <img src="../static/balls/{{ _ball }}.png" />
+            <!-- <span>{{ inventory[_ball|string]['name'] }}</span> -->
+            <span class="itemCount">x{{ inventory[_ball|string]['amount'] }}</span>
         </div>
+        {% endif %}
     {% endfor %}
+        <div class="RM">
+            <img src="../static/icons/RM.png" >
+            <!-- <span>{{ inventory['5']['name'] }}</span> -->
+            <span class="itemCount">x{{ inventory['5']['amount'] }}</span>
+        </div>
     </div>
 </div>
 {% endblock %}
+

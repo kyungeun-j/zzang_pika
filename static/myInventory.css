@@ -1,6 +1,10 @@
+.coin {
+    color: goldenrod;
+}
+
 #inventoryContainer {
-    height: 480px;
-    margin: 10px;
+    height: -webkit-fill-available;
+    padding: 30px;
 }
 
 #inventoryContainer span, .ballInventory h4 {
@@ -11,21 +15,10 @@
 
 .notBallInventory {
     display: flex;
-    justify-content: center;
-    position: absolute;
+    justify-content: space-between;
+    /* position: absolute;
     top: 30px;
-    width: 480px;
-}
-
-.notBallInventory section {
-    width: 115px;
-    text-align: center;
-    margin: 24px 11px;
-}
-
-.notBallInventory section:nth-child(2) {
-    border-right: 2px solid #2f325c;
-    border-left: 2px solid #2f325c;
+    width: 480px; */
 }
 
 .notBallInventory img {
@@ -33,24 +26,28 @@
 }
 
 .ballInventory {
+    padding: 38px 0;
     position: absolute;
-    top: 180px;
+    top: 100px;
     left: 30px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 290px;
+    /* justify-content: space-evenly; */
+    /* align-items: center; */
+    height: 370px;
     width: 440px;
-    background: #fbfbfb;
-    box-shadow: 0px 0px 3px 0px #dadce0;
+    background: #4e4e4e26;
+    border: 3px solid #7ca2ad;
+    /* box-shadow: 0px 0px 3px 0px #dadce0; */
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .ballInventory div {
-    padding: 10px 0;
-    height: 60px;
-    flex: 0 0 40%;
+    padding: 25px 0;
+    margin: 23px 7.85px 0;
+    height: 40px;
+    flex: 0 0 20%;
     background-repeat: no-repeat;
     background-size: 45px;
     background-position: center 26px;
@@ -59,22 +56,32 @@
     flex-direction: column;
     justify-content: initial;
     align-items: center;
+    border: 3px outset white;
+    border-radius: 5px;
 }
 
-.ballInventory .ballCount {
-    position: absolute;
-    top: 47px;
-    left: 90px;
+.ballInventory div img {
+    height: 100%;
+}
+
+.ballInventory .itemCount {
+position: absolute;
+    bottom: 0;
+    left: 4px;
     padding: 0 3px;
-    border: 1px solid #2f325c;
+    /* border: 1px solid #2f325c; */
     border-radius: 9px;
     font-size: 11px;
-    background: #7277b9;
-    color: white;
+    /* background: #7277b9; */
+    color: #838383;
+}
+
+div .RM {
+    width: 90px;
 }
 
 /* 볼 이미지 */
-.ballInventory div[type="1"] {
+/* .ballInventory div[type="1"] {
     background-image: url('../static/balls/1.png');
 }
 
@@ -88,3 +95,7 @@
 .ballInventory div[type="4"] {
     background-image: url('../static/balls/4.png');
 }
+
+.ballInventory div[type="5"] {
+    background-image: url('../static/icons/RM.png');
+} */
