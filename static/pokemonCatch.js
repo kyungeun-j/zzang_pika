@@ -6,28 +6,33 @@ function pokemonImgCreate(pokemon) {
     catchEle.innerHTML = '';
 
     pokemon.map(poke => {
+        const div = document.createElement('div');
         const img = document.createElement('img');
-        img.setAttribute('class', 'pokemon');
+        div.setAttribute('class', 'pokemon');
         img.setAttribute('pokemon_id', poke[0]);
         img.setAttribute('pokemon_percent', poke[1]);
         
         img.src = '../static/images/' + poke[0] + '.png';
-        
-        const randomX = Math.random() * (catchEle.offsetWidth - 96);
-        const randomY = Math.random() * (catchEle.offsetHeight - 96); 
-
-        img.style.left = randomX+'px';
-        img.style.top = randomY+'px';
-
 
         // 보유 포켓몬인지 확인을 위함
         const possessionPoke = Object.keys(myPokemonJSON).filter(myPoke =>  myPoke == poke[0]);
         if (possessionPoke.length === 0)
         {
-            img.style.background = 'radial-gradient(rgb(255 106 0 / 36%) 35%, rgb(255 96 0 / 34%) 36%, rgba(255, 255, 255, 0) 68%)';
+            div.setAttribute('style', "--content:'!'");
+        }
+        else
+        {
+            div.setAttribute('style', '--content:none');
         }
 
-        catchEle.appendChild(img);
+        const randomX = Math.random() * (catchEle.offsetWidth - 96);
+        const randomY = Math.random() * (catchEle.offsetHeight - 96); 
+
+        div.style.left = randomX+'px';
+        div.style.top = randomY+'px';
+
+        div.appendChild(img);
+        catchEle.appendChild(div);
     });
 
     [...getClass('pokemon')].map(poke => {

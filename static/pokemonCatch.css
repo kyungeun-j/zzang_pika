@@ -16,9 +16,23 @@
   position: absolute;
   width: 96px;
   height: 96px;
-  /* transform: scale(1.5); */
   cursor: pointer;
   user-select: none;
+}
+
+.pokemon::after {
+  content: var(--content);
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  width: 11px;
+  height: 12px;
+  text-align: center;
+  line-height: 1;
+  font-size: 11px;
+  color: #ff4646;
 }
 
 #catchBtns {
