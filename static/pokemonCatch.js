@@ -16,13 +16,19 @@ function pokemonImgCreate(pokemon) {
 
         // 보유 포켓몬인지 확인을 위함
         const possessionPoke = Object.keys(myPokemonJSON).filter(myPoke =>  myPoke == poke[0]);
+        // if (possessionPoke.length === 0)
+        // {
+        //     div.setAttribute('style', "--content:'!'");
+        // }
+        // else
+        // {
+        //     div.setAttribute('style', '--content:none');
+        // }
         if (possessionPoke.length === 0)
         {
-            div.setAttribute('style', "--content:'!'");
-        }
-        else
-        {
-            div.setAttribute('style', '--content:none');
+            const span = document.createElement('span');
+            span.innerHTML = "!"
+            div.appendChild(span)
         }
 
         const randomX = Math.random() * (catchEle.offsetWidth - 96);

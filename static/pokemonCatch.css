@@ -20,8 +20,7 @@
   user-select: none;
 }
 
-.pokemon::after {
-  content: var(--content);
+.pokemon span {
   position: absolute;
   top: 17px;
   left: 21px;
@@ -35,6 +34,18 @@
   font-weight: bold;
   color: #ff0000;
   background: #ffffffba;
+}
+
+.pokemon span:hover::after {
+  content: '발견하지 못한 포켓몬';
+  width: max-content;
+  color: white;
+  font-size: 12px;
+  font-weight: 100;
+  position: absolute;
+  left: 0;
+  top: -17px;
+  z-index: 10;
 }
 
 #catchBtns {

@@ -66,6 +66,7 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  z-index: 10;
 }
 
 #menu ul {
@@ -147,4 +148,30 @@ body {
   position: absolute;
   color: white;
   background: #6c6f96e8;
+}
+
+/* info icon */
+[data-info-text] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px;
+  color: #2f325c;
+}
+
+[data-info-text]:hover:after {
+  content: attr(data-info-text);
+  position: absolute;
+  width: 255px;
+  font-size: 11px;
+  top: 20px;
+  left: 0;
+  font-weight: bold;
+  padding: 8px;
+  background: #2f325cbd;
+  border: 1px solid #2f325c;
+  border-radius: 3px;
+  color: white;
+  z-index: 10;
+  line-height: normal;
 }

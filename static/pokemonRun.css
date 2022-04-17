@@ -4,6 +4,7 @@
 } */
 
 .container {
+  position: relative;
   height: 100px;
   margin: 10px 10px 0 10px;
   padding: 4px 2px;
@@ -15,10 +16,6 @@
 .container h5 {
   padding: 0 5px;
   font-size: 14px;
-}
-
-.working {
-  position: relative;
 }
 
 .resting {
@@ -56,8 +53,7 @@
 
 .container span {
   position: absolute;
-  top: 3px;
-  right: 0;
+  top: 5px;
   border-radius: 5px;
   padding: 1px 4px;
   color: #2f325c;
@@ -183,4 +179,29 @@
   justify-content: center;
   align-items: center;
   font-weight: 100;
+}
+
+[data-info-run-text] {
+  position: absolute;
+  top: -3px;
+  right: 0;
+  margin: 10px;
+  color: #2f325c;
+}
+
+[data-info-run-text]:hover:after {
+  content: attr(data-info-run-text);
+  position: absolute;
+  width: 199px;
+  font-size: 11px;
+  top: -37px;
+  right: 0;
+  font-weight: bold;
+  padding: 8px;
+  background: #2f325cbd;
+  border: 1px solid #2f325c;
+  border-radius: 3px;
+  color: white;
+  z-index: 10;
+  line-height: normal;
 }

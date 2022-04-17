@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<i class="far fa-question-circle" data-info-text="같은 레벨의 포켓몬을 합성하여 진화 시키거나 다음 레벨의 포켓몬으로 레벨업 시킬 수 있습니다."></i>
+
 <!-- 포케몬 페이지 이동 메뉴(러닝, 합성, 훈련) -->
 {% include 'pokemonRunMenu.html' %}
     <div id="pokemons" style="display: none;">{{ pokemons|tojson }}</div>
