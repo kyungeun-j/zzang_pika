@@ -275,10 +275,12 @@ function select_pokemon(type, pokemonID, json) {
             const post = await myPokemonPost(option);
             const data = await post.json();
             if (!data.msg) {
-                popup_text(data*100 + '% (이)가 되었다!');
+                popup_text(data * 100 + '% (이)가 되었다!');
                 defaultJSON[pokemonID]['percent'] = data;
-                getClass(pokemonID)[0].children[1].innerText = parseFloat(Math.round(defaultJSON[pokemonID]['percent'] * defaultJSON[pokemonID]['max'])) + " (" + parseInt(Math.round(parseFloat(defaultJSON[pokemonID]['percent']) * 100)) + "%)";
-                setBackgroundColor();
+                pokemon_list_create('list', defaultJSON);
+                getClass('selectPokemon')[0].innerHTML = '';
+                getID('pokemonSort').style.display = 'block';
+                pokemon_sort(getID('pokemonSort').value, defaultJSON);
             } else {
                 popup_text(data.msg);
             }
