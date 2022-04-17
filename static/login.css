@@ -92,6 +92,10 @@ body {
     cursor: pointer;
 }
 
+.loginBtn:hover {
+    background: #444883;
+}
+
 .registerA {
     width: -webkit-fill-available;
     text-align: right;

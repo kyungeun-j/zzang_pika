@@ -60,6 +60,10 @@
     cursor: pointer;
 }
 
+.shopItem .ballBtn span input:hover {
+    background: #8d8d8d;
+}
+
 .shopItem .ballBtn .buyBall {
     display: block;
     width: 70px;
@@ -72,6 +76,10 @@
     position: absolute;
     right: 0;
     cursor: pointer;
+}
+
+.shopItem [type='button']:hover {
+    background: #48998c;
 }
 
 .shopItem .buyBtn {

@@ -64,6 +64,10 @@ input[type="button"] {
     cursor: pointer;
 }
 
+input[type="button"]:hover {
+    background: #444883;
+}
+
 .infoEle {
     font-size: 12px;
     line-height: 25px;

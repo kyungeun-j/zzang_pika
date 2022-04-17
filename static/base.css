@@ -69,6 +69,10 @@ body {
   z-index: 10;
 }
 
+#menu:hover {
+  background: #444883;
+}
+
 #menu ul {
   display: none;
   justify-content: space-evenly;
@@ -131,6 +135,10 @@ body {
   width: max-content;
 }
 
+#menu .routeMenu:hover {
+  background: #444883;
+}
+
 #result_container {
   position: absolute;
   width: inherit;
@@ -156,7 +164,10 @@ body {
   top: 0;
   left: 0;
   margin: 10px;
-  color: #2f325c;
+  color: #e3e2e2;
+  background: #2f325c;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 [data-info-text]:hover:after {
@@ -166,12 +177,12 @@ body {
   font-size: 11px;
   top: 20px;
   left: 0;
-  font-weight: bold;
-  padding: 8px;
-  background: #2f325cbd;
+  padding: 4px;
+  background: #626487bd;
   border: 1px solid #2f325c;
   border-radius: 3px;
   color: white;
   z-index: 10;
   line-height: normal;
+  z-index: 10;
 }

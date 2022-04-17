@@ -17,6 +17,7 @@ ul#pokemons li {
   background-position: center;
   background-size: 50px;
   background-repeat: no-repeat;
+  color: burlywood;
 }
 
 ul#pokemons li.existence {

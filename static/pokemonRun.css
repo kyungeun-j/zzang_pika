@@ -186,7 +186,10 @@
   top: -3px;
   right: 0;
   margin: 10px;
-  color: #2f325c;
+  color: #e3e2e2;
+  background: #2f325c;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 [data-info-run-text]:hover:after {
@@ -194,11 +197,10 @@
   position: absolute;
   width: 199px;
   font-size: 11px;
-  top: -37px;
+  top: -29px;
   right: 0;
-  font-weight: bold;
-  padding: 8px;
-  background: #2f325cbd;
+  padding: 4px;
+  background: #626487bd;
   border: 1px solid #2f325c;
   border-radius: 3px;
   color: white;
