@@ -1,0 +1,69 @@
+.indexSection {
+    margin: 20px 10px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 460px;
+}
+
+.indexContainer {
+    margin: 10px;
+    width: 460px;
+}
+
+.indexContainer div {
+    /* width: inherit;
+    margin-top: 30px; */
+    position: relative;
+    width: inherit;
+    margin-top: 45px;
+    /* background: beige; */
+    background: #d9d9d9;
+    border-radius: 5px;
+    padding: 15px 11px;
+    box-sizing: border-box;
+}
+
+.indexContainer div p {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.imgAfter::before {
+    content: '이 Tab을 이용해서 합성/훈련 페이지로 이동할 수 있어요!';
+    position: absolute;
+    top: 42px;
+    right: 62px;
+    font-size: 14px;
+    width: 332px;
+    color: #fb6200;
+}
+
+.imgAfter::after {
+    content: ' ';
+    border: 2px dashed #fa7c2b;
+    border-radius: 5px;
+    width: 158px;
+    height: 28px;
+    position: absolute;
+    top: 62px;
+    right: 64px;
+}
+
+.indexContainer div h1 {
+    position: absolute;
+    top: -12px;
+    background: #fa7c2b;
+    color: white;
+    padding: 1px 4px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.indexContainer img {
+    width: 400px;
+}
+
+.indexContainer .pokemonMenu img {
+    width: 200px;
+}

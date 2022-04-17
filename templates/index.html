@@ -1,5 +1,72 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>zzang_pika</h1>
+<section class="indexSection">
+    <div class="indexContainer">
+        <h1>💡 게임 설명</h1>
+
+        <!-- login -->
+        <!-- <div>
+            <p>회원가입 후 로그인을 해주세요!</p>
+            <img src="../static/homeImage/login.png" />
+        </div> -->
+        
+        <!-- menu -->
+        <div>
+            <h1>Menu</h1>
+            <p>아래 메뉴를 이용해서 다른 페이지에 이동할 수 있어요.</p>
+            <img src="../static/homeImage/menu.png" />
+        </div>
+
+        <!-- pokemonCatch -->
+        <div>
+            <h1>찾기 페이지</h1>
+            <p>찾기페이지에서 포켓몬을 잡아봐요!</p>
+            <img src="../static/homeImage/pokemonCatch.png" />
+        </div>
+
+        <!-- pokemonRun/LevelUp/Training -->
+        <div>
+            <h1>포켓몬 페이지</h1>
+            <!-- <p>이 Tab을 이용해서 합성/훈련 페이지로 이동할 수 있어요!</p> -->
+            <p class="imgAfter">잡은 포켓몬으로 코인을 모을 수 있어요.</p>
+            <img src="../static/homeImage/pokemonRun.png" />
+            <br /><br />
+            <p>합성과 훈련으로 포켓몬을 강화할 수 있어요.</p>
+            <!-- <img src="../static/homeImage/pokemonLevelUp.png" /> -->
+            <img src="../static/homeImage/pokemonLevelUp.png" />
+            
+            <!-- <img src="../static/homeImage/pokemonTraining.png" /> -->
+            <img src="../static/homeImage/pokemonTraining.png" />
+        </div>
+
+        <!-- pokemonList -->
+        <div>
+            <h1>도감 페이지</h1>
+            <p>나만의 포켓몬 도감을 채워봐요!</p>
+            <img src="../static/homeImage/pokemonList.png" />
+        </div>
+
+        <!-- inventroy -->
+        <div>
+            <h1>가방 페이지</h1>
+            <p>가지고있는 아이템을 확인할 수 있어요.</p>
+            <img src="../static/homeImage/inventory.png" />
+        </div>
+
+        <!-- shop -->
+        <div>
+            <h1>상점 페이지</h1>
+            <p>상점에서 아이템을 구입해봐요!</p>            
+            <img src="../static/homeImage/shop.png" />
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+    <script>
+        const container = document.getElementsByClassName('indexSection')[0];
+        show_scroll_bar(container);
+    </script>
 {% endblock %}
