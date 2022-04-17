@@ -19,6 +19,14 @@
     align-items: center;
 }
 
+.runMenuContainer li:hover {
+    background: #85869d;
+}
+
+.runMenuContainer li:hover a {
+    color: white;
+}
+
 /* 선택된 페이지일 경우 */
 .selected {
     background: #2f325c;

@@ -110,3 +110,7 @@
 .levelup {
   right: 116px;
 }
+
+button:hover {
+  background: #545781;
+}
