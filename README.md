@@ -1,9 +1,8 @@
 # zzang_pika
 
-### Test
-- 유저 추가, 로그인
-db.register(id, password)
-db.login(id, password)
+<img src="./static/icons/zzangpika.gif" width="80%" height="80%"/>
 
-- 유저 초기화
-db.resetUsers()
+
+# Links
+- [Git Repository URL](https://github.com/kyungeun-j/zzang_flix)
+- [Live Site URL](https://zzang-flix.herokuapp.com/)

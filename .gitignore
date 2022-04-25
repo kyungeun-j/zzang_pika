@@ -6,3 +6,4 @@ __pycache__/
 /lib
 db/
 db/users.json
+static/icons/zzangpika.gif
